@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>PG관리시스템</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-200">
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    const exception = "";
+    if (error) {
+        const message = exception || '아이디 또는 패스워드가 틀립니다. 확인 후 다시 입력하세요.';
+        alert(message);
+    }
+</script>
+
+<div class="bg-white p-8 rounded-lg shadow-md w-96">
+    <h2 class="text-2xl text-gray-700 font-bold text-center mb-6">PG관리시스템</h2>
+    <form th:action="@{/}" method="post">
+        <a class="font-bold text-xl text-blue-500">CopyPay</a>
+        <div class="mb-4">
+            <label for="username" class="block text-sm font-medium text-gray-700"></label>
+            <input type="text" id="username" name="username" placeholder="아이디를 입력해주세요" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500" required>
+        </div>
+        <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700"></label>
+            <input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요" class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500" required>
+        </div>
+        <div>
+            <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 rounded-md hover:bg-blue-600 transition duration-200">로그인</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

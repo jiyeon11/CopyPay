@@ -16,8 +16,8 @@ public class SampleController {
 
     private final SampleReaderService sampleService;
 
-    @GetMapping("/")
-    public String main() {
+    @GetMapping("/index")
+    public String sampleIndex() {
         return "index";
     }
 
