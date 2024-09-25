@@ -18,7 +18,7 @@ public class SampleController {
 
     @GetMapping("/")
     public String main() {
-        return "index";
+        return "main";
     }
 
     @PostMapping("/sample/{sampleId}/list")
