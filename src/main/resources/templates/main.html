@@ -1,91 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragment/head}">src/main/resources/templates/main.html
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<head th:replace="~{fragment/head}">
+    <title></title>
 </head>
 
-<body class="bg-gray-100">
-<header class="bg-white shadow">
-    <nav class="px-6 py-2 flex justify-between items-center">
-        <a href="#" class="font-bold text-xl text-blue-500">CopyPay</a>
-        <div class="float-right flex items-center">
-            <p th:text="${id}" class="text-gray-600">fsdfs</p>
-            <p>/</p>
-            <p th:text="${loginDnt}" class="text-gray-600">fsdfsdf</p>
-            <a id="callLogoutBtn" href="#" class="bg-white text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-100 shadow-md">로그아웃</a>
-        </div>
-    </nav>
-
-    <!-- 상단 메뉴 -->
-    <nav class="bg-blue-500 text-white" aria-label="메인 메뉴">
-        <ul class="px-7 py-1 flex space-x-8 space-y-1 text-center items-center">
-            <li><a id="callSaleManagementBtn" href="#" class="hover:bg-black font-semibold py-2 px-4 rounded shadow-md w-28 menu-toggle" role="menuitem">영업관리</a></li>
-            <li><div class="border-l border-white h-10"></div></li>
-            <li><a id="callBasicInfoBtn" href="#" class="hover:bg-black font-semibold py-2 px-4 rounded shadow-md w-28 menu-toggle">기본정보</a></li>
-            <li><div class="border-l border-white h-10"></div></li>
-            <li><a id="callPaymentBtn" href="#" class="hover:bg-black font-semibold py-2 px-4 rounded shadow-md w-28 under-construction">결제</a></li>
-            <li><div class="border-l border-white h-10"></div></li>
-            <li><a id="callPurchaseDepositBtn" href="#" class="hover:bg-black font-semibold py-2 px-4 rounded shadow-md w-28 under-construction">매입/입금</a></li>
-            <li><div class="border-l border-white h-10"></div></li>
-            <li><a id="callSettlementBtn" href="#" class="hover:bg-black font-semibold py-2 px-4 rounded shadow-md w-28 under-construction">정산</a></li>
-            <li><div class="border-l border-white h-10"></div></li>
-            <li><a id="callRMBtn" href="#" class="hover:bg-black font-semibold py-2 px-4 rounded shadow-md w-28 under-construction">RM</a></li>
-            <li><div class="border-l border-white h-10"></div></li>
-            <li><a id="callStatisticsBtn" href="#" class="hover:bg-black font-semibold py-2 px-4 rounded shadow-md w-28 under-construction">통계</a></li>
-            <li><div class="border-l border-white h-10"></div></li>
-            <li><a id="callOperateBtn" href="#" class="hover:bg-black font-semibold py-2 px-4 rounded shadow-md w-28 under-construction" >운영</a></li>
-            <li></li><div class="border-l border-white h-10"></div>
-            <li><a id="callAdminBtn" href="#" class="hover:bg-black font-semibold py-2 px-4 rounded shadow-md w-28 under-construction">Admin</a></li>
-        </ul>
-    </nav>
-</header>
-
-<!-- 왼쪽 사이드바 -->
-<nav class="fixed left-0 h-full w-40 bg-blue-400 text-white text-center shadow-lg" aria-label="사이드바 메뉴">
-    <ul class="sales-management-sub">
-        <li>
-            <button class="bg-black block w-full py-1 px-2 cursor-pointer shadow-md text-md" aria-expanded="false" aria-controls="sales-submenu">
-                사업자관리
-            </button>
-            <ul class="sub bg-slate-700 text-sm">
-                <li><a href="#" class="hover:bg-zinc-600 block py-2 px-2 menu-item">계약 진행현황</a></li>
-                <li><a href="#" class="hover:bg-zinc-600 block py-2 px-2 menu-item">계약 완료현황</a></li>
-                <li><a href="#" class="hover:bg-zinc-600 block py-2 px-2 menu-item">가맹점 ID 관리</a></li>
-            </ul>
-        </li>
-    </ul>
-    <ul class="basic-info-sub">
-        <li>
-            <p class="bg-black block py-1 px-2 shadow-md text-md">기본정보</p>
-            <ul class="sub bg-slate-700 text-sm">
-                <li><a href="#" class="hover:bg-zinc-600 block py-2 px-2 menu-item">등록/변경</a></li>
-                <li><a href="#" class="hover:bg-zinc-600 block py-2 px-2 menu-item">기본정보 조회</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
+<body>
+    <div th:replace="~{fragment/sidebar}"></div>
 </body>
 
 <script>
     $(document).ready(function () {
         $(".sales-management-sub, .basic-info-sub").hide();
-        //영업관리 메뉴 클릭 시
-        $("#callSaleManagementBtn").click(function (e) {
-            $(".basic-info-sub").slideUp("fast");
-            $(".sales-management-sub, .sales-management-sub .sub").slideDown("fast");
-        });
+        $(".menu-toggle").click(function () {
+            var targetMenu = $(this).data('target');
+            $(".menu-toggle").removeClass("bg-black");
+            $(this).addClass("bg-black");
 
-        //기본정보 메뉴 클릭 시
-        $("#callBasicInfoBtn").click(function (e) {
-            $(".sales-management-sub").slideUp("fast");
-            $(".basic-info-sub, .basic-info-sub .sub").slideDown("fast");
-        });
-        //상단 메뉴 클릭 시 배경색 바꾸기
-        $(".menu-toggle").click(function (e) {
-            $(".menu-toggle").removeClass("bg-black").addClass("hover:bg-black");
-            $(this).toggleClass("bg-black");
-
+            //모든 서브메뉴 숨기기
+            $(".sales-management-sub, .basic-info-sub").hide();
+            //선택된 서브메뉴 보이기
+            $(targetMenu).slideDown(500);
         });
         //사이드바 메뉴 클릭 시 글자색 바꾸기
         $(".menu-item").click(function (e) {
@@ -99,6 +35,6 @@
             $(e).removeClass("bg-black");
         });
     });
-
 </script>
+
 </html>
