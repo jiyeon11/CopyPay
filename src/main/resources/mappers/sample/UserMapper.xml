@@ -6,7 +6,7 @@
 <mapper namespace="com.copypay.repository.mapper.UserMapper">
 
     <select id="findByUsername" parameterType="String" resultType="com.copypay.model.User">
-        SELECT ID, PW FROM USER WHERE ID = #{ID}
+        SELECT ID, PW FROM USER WHERE ID = #{id}
     </select>
 </mapper>
 
