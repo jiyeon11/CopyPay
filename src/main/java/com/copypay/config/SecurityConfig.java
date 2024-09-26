@@ -1,5 +1,6 @@
 package com.copypay.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ public class SecurityConfig {
 
     private final CustomAuthFailureHandler customAuthFailureHandler;
 
+    @Autowired
     public SecurityConfig(CustomAuthFailureHandler customAuthFailureHandler) {
         this.customAuthFailureHandler = customAuthFailureHandler;
     }
@@ -34,7 +36,6 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/")         // 로그아웃 시 이동할 경로
                         .invalidateHttpSession(true)); // 세션 만료 처리
-
         return http.build();
     }
 
