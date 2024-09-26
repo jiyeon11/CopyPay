@@ -20,7 +20,11 @@ public class SampleController {
     public String main() {
         return "main";
     }
-
+    @GetMapping("/basic_info")
+    public String basic_info(){
+        return "basic-info";
+    }
+    
     @PostMapping("/sample/{sampleId}/list")
     @ResponseBody
     public SampleResponse samplePostReq(@PathVariable Long sampleId,
