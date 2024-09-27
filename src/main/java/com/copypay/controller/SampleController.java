@@ -13,18 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 public class SampleController {
-
     private final SampleReaderService sampleService;
 
     @GetMapping("/")
     public String main() {
         return "main";
     }
-    @GetMapping("/basic_info")
-    public String basic_info(){
-        return "basic-info";
-    }
-    
+
     @PostMapping("/sample/{sampleId}/list")
     @ResponseBody
     public SampleResponse samplePostReq(@PathVariable Long sampleId,
