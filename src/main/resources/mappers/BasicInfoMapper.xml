@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.copypay.repository.mapper.BasicInfoMapper">
+
+    <select id="getBasicInfoList" resultType="com.copypay.dto.response.BasicInfoListResponse">
+	<![CDATA[
+		SELECT
+			BUSINESS_REG_NUMBER AS businessRegNumber,
+			BUSINESS_NAME AS businessName,
+			MID AS mid,
+			BUSINESS_STATUS AS businessType,
+			PAYMENT_METHOD.IS_USED AS isUsed,
+			IS_SMALL_MID_USED AS isSmallMidUsed
+		FROM CONTRACT
+				 JOIN PAYMENT_METHOD ON CONTRACT.NO = PAYMENT_METHOD.NO
+        ]]>
+	</select>
+
+
+</mapper>
