@@ -73,9 +73,10 @@
             tbody.empty();
             // 받아온 데이터로 테이블 행 추가
             data.forEach(item => {
+                const formattedBusinessRegNumber = formatBusinessRegNumber(item.businessRegNumber); 
                 const row = `
                             <div class="table-row even:bg-blue-300 odd:bg-white hover:bg-slate-400">
-                                <div class="table-cell px-2 py-1">${item.businessRegNumber}</div>
+                                <div class="table-cell px-2 py-1">${formattedBusinessRegNumber}</div>
                                 <div class="table-cell px-2 py-1">${item.businessName}</div>
                                 <div class="table-cell px-2 py-1">${item.mid ? item.mid : ""}</div>
                                 <div class="table-cell px-2 py-1">${item.businessType}</div>
@@ -86,6 +87,10 @@
                 tbody.append(row);
             });
         }
+
+        function formatBusinessRegNumber(regNumber) {
+            return regNumber.substring(0, 3) + "-" + regNumber.substring(3, 5) + "-" + regNumber.substring(5);
+        }  
     </script>
 </body>
 
