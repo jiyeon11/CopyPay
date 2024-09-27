@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -22,9 +22,9 @@ public class BasicInfoController {
         return "basic-info";
     }
 
-    @GetMapping("/api/basic-info/list")
+    @GetMapping(value = {"/api/basic-info/list/{inputMid}", "/api/basic-info/list"})
     @ResponseBody
-    public List<BasicInfoListResponse> basicInfoListRes(){
-        return basicInfoService.getBasicInfoList();
+    public List<BasicInfoListResponse> basicInfoListRes(@PathVariable(required = false) String inputMid){
+        return basicInfoService.getBasicInfoList(inputMid);
     }
 }

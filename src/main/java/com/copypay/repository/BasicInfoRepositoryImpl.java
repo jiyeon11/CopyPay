@@ -13,7 +13,7 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     private final BasicInfoMapper basicInfoMapper;
 
     @Override
-    public List<BasicInfoListResponse> getBasicInfoList() {
-        return basicInfoMapper.getBasicInfoList();
+    public List<BasicInfoListResponse> getBasicInfoList(String inputMid) {
+        return basicInfoMapper.getBasicInfoList(inputMid);
     }
 }

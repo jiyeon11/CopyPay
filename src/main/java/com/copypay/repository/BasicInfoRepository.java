@@ -5,5 +5,5 @@ import com.copypay.dto.response.BasicInfoListResponse;
 import java.util.List;
 
 public interface BasicInfoRepository {
-    List<BasicInfoListResponse> getBasicInfoList();
+    List<BasicInfoListResponse> getBasicInfoList(String inputMid);
 }

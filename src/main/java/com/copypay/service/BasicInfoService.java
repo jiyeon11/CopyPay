@@ -14,7 +14,7 @@ import java.util.List;
 public class BasicInfoService {
     private final BasicInfoRepository basicInfoRepository;
 
-    public List<BasicInfoListResponse> getBasicInfoList() {
-        return basicInfoRepository.getBasicInfoList();
+    public List<BasicInfoListResponse> getBasicInfoList(String inputMid) {
+        return basicInfoRepository.getBasicInfoList(inputMid);
     }
 }

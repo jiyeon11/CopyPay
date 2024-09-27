@@ -7,5 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface BasicInfoMapper {
-    List<BasicInfoListResponse> getBasicInfoList();
+    List<BasicInfoListResponse> getBasicInfoList(String inputMid);
 }
