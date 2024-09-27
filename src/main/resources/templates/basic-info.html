@@ -47,11 +47,43 @@
     <script>
         $(document).ready(function () {
             // 조회 버튼 클릭 시
-            $("#basicInfoCheckBtn").click(function () {
+            $("#basicInfoCheckBtn").on('click', function () {
+                callBasicInfoData();
                 $("#basicInfoList").removeClass("hidden");
             });
 
         });
+        function callBasicInfoData(){
+            $.ajax({
+                url: '/api/basic-info/list',
+                method: 'GET',
+                success: function (data) {
+                    populateTable(data);
+                },
+                error: function (error) {
+                    console.error("데이터를 가져오는 데 실패했습니다:", error);
+                }
+            });
+        }
+
+        function populateTable(data) {
+            const tbody = $('.table-row-group');
+            tbody.empty();
+            // 받아온 데이터로 테이블 행 추가
+            data.forEach(item => {
+                const row = `
+                            <div class="table-row even:bg-blue-300 odd:bg-white hover:bg-slate-400">
+                                <div class="table-cell px-2 py-1">${item.businessRegNumber}</div>
+                                <div class="table-cell px-2 py-1">${item.businessName}</div>
+                                <div class="table-cell px-2 py-1">${item.mid}</div>
+                                <div class="table-cell px-2 py-1">${item.businessType}</div>
+                                <div class="table-cell px-2 py-1">${item.isUsed}</div>
+                                <div class="table-cell px-2 py-1">${item.isSmallMidUsed}</div>
+                            </div>
+                        `;
+                tbody.append(row);
+            });
+        }
     </script>
 </body>
 
