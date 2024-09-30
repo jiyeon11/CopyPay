@@ -187,6 +187,7 @@
             // 신규 모달 열기
             $("#newModalBtn").click(function () {
                 $("#basicInfoNewModal").removeClass("hidden");
+                getManagers();  //계약담당자, 영업담당자 셀렉트박스 추가
             });
 
             // 신규 모달 닫기
@@ -209,7 +210,23 @@
                 }
             });
         }
-
+        
+        function getManagers(){
+            $.ajax({
+                url: '/api/managers',
+                method: 'GET',
+                success: function (data) {
+                    data.forEach(item => {
+                        $('#selectContractManager, #selectSalesManager').append(
+                            `<option value="${item}">${item}</option>`
+                        );
+                    });
+                },
+                error: function (error) {
+                    console.error("데이터를 가져오는 데 실패했습니다:", error);
+                }
+            });
+        }
 
         function populateTable(data) {
             const tbody = $('.table-row-group');
