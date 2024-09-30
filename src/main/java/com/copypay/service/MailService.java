@@ -3,19 +3,24 @@ package com.copypay.service;
 import com.copypay.dto.MailDto;
 import com.copypay.model.User;
 import com.copypay.repository.mapper.UserMapper;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@AllArgsConstructor
 public class MailService {
     private final UserMapper userMapper;
-    private JavaMailSender mailSender;
-    private static final String FROM_ADDRESS = "ksh251024@naver.com";
+    private final JavaMailSender mailSender;
+    private final String fromAddress;
+
+    public MailService(UserMapper userMapper, JavaMailSender mailSender, @Value("${mail.address}") String fromAddress) {
+        this.userMapper = userMapper;
+        this.mailSender = mailSender;
+        this.fromAddress = fromAddress;
+    }
 
     public boolean mailSend(MailDto mailDto) {
         User user = userMapper.findByUsername(mailDto.getId());
@@ -24,9 +29,8 @@ public class MailService {
         }
         try {
             MailHandler mailHandler = new MailHandler(mailSender);
-            user = userMapper.findEmailByUsername(mailDto.getId()); // 사용자가 입력한 아이디로 이메일을 찾아서
-            mailHandler.setTo(user.getEmail());                     // 임시비번을 받을 이메일로 지정
-            mailHandler.setFrom(MailService.FROM_ADDRESS);
+            mailHandler.setTo(user.getEmail());  // 임시 비번을 받을 이메일로 지정
+            mailHandler.setFrom(fromAddress);
             mailHandler.setSubject(mailDto.getTitle());
             Map<String, Object> params = new HashMap<>();
             params.put("id", mailDto.getId());
@@ -38,8 +42,7 @@ public class MailService {
             return true;
         }
         catch(Exception e){
-            e.printStackTrace();
+            throw new MailSendException("이메일 전송 중 오류 발생", e);
         }
-        return true;
     }
 }
