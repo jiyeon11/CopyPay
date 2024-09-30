@@ -25,4 +25,34 @@
         ]]>
 	</select>
 
+	<select id="getBasicInfo" parameterType="string" resultType="com.copypay.dto.response.BasicInfoResponse">
+	<![CDATA[
+		SELECT
+			BUSINESS_REG_NUMBER AS businessRegNumber,
+			MID AS mid,
+			BUSINESS_NAME AS businessName,
+			EFFECTIVE_DATE AS effectiveDate,
+			COMPLETION_DATE AS completionDate,
+			CONTRACT_DATE AS contractDate,
+			CEO_NAME AS ceoName,
+			CEO_BIRTH AS ceoBirth,
+			CEO_HP AS ceoHp,
+			CEO_TEL AS ceoTel,
+			CEO_EMAIL AS ceoEmail,
+			CEO_FAX AS ceoFax,
+			BUSINESS_POSTCODE AS businessPostcode,
+			BUSINESS_ADDRESS_LINE1 AS businessAddressLine1,
+			BUSINESS_ADDRESS_LINE2 AS businessAddressLine2,
+			BUSINESS_TYPE AS businessType,
+			FRANCHISE_CONTRACT_MANAGER_NAME AS franchiseContractManagerName,
+			FRANCHISE_CONTRACT_MANAGER_TEL AS franchiseContractManagerTel,
+			FRANCHISE_CONTRACT_MANAGER_HP AS franchiseContractManagerHp,
+			FRANCHISE_CONTRACT_MANAGER_Email AS franchiseContractManagerEmail,
+			APPLICATION_PATH AS applicationPath,
+			CONTRACT_MANAGER AS contractManager,
+			SALES_MANAGER AS salesManager
+		FROM CONTRACT
+		WHERE MID = #{inputMid}
+		]]>
+	</select>
 </mapper>

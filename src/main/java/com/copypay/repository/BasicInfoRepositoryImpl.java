@@ -1,6 +1,7 @@
 package com.copypay.repository;
 
 import com.copypay.dto.response.BasicInfoListResponse;
+import com.copypay.dto.response.BasicInfoResponse;
 import com.copypay.repository.mapper.BasicInfoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -20,5 +21,10 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     @Override
     public List<String> getManagerId() {
         return basicInfoMapper.getManagerId();
+    }
+
+    @Override
+    public BasicInfoResponse getBasicInfo(String inputMid) {
+        return basicInfoMapper.getBasicInfo(inputMid);
     }
 }
