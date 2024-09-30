@@ -8,6 +8,14 @@
     <select id="findByUsername" parameterType="String" resultType="com.copypay.model.User">
         SELECT ID, PW FROM USER WHERE ID = #{id}
     </select>
+
+    <select id="findEmailByUsername" parameterType="String" resultType="com.copypay.model.User">
+        SELECT EMAIL FROM USER WHERE ID = #{id}
+    </select>
+
+    <update id="updatePassword" parameterType="Map">
+        UPDATE USER SET PW= TO_BASE64(MD5(#{password})) WHERE ID = #{id}
+    </update>
 </mapper>
 
 
