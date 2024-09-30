@@ -1,6 +1,7 @@
 package com.copypay.controller;
 
 import com.copypay.dto.response.BasicInfoListResponse;
+import com.copypay.dto.response.BasicInfoResponse;
 import com.copypay.service.BasicInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,5 +33,11 @@ public class BasicInfoController {
     @ResponseBody
     public List<String> managerIdRes(){
         return basicInfoService.getManagerId();
+    }
+
+    @GetMapping("/api/basic-info/{mid}")
+    @ResponseBody
+    public BasicInfoResponse basicInfoRes(@PathVariable String mid){
+        return basicInfoService.getBasicInfo(mid);
     }
 }
