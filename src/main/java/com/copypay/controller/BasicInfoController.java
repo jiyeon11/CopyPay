@@ -27,8 +27,8 @@ public class BasicInfoController {
 
     @GetMapping(value = {"/api/basic-info/list/{inputMid}", "/api/basic-info/list"})
     @ResponseBody
-    public List<BasicInfoListResponse> basicInfoListRes(@PathVariable(required = false) String inputMid){
-        return basicInfoService.getBasicInfoList(inputMid);
+    public ResponseEntity<List<BasicInfoListResponse>> getBasicInfoList(@PathVariable(required = false) String inputMid){
+        return ResponseEntity.ok(basicInfoService.getBasicInfoList(inputMid));
     }
     
     @GetMapping("/api/managers")
