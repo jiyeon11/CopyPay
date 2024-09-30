@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/", "/public/**").permitAll()  // 접근 가능한 페이지
+                        .requestMatchers("/", "/lost-pw", "/mail-send").permitAll()  // 접근 가능한 페이지
                         .anyRequest().authenticated()                        // 그 외 경로는 로그인 필요
                 )
                 .formLogin(formLogin -> formLogin
