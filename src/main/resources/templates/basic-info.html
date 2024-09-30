@@ -7,7 +7,7 @@
     <!-- MID 입력칸 -->
     <div class="flex bg-white mt-16 ml-10 pl-40 rounded-lg w-[105rem]">
         <button id="dropdown-button" data-dropdown-toggle="dropdown"
-            class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 dark:border-gray-700 dark:text-white rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
+            class="flex-shrink-0 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 dark:border-gray-700 dark:text-white rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
             MID
             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
@@ -16,8 +16,7 @@
         <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
                 <li>
-                    <a href="#"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">MID</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">MID</a>
                 </li>
             </ul>
         </div>
@@ -44,16 +43,159 @@
             </div>
         </div>
     </div>
+
+    <!-- 신규 모달 -->
+    <div id="basicInfoNewModal" class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-[120rem] h-full justify-center">
+        <div class="flex bg-white rounded-lg shadow-lg p-6 w-5/6 h-3/4 overflow-y-auto mx-auto">
+            <div class="bg-white mt-2 rounded-lg shadow-2xl w-[110rem] h-[44rem]">
+                <!-- 일반 정보 -->
+                <table class="table-fixed w-[90rem] border-collapse mx-auto">
+                    <thead class="table-header-group">
+                        <tr class="table-row bg-blue-300">
+                            <td class="" colspan="6"><p class="font-bold text-white text-lg py-2 ml-3">일반정보</p></td>
+                        </tr>
+                    </thead>
+                    <tbody class="table-row-group">
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">사업자번호</td>
+                            <td class="border-2 py-1">
+                                <input type="text" id="inputBusinessRegNum" class="w-28 h-7 text-sm ml-3 border-2 border-gray-400 outline-none">
+                                <button id="getBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7">가져오기</button>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">MID</td>
+                            <td class="border-2 py-1">
+                                <input type="text" id="inputMID2" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <button id="checkDuplicateBtn" class="text-white text-xs bg-green-700 w-16 h-7">중복확인</button>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">상호</td>
+                            <td class="border-2 py-1">
+                                <input type="text" id="inputBusinessName" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                            </td>
+                        </tr>
+                
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">적용일/완료일</td>
+                            <td class="border-2 py-1">
+                                <p id="effectiveDate" class="text-sm ml-3"></p>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">계약일자</td>
+                            <td class="border-2 py-1">
+                                <input type="text" id="inputContractDate" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">대표자명</td>
+                            <td class="border-2 py-1">
+                                <input type="text" id="inputCeoName" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                            </td>
+                        </tr>
+                
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">대표자 생년월일</td>
+                            <td class="border-2 py-1">
+                                <p id="ceoBirth" class="text-sm ml-3"></p>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">대표자 HP</td>
+                            <td class="border-2 py-1">
+                                <p id="ceoHP" class="text-sm ml-3"></p>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">대표 TEL</td>
+                            <td class="border-2 py-1">
+                                <p id="ceoTEL" class="text-sm ml-3"></p>
+                            </td>
+                        </tr>
+                
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">대표 E-Mail</td>
+                            <td class="border-2 py-1">
+                                <p id="ceoEmail" class="text-sm ml-3"></p>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">대표자 FAX</td>
+                            <td class="border-2 py-1" colspan="3">
+                                <p id="ceoFAX" class="text-sm ml-3"></p>
+                            </td>
+                        </tr>
+                
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">사업장 주소</td>
+                            <td class="border-2 py-1" colspan="3">
+                                <input type="text" id="inputPostCode" class="w-24 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">  <!-- 우편번호 -->
+                                <input type="text" id="inputAddress1" class="w-52 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">  <!-- 주소1 -->
+                                <input type="text" id="inputAddress2" class="w-32 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">  <!-- 주소2 -->
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">사업체구분</td>
+                            <td class="border-2 py-1">
+                                <p id="businessType" class="text-sm ml-3">개인사업자</p>
+                            </td>
+                        </tr>
+                
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">가맹점 계약담당</td>
+                            <td class="border-2 py-1" colspan="5">
+                                <p class="text-sm inline ml-3">성명:</p>
+                                <input type="text" id="inputContractManagerName" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none">
+                                <p class="text-sm inline ml-3">TEL:</p>
+                                <input type="text" id="inputContractManagerTEL" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none">
+                                <p class="text-sm inline ml-3">HP:</p>
+                                <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none">
+                                <p class="text-sm inline ml-3">EMail:</p>
+                                <input type="text" id="inputContractManagerEmail" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none">
+                            </td>
+                        </tr>
+
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">접수경로</td>
+                            <td class="border-2 py-1">
+                                <select id="selectAppPath" class="ml-3 border-2 border-gray-400 outline-none">
+                                    <option value="다이렉트">다이렉트</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">계약담당자</td>
+                            <td class="border-2 py-1">
+                                <select id="selectContractManager" class="ml-3 border-2 border-gray-400 outline-none">
+                                    <option>선택하세요</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">영업담당자</td>
+                            <td class="border-2 py-1">
+                                <select id="selectSalesManager" class="ml-3 border-2 border-gray-400 outline-none">
+                                    <option>선택하세요</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="border-2 py-1" colspan="6">
+                                <button id="registerBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7 float-right">등록</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>                
+            </div>
+<!--            <button id="closeModal" class="w-12 h-8 float-right bg-red-500 text-white text-sm rounded">닫기</button>-->
+        </div>
+    </div>
+
+
     <script>
         $(document).ready(function () {
             // 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
-                callBasicInfoData();
+                callBasicInfoListData();
                 $("#basicInfoList").removeClass("hidden");
             });
 
+            // 신규 모달 열기
+            $("#newModalBtn").click(function () {
+                $("#basicInfoNewModal").removeClass("hidden");
+            });
+
+            // 신규 모달 닫기
+            $("#closeModal").click(function () {
+                $("#basicInfoNewModal").addClass("hidden");
+            });
         });
-        function callBasicInfoData(){
+
+        function callBasicInfoListData(){
             const midValue = $("#inputMid").val();
             const url = midValue === "" ? '/api/basic-info/list' : '/api/basic-info/list/' + midValue;
             $.ajax({
@@ -67,6 +209,7 @@
                 }
             });
         }
+
 
         function populateTable(data) {
             const tbody = $('.table-row-group');
