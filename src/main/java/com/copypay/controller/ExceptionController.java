@@ -2,6 +2,7 @@ package com.copypay.controller;
 
 import com.copypay.dto.response.ErrorResponse;
 import com.copypay.exception.BaseException;
+import com.copypay.exception.BasicInfoNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -51,5 +52,16 @@ public class ExceptionController {
         return response;
     }
 
+    @ExceptionHandler({BasicInfoNotFoundException.class})
+    public ResponseEntity<ErrorResponse> BasicInfoNotFoundExceptionHandler(BasicInfoNotFoundException e){
+        ErrorResponse body = ErrorResponse.builder()
+                .code(String.valueOf(e.getStatusCode()))
+                .message(e.getMessage())
+                .validation(e.getValidation())
+                .build();
+        ResponseEntity<ErrorResponse> response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+
+        return response;
+    }
 
 }

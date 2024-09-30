@@ -5,6 +5,8 @@ import com.copypay.dto.response.BasicInfoResponse;
 import com.copypay.service.BasicInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,13 +33,13 @@ public class BasicInfoController {
     
     @GetMapping("/api/managers")
     @ResponseBody
-    public List<String> managerIdRes(){
-        return basicInfoService.getManagerId();
+    public ResponseEntity<?> getManagerIds(){
+        return ResponseEntity.ok(basicInfoService.getManagerId());
     }
 
     @GetMapping("/api/basic-info/{businessRegNumber}")
     @ResponseBody
-    public BasicInfoResponse basicInfoRes(@PathVariable String businessRegNumber){
-        return basicInfoService.getBasicInfo(businessRegNumber);
+    public ResponseEntity<?> getBasicInfo(@PathVariable String businessRegNumber){
+        return ResponseEntity.ok(basicInfoService.getBasicInfo(businessRegNumber));
     }
 }
