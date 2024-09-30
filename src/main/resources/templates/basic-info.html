@@ -59,7 +59,7 @@
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1">사업자번호</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputBusinessRegNum" class="w-28 h-7 text-sm ml-3 border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputBusinessRegNumber" class="w-28 h-7 text-sm ml-3 border-2 border-gray-400 outline-none">
                                 <button id="getBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7">가져오기</button>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">MID</td>
@@ -123,7 +123,7 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">사업체구분</td>
                             <td class="border-2 py-1">
-                                <p id="businessType" class="text-sm ml-3">개인사업자</p>
+                                <p id="businessType" class="text-sm ml-3"></p>
                             </td>
                         </tr>
                 
@@ -137,7 +137,7 @@
                                 <p class="text-sm inline ml-3">HP:</p>
                                 <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none">
                                 <p class="text-sm inline ml-3">EMail:</p>
-                                <input type="text" id="inputContractManagerEmail" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputContractManagerEmail" class="w-40 h-7 text-sm border-2 border-gray-400 outline-none">
                             </td>
                         </tr>
 
@@ -194,6 +194,11 @@
             $("#closeModal").click(function () {
                 $("#basicInfoNewModal").addClass("hidden");
             });
+
+            //사업자 번호로 가져오기
+            $("#getBasicInfoBtn").click(function (){
+                callBasicInfoData();
+            });
         });
 
         function callBasicInfoListData(){
@@ -221,6 +226,38 @@
                             `<option value="${item}">${item}</option>`
                         );
                     });
+                },
+                error: function (error) {
+                    console.error("데이터를 가져오는 데 실패했습니다:", error);
+                }
+            });
+        }
+
+        function callBasicInfoData(){
+            $.ajax({
+                url: '/api/basic-info/'+$("#inputBusinessRegNumber").val(),
+                method: 'GET',
+                success: function (data) {
+                    $('#inputMID2').val(data.mid);
+                    $('#inputBusinessName').val(data.businessName);
+                    $('#effectiveDate').text(data.effectiveDate + "/" + data.completionDate);
+                    $('#inputContractDate').val(data.contractDate);
+                    $('#inputCeoName').val(data.ceoName);
+                    $('#ceoBirth').text(data.ceoBirth);
+                    $('#ceoHP').text(data.ceoHp);
+                    $('#ceoTEL').text(data.ceoTel);
+                    $('#ceoEmail').text(data.ceoEmail);
+                    $('#ceoFAX').text(data.ceoFax);
+                    $('#inputPostCode').val(data.businessPostcode);
+                    $('#inputAddress1').val(data.businessAddressLine1);
+                    $('#inputAddress2').val(data.businessAddressLine2);
+                    $('#businessType').text(data.businessType);
+                    $('#inputContractManagerName').val(data.franchiseContractManagerName);
+                    $('#inputContractManagerTEL').val(data.franchiseContractManagerTel);
+                    $('#inputContractManagerHP').val(data.franchiseContractManagerHp);
+                    $('#inputContractManagerEmail').val(data.franchiseContractManagerEmail);
+                    $('#selectContractManager').val(data.contractManager).prop("selected", true);
+                    $('#selectSalesManager').val(data.salesManager).prop("selected", true);
                 },
                 error: function (error) {
                     console.error("데이터를 가져오는 데 실패했습니다:", error);
