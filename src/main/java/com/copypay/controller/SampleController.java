@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class SampleController {
     private final SampleReaderService sampleService;
 
-    @GetMapping("/")
-    public String main() {
-        return "main";
+    @GetMapping("/index")
+    public String sampleIndex() {
+        return "index";
     }
 
     @PostMapping("/sample/{sampleId}/list")
