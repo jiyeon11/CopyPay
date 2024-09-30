@@ -27,4 +27,10 @@ public class BasicInfoController {
     public List<BasicInfoListResponse> basicInfoListRes(@PathVariable(required = false) String inputMid){
         return basicInfoService.getBasicInfoList(inputMid);
     }
+    
+    @GetMapping("/api/managers")
+    @ResponseBody
+    public List<String> managerIdRes(){
+        return basicInfoService.getManagerId();
+    }
 }

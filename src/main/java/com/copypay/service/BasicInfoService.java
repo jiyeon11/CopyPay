@@ -17,4 +17,8 @@ public class BasicInfoService {
     public List<BasicInfoListResponse> getBasicInfoList(String inputMid) {
         return basicInfoRepository.getBasicInfoList(inputMid);
     }
+
+    public List<String> getManagerId(){
+        return basicInfoRepository.getManagerId();
+    }
 }

@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface BasicInfoMapper {
     List<BasicInfoListResponse> getBasicInfoList(String inputMid);
+    List<String> getManagerId();
 }

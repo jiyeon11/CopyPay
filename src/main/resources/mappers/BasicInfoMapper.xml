@@ -19,5 +19,10 @@
         ]]>
 	</select>
 
+    <select id="getManagerId" resultType="string">
+	<![CDATA[
+		SELECT ID FROM USER
+        ]]>
+	</select>
 
 </mapper>

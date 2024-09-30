@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface BasicInfoRepository {
     List<BasicInfoListResponse> getBasicInfoList(String inputMid);
+    List<String> getManagerId();
 }

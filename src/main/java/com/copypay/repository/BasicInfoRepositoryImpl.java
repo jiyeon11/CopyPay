@@ -16,4 +16,9 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     public List<BasicInfoListResponse> getBasicInfoList(String inputMid) {
         return basicInfoMapper.getBasicInfoList(inputMid);
     }
+
+    @Override
+    public List<String> getManagerId() {
+        return basicInfoMapper.getManagerId();
+    }
 }
