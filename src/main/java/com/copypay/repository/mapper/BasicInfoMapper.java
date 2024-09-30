@@ -10,5 +10,5 @@ import java.util.List;
 public interface BasicInfoMapper {
     List<BasicInfoListResponse> getBasicInfoList(String inputMid);
     List<String> getManagerId();
-    BasicInfoResponse getBasicInfo(String inputMid);
+    BasicInfoResponse getBasicInfo(String inputBusinessRegNumber);
 }

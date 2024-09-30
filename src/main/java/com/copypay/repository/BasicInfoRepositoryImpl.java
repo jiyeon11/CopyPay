@@ -24,7 +24,7 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     }
 
     @Override
-    public BasicInfoResponse getBasicInfo(String inputMid) {
-        return basicInfoMapper.getBasicInfo(inputMid);
+    public BasicInfoResponse getBasicInfo(String inputBusinessRegNumber) {
+        return basicInfoMapper.getBasicInfo(inputBusinessRegNumber);
     }
 }

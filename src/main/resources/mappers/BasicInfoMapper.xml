@@ -52,7 +52,7 @@
 			CONTRACT_MANAGER AS contractManager,
 			SALES_MANAGER AS salesManager
 		FROM CONTRACT
-		WHERE MID = #{inputMid}
+		WHERE BUSINESS_REG_NUMBER = #{inputBusinessRegNumber}
 		]]>
 	</select>
 </mapper>

@@ -35,9 +35,9 @@ public class BasicInfoController {
         return basicInfoService.getManagerId();
     }
 
-    @GetMapping("/api/basic-info/{mid}")
+    @GetMapping("/api/basic-info/{businessRegNumber}")
     @ResponseBody
-    public BasicInfoResponse basicInfoRes(@PathVariable String mid){
-        return basicInfoService.getBasicInfo(mid);
+    public BasicInfoResponse basicInfoRes(@PathVariable String businessRegNumber){
+        return basicInfoService.getBasicInfo(businessRegNumber);
     }
 }

@@ -23,7 +23,7 @@ public class BasicInfoService {
         return basicInfoRepository.getManagerId();
     }
 
-    public BasicInfoResponse getBasicInfo(String inputMid) {
-        return basicInfoRepository.getBasicInfo(inputMid);
+    public BasicInfoResponse getBasicInfo(String businessRegNumber) {
+        return basicInfoRepository.getBasicInfo(businessRegNumber);
     }
 }
