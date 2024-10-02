@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
 <body>
     <button id="newModalBtn" class="float-right items-center px-6 py-2 mr-5 bg-green-700 text-md text-white rounded">신규</button>
     <button id="basicInfoCheckBtn" class="float-right items-center px-6 py-2 mr-2 bg-slate-800 text-md text-white rounded">조회</button>
@@ -21,26 +25,26 @@
             </ul>
         </div>
         <div class="relative w-full">
-            <input type="text" id="inputMid" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" required />
+            <input type="text" id="inputMid" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"/>
         </div>
     </div>
     <div id="basicInfoList" class="fixed mt-5 ml-10 pl-40 items-center hidden">
         <!-- 조회한 기본정보 리스트 -->
         <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[44rem] overflow-y-auto">
-            <div class="table w-full">
-                <div class="table-header-group bg-blue-200 sticky top-0 z-10">
-                  <div class="table-row">
-                    <div class="table-cell text-center border-r border-blue-400 py-1">사업자번호</div>
-                    <div class="table-cell text-center border-r border-blue-400 py-1">상호</div>
-                    <div class="table-cell text-center border-r border-blue-400 py-1">MID</div>
-                    <div class="table-cell text-center border-r border-blue-400 py-1">사업체구분</div>
-                    <div class="table-cell text-center border-r border-blue-400 py-1">사용여부</div>
-                    <div class="table-cell text-center">영중소 사용여부</div>
-                  </div>
-                </div>
-                <div id="list" class="table-row-group text-sm">
-                </div>
-            </div>
+            <table class="w-full">
+                <thead class="bg-blue-200 sticky top-0 z-10">
+                  <tr>
+                    <th class="text-center border-r border-blue-400 py-1">사업자번호</th>
+                    <th class="text-center border-r border-blue-400 py-1">상호</th>
+                    <th class="text-center border-r border-blue-400 py-1">MID</th>
+                    <th class="text-center border-r border-blue-400 py-1">사업체구분</th>
+                    <th class="text-center border-r border-blue-400 py-1">사용여부</th>
+                    <th class="text-center">영중소 사용여부</th>
+                  </tr>
+                </thead>
+                <tbody id="list" class="text-sm">
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -57,14 +61,14 @@
                     </thead>
                     <tbody class="table-row-group">
                         <tr class="table-row">
-                            <td class="text-center border-2 bg-stone-300 py-1">사업자번호</td>
+                            <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업자번호</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputBusinessRegNumber" class="w-28 h-7 text-sm ml-3 border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputBusinessRegNumber" class="w-28 h-7 text-sm ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
                                 <button id="getBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7">가져오기</button>
                             </td>
-                            <td class="text-center border-2 bg-stone-300 py-1">MID</td>
+                            <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>MID</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputMID2" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputMID2" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none" required>
                                 <button id="checkDuplicateBtn" class="text-white text-xs bg-green-700 w-16 h-7">중복확인</button>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">상호</td>
@@ -97,20 +101,20 @@
                             <td class="border-2 py-1">
                                 <p id="ceoHP" class="text-sm ml-3"></p>
                             </td>
-                            <td class="text-center border-2 bg-stone-300 py-1">대표 TEL</td>
+                            <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-600">*</span>대표 TEL</td>
                             <td class="border-2 py-1">
-                                <p id="ceoTEL" class="text-sm ml-3"></p>
+                                <input type="text" id="ceoTEL" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                             </td>
                         </tr>
                 
                         <tr class="table-row">
-                            <td class="text-center border-2 bg-stone-300 py-1">대표 E-Mail</td>
+                            <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 E-Mail</td>
                             <td class="border-2 py-1">
-                                <p id="ceoEmail" class="text-sm ml-3"></p>
+                                <input type="text" id="ceoEmail" class="w-40 h-7 ml-3 text-sm border-2 border-gray-400 outline-none" required>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자 FAX</td>
                             <td class="border-2 py-1" colspan="3">
-                                <p id="ceoFAX" class="text-sm ml-3"></p>
+                                <input type="text" id="ceoFAX" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
                             </td>
                         </tr>
                 
@@ -128,16 +132,16 @@
                         </tr>
                 
                         <tr class="table-row">
-                            <td class="text-center border-2 bg-stone-300 py-1">가맹점 계약담당</td>
+                            <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>가맹점 계약담당</td>
                             <td class="border-2 py-1" colspan="5">
                                 <p class="text-sm inline ml-3">성명:</p>
-                                <input type="text" id="inputContractManagerName" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputContractManagerName" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none" required>
                                 <p class="text-sm inline ml-3">TEL:</p>
-                                <input type="text" id="inputContractManagerTEL" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputContractManagerTEL" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                                 <p class="text-sm inline ml-3">HP:</p>
-                                <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                                 <p class="text-sm inline ml-3">EMail:</p>
-                                <input type="text" id="inputContractManagerEmail" class="w-40 h-7 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputContractManagerEmail" class="w-40 h-7 text-sm border-2 border-gray-400 outline-none" required>
                             </td>
                         </tr>
 
@@ -204,10 +208,15 @@
             });
 
             //사업자 번호로 일반정보 데이터 가져오기
-            $("#getBasicInfoBtn").click(function (){
-                makeAjaxCall('/api/basic-info/'+$("#inputBusinessRegNumber").val(), 'GET', function (data) {
-                    setBasicInfoData(data);
-                });
+            $("#getBasicInfoBtn").click(function () {
+                const regNumber = $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, '')
+                if (!/^\d{10}$/.test(regNumber)) {
+                    alert('사업자번호는 10자리가 유효합니다.')
+                } else {
+                    makeAjaxCall('/api/basic-info/' + regNumber, 'GET', function (data) {
+                        setBasicInfoData(data);
+                    });
+                }
             });
         });
 
@@ -246,21 +255,21 @@
         function setBasicInfoData(data) {  //일반정보 업데이트
             $('#inputMID2').val(data.mid);
             $('#inputBusinessName').val(data.businessName);
-            $('#effectiveDate').text(data.effectiveDate + "/" + data.completionDate);
-            $('#inputContractDate').val(data.contractDate);
+            $('#effectiveDate').text(formatDate(data.effectiveDate) + " ~ " + formatDate(data.completionDate));
+            $('#inputContractDate').val(formatDate(data.contractDate));
             $('#inputCeoName').val(data.ceoName);
-            $('#ceoBirth').text(data.ceoBirth);
-            $('#ceoHP').text(data.ceoHp);
-            $('#ceoTEL').text(data.ceoTel);
-            $('#ceoEmail').text(data.ceoEmail);
-            $('#ceoFAX').text(data.ceoFax);
+            $('#ceoBirth').text(formatDate(data.ceoBirth));
+            $('#ceoHP').text(formatPhone(data.ceoHp));
+            $('#ceoTEL').val(formatPhone(data.ceoTel));
+            $('#ceoEmail').val(data.ceoEmail);
+            $('#ceoFAX').val(data.ceoFax);
             $('#inputPostCode').val(data.businessPostcode);
             $('#inputAddress1').val(data.businessAddressLine1);
             $('#inputAddress2').val(data.businessAddressLine2);
             $('#businessType').text(data.businessType);
             $('#inputContractManagerName').val(data.franchiseContractManagerName);
-            $('#inputContractManagerTEL').val(data.franchiseContractManagerTel);
-            $('#inputContractManagerHP').val(data.franchiseContractManagerHp);
+            $('#inputContractManagerTEL').val(formatPhone(data.franchiseContractManagerTel));
+            $('#inputContractManagerHP').val(formatPhone(data.franchiseContractManagerHp));
             $('#inputContractManagerEmail').val(data.franchiseContractManagerEmail);
             $('#selectContractManager').val(data.contractManager).prop("selected", true);
             $('#selectSalesManager').val(data.salesManager).prop("selected", true);
@@ -271,16 +280,15 @@
             tbody.empty();
             if (data) {
                 $.each(data, function(index, item){
-                    const formattedBusinessRegNumber = formatBusinessRegNumber(item.businessRegNumber);
                     const row = `
-                            <div class="table-row even:bg-blue-300 odd:bg-white hover:bg-slate-400">
-                                <div class="table-cell px-2 py-1">${formattedBusinessRegNumber}</div>
-                                <div class="table-cell px-2 py-1">${item.businessName}</div>
-                                <div class="table-cell px-2 py-1">${item.mid ? item.mid : ""}</div>
-                                <div class="table-cell px-2 py-1">${item.businessType}</div>
-                                <div class="table-cell px-2 py-1">${item.isUsed}</div>
-                                <div class="table-cell px-2 py-1">${item.isSmallMidUsed}</div>
-                            </div>
+                            <tr class="even:bg-blue-300 odd:bg-white hover:bg-slate-400">
+                                <td class="table-cell px-2 py-1">${formatBusinessRegNumber(item.businessRegNumber)}</td>
+                                <td class="table-cell px-2 py-1">${item.businessName}</td>
+                                <td class="table-cell px-2 py-1">${item.mid ? item.mid : ""}</td>
+                                <td class="table-cell px-2 py-1">${item.businessType}</td>
+                                <td class="table-cell px-2 py-1">${item.isUsed}</td>
+                                <td class="table-cell px-2 py-1">${item.isSmallMidUsed}</td>
+                            </tr>
                         `;
                     tbody.append(row);
                 });
@@ -297,8 +305,29 @@
         }
 
         function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
-            return regNumber.substring(0, 3) + "-" + regNumber.substring(3, 5) + "-" + regNumber.substring(5);
-        }  
+            let formatRegNumber = typeof regNumber === 'string' ? regNumber : $(regNumber).val();
+            formatRegNumber = formatRegNumber
+                .replace(/[^0-9]/g, '')
+                .replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
+            $(regNumber).val(formatRegNumber);
+            return formatRegNumber;
+        }
+
+        function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
+            let year = dateString.substring(0, 4);
+            let month = dateString.substring(4, 6);
+            let day = dateString.substring(6, 8);
+            return year+'/'+month+'/'+day;
+        }
+
+        function formatPhone(phone) {  //전화번호 형식으로 바꾸기
+            let phoneNumber = typeof phone === 'string' ? phone : $(phone).val();
+            phoneNumber = phoneNumber
+                .replace(/[^0-9]/g, '')
+                .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
+            $(phone).val(phoneNumber);
+            return phoneNumber;
+        }
     </script>
 </body>
 
