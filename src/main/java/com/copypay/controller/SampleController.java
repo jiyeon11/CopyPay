@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 public class SampleController {
-
     private final SampleReaderService sampleService;
 
     @GetMapping("/index")
