@@ -15,6 +15,6 @@ public class CustomAuthSuccessListener implements ApplicationListener<Authentica
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
         String username = event.getAuthentication().getName();
-        logger.warn("Success authentication attempt for user: {}", username);
+        logger.info("Success authentication attempt for user: {}", username);
     }
 }
