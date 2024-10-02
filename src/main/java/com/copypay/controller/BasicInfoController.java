@@ -1,11 +1,9 @@
 package com.copypay.controller;
 
 import com.copypay.dto.response.BasicInfoListResponse;
-import com.copypay.dto.response.BasicInfoResponse;
 import com.copypay.service.BasicInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
