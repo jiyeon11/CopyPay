@@ -236,7 +236,7 @@
         }
         
         function getManagers(data) {  //담당자 id 가져오기
-            data.forEach(item => {
+            $.each(data, function(index, item) {
                 $('#selectContractManager, #selectSalesManager').append(
                     `<option value="${item}">${item}</option>`
                 );
@@ -270,7 +270,7 @@
             const tbody = $('#list');
             tbody.empty();
             if (data) {
-                data.forEach(item => {
+                $.each(data, function(index, item){
                     const formattedBusinessRegNumber = formatBusinessRegNumber(item.businessRegNumber);
                     const row = `
                             <div class="table-row even:bg-blue-300 odd:bg-white hover:bg-slate-400">
