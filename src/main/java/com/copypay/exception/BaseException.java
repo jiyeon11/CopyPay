@@ -1,32 +1,19 @@
 package com.copypay.exception;
 
 import lombok.Getter;
-import lombok.Setter;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Getter
-@Setter
-public abstract class BaseException extends RuntimeException{
-    public final Map<String,String> validation = new HashMap<>();
+public class BaseException extends RuntimeException {
+  private final ErrorCode errorCode;
 
-    public BaseException() {
-    }
+  public BaseException(String message, ErrorCode errorCode) {
+    super(message);
+    this.errorCode = errorCode;
+  }
 
-    public BaseException(String message) {
-        super(message);
-    }
+  public BaseException(ErrorCode errorCode) {
+    super(errorCode.getMessage());
+    this.errorCode = errorCode;
+  }
 
-    public BaseException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public abstract int getStatusCode();
-
-    public void addValidation(String fieldName, String message) {
-
-        validation.put(fieldName, message);
-    }
 }
-

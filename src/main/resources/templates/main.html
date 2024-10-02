@@ -1,39 +1,20 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragment/head}">
     <title></title>
 </head>
 
-<body>
-    <div th:replace="~{fragment/sidebar}"></div>
+<body class="w-screen h-screen">
+    <div th:replace="~{fragment/sidebar}" class="bg-gray-200"></div>
+    <div id="content"></div>
+    <script>
+        //기본정보의 등록/변경 클릭 시
+        $(document).on('click', '#registrationChangeBtn', function (e) {
+            $("#content").load("/basic-info", function () {});
+        });
+
+    </script>
 </body>
-
-<script>
-    $(document).ready(function () {
-        $(".sales-management-sub, .basic-info-sub").hide();
-        $(".menu-toggle").click(function () {
-            var targetMenu = $(this).data('target');
-            $(".menu-toggle").removeClass("bg-black");
-            $(this).addClass("bg-black");
-
-            //모든 서브메뉴 숨기기
-            $(".sales-management-sub, .basic-info-sub").hide();
-            //선택된 서브메뉴 보이기
-            $(targetMenu).slideDown(500);
-        });
-        //사이드바 메뉴 클릭 시 글자색 바꾸기
-        $(".menu-item").click(function (e) {
-            $(".menu-item").removeClass("font-bold text-yellow-400");
-            $(this).addClass("text-yellow-400 font-bold");
-        });
-        //공사중인 메뉴 클릭 시
-        $(".under-construction").click(function (e) {
-            $(".under-construction").removeClass("bg-black");
-            alert("공사중입니다.");
-            $(e).removeClass("bg-black");
-        });
-    });
-</script>
 
 </html>
