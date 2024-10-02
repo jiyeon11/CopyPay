@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BaseException.class)
-    protected ResponseEntity<ErrorResponse> BaseExceptionHandler(BaseException e) {
+    protected ResponseEntity<ErrorResponse> baseExceptionHandler(BaseException e) {
         log.error("BaseException : ", e);
         return ResponseEntity
                 .status(e.getErrorCode().getStatus().value())
@@ -19,14 +19,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BusinessRegNumberNotFoundException.class)
-    protected ResponseEntity<ErrorResponse> BusinessRegNumberNotFoundExceptionHandler(BusinessRegNumberNotFoundException e) {
+    protected ResponseEntity<ErrorResponse> businessRegNumberNotFoundExceptionHandler(BusinessRegNumberNotFoundException e) {
         return ResponseEntity
                 .status(ErrorCode.BUSINESS_REG_NUMBER_NOT_FOUND.getStatus().value())
                 .body(new ErrorResponse(ErrorCode.BUSINESS_REG_NUMBER_NOT_FOUND));
     }
 
     @ExceptionHandler(DataNotFoundException.class)
-    protected ResponseEntity<ErrorResponse> DataNotFoundExceptionHandler(DataNotFoundException e) {
+    protected ResponseEntity<ErrorResponse> dataNotFoundExceptionHandler(DataNotFoundException e) {
         return ResponseEntity
                 .status(ErrorCode.DATA_NOT_FOUND.getStatus().value())
                 .body(new ErrorResponse(ErrorCode.DATA_NOT_FOUND));
