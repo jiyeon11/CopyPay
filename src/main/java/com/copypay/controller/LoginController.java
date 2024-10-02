@@ -3,8 +3,7 @@ package com.copypay.controller;
 import com.copypay.dto.MailDto;
 import com.copypay.service.MailService;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller
+@Slf4j
 @AllArgsConstructor
+@Controller
 public class LoginController {
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     private final MailService mailService;
 
     @GetMapping("/")
@@ -46,7 +45,7 @@ public class LoginController {
             model.addAttribute("error", "메일 전송 중 오류가 발생했습니다.");
             return "lostPw";
         } catch (Exception e) { // 그 외 예외 처리
-            logger.error("예외 발생: {}", e.getMessage());
+            log.error("예외 발생: {}", e.getMessage());
             model.addAttribute("error", "메일 전송 중 오류가 발생했습니다.");
             return "lostPw";
         }
