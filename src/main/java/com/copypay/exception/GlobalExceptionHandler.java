@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
         log.error("BaseException : ", e);
         return ResponseEntity
                 .status(e.getErrorCode().getStatus().value())
-                .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage()));
+                .body(new ErrorResponse(e.getErrorCode()));
     }
 
     @ExceptionHandler(BusinessRegNumberNotFoundException.class)
