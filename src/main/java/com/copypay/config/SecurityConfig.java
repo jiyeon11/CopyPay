@@ -23,13 +23,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/", "/public/**").permitAll()  // 접근 가능한 페이지
+                        .requestMatchers("/", "/lost-pw", "/mail-send").permitAll()  // 접근 가능한 페이지
                         .anyRequest().authenticated()                        // 그 외 경로는 로그인 필요
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/")                                           // 로그인 페이지
-                        .defaultSuccessUrl("/main", true)  // 로그인 성공 시 이동할 경로
-                        .failureHandler(customAuthFailureHandler)                 // 로그인 실패 시
+                        .defaultSuccessUrl("/main", true)  // 로그인 성공 시 이동할 경로 지정
+                        .failureHandler(customAuthFailureHandler)                 // 로그인 실패 시 이동할 경로 지정
                         .permitAll()
                 )
                 .logout((logout) -> logout
