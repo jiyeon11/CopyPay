@@ -32,13 +32,13 @@ public class MailService {
             mailHandler.setTo(user.getEmail());  // 임시 비번을 받을 이메일로 지정
             mailHandler.setFrom(fromAddress);
             mailHandler.setSubject(mailDto.getTitle());
+            String htmlContent = "<p>" + mailDto.getContent() + "<p> <img src='cid:sample-img'>";
+            mailHandler.setText(htmlContent, true);
+            mailHandler.send(); // 메일 전송
             Map<String, Object> params = new HashMap<>();
             params.put("id", mailDto.getId());
             params.put("password", mailDto.getContent());
             userMapper.updatePassword(params); // 임시 비번으로 업데이트
-            String htmlContent = "<p>" + mailDto.getContent() + "<p> <img src='cid:sample-img'>";
-            mailHandler.setText(htmlContent, true);
-            mailHandler.send();
             return true;
         }
         catch(Exception e){
