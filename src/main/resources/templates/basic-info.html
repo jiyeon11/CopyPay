@@ -494,8 +494,45 @@
                         </tr>
                     </tfoot>
                 </table>
-                </div>
-           <!-- <button id="closeModal" class="w-12 h-8 float-end bg-red-500 text-white text-sm rounded">닫기</button> -->
+                <!-- 메모 -->
+                <table class="table-fixed w-[90rem] border-collapse mx-auto mt-7">
+                    <thead class="table-header-group">
+                        <tr class="py-1">
+                            <th class="text-center border-r bg-stone-300 py-1">등록 일시</th>
+                            <th class="text-center border-r bg-stone-300 py-1">이름(사번)</th>
+                            <th class="text-center border-r bg-stone-300 py-1" colspan="4">메모 내역</th>
+                        </tr>
+                    </thead>
+                    <tbody id="memoList" class="text-sm">
+                    </tbody>
+                </table>
+                <!-- 기타 -->
+                <table class="table-fixed w-[90rem] border-collapse mx-auto mt-7">
+                    <thead class="table-header-group">
+                        <tr class="table-row bg-blue-300">
+                            <td colspan="6">
+                                <p class="font-bold text-white text-lg py-2 ml-3">기타</p>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody class="table-row-group">
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1 text-black font-bold">MEMO</td>
+                            <td class="border-2 m-2" colspan="5">
+                                <textarea id="memoContent" rows="5" cols="158" class="border-2 outline-none"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="border-2 py-1" colspan="6">
+                                <button id="memoBtn" class="text-white text-xs bg-green-700 w-16 h-7 float-right">메모 등록</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!--<button id="closeModalBtn" class="text-white text-xs bg-gray-600 w-16 h-7 float-right">닫기</button>-->
         </div>
     </div>
 
@@ -632,6 +669,32 @@
                                 <td class="table-cell px-2 py-1">${item.businessType}</td>
                                 <td class="table-cell px-2 py-1">${item.isUsed}</td>
                                 <td class="table-cell px-2 py-1">${item.isSmallMidUsed}</td>
+                            </tr>
+                        `;
+                    tbody.append(row);
+                });
+            }else{
+                const noDataRow = `
+                            <tr class="table-row">
+                                <td class="text-center pt-36" colspan="6">
+                                    <p class="text-lg">조회 결과가 없습니다.</p>
+                                </td>
+                            </tr>
+                        `;
+                tbody.append(noDataRow);
+            }
+        }
+
+        function populateMemo(data) {  //받아온 데이터로 메모 테이블 행 추가
+            const tbody = $('#memoList');
+            tbody.empty();
+            if (data) {
+                $.each(data, function(index, item){
+                    const row = `
+                            <tr class="">
+                                <td class="table-cell px-2 py-1">${item.regDnt}</td>
+                                <td class="table-cell px-2 py-1">${item.id}</td>
+                                <td class="table-cell px-2 py-1">${item.content}</td>
                             </tr>
                         `;
                     tbody.append(row);
