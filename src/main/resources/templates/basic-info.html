@@ -56,24 +56,24 @@
                 <table class="table-fixed w-[90rem] border-collapse mx-auto">
                     <thead class="table-header-group">
                         <tr class="table-row bg-blue-300">
-                            <td class="" colspan="6"><p class="font-bold text-white text-lg py-2 ml-3">일반정보</p></td>
+                            <td colspan="6"><p class="font-bold text-white text-lg py-2 ml-3">일반정보</p></td>
                         </tr>
                     </thead>
                     <tbody class="table-row-group">
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업자번호</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputBusinessRegNumber" class="w-28 h-7 text-sm ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
+                                <input type="text" id="inputBusinessRegNumber" class="w-28 h-7 text-sm pl-1 ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
                                 <button id="getBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7">가져오기</button>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>MID</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputMID2" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputMID2" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                                 <button id="checkDuplicateBtn" class="text-white text-xs bg-green-700 w-16 h-7">중복확인</button>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">상호</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputBusinessName" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputBusinessName" class="w-28 h-7 ml-3 pl-1 text-sm border-2 border-gray-400 outline-none">
                             </td>
                         </tr>
                 
@@ -84,11 +84,11 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">계약일자</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputContractDate" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputContractDate" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자명</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputCeoName" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputCeoName" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                             </td>
                         </tr>
                 
@@ -103,27 +103,27 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-600">*</span>대표 TEL</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="ceoTEL" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="ceoTEL" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                             </td>
                         </tr>
                 
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 E-Mail</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="ceoEmail" class="w-40 h-7 ml-3 text-sm border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="ceoEmail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자 FAX</td>
                             <td class="border-2 py-1" colspan="3">
-                                <input type="text" id="ceoFAX" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="ceoFAX" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                             </td>
                         </tr>
                 
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1">사업장 주소</td>
                             <td class="border-2 py-1" colspan="3">
-                                <input type="text" id="inputPostCode" class="w-24 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">  <!-- 우편번호 -->
-                                <input type="text" id="inputAddress1" class="w-52 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">  <!-- 주소1 -->
-                                <input type="text" id="inputAddress2" class="w-32 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">  <!-- 주소2 -->
+                                <input type="text" id="inputPostCode" class="w-24 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">  <!-- 우편번호 -->
+                                <input type="text" id="inputAddress1" class="w-52 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">  <!-- 주소1 -->
+                                <input type="text" id="inputAddress2" class="w-32 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">  <!-- 주소2 -->
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">사업체구분</td>
                             <td class="border-2 py-1">
@@ -135,32 +135,32 @@
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>가맹점 계약담당</td>
                             <td class="border-2 py-1" colspan="5">
                                 <p class="text-sm inline ml-3">성명:</p>
-                                <input type="text" id="inputContractManagerName" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputContractManagerName" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                                 <p class="text-sm inline ml-3">TEL:</p>
-                                <input type="text" id="inputContractManagerTEL" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="inputContractManagerTEL" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                                 <p class="text-sm inline ml-3">HP:</p>
-                                <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                                 <p class="text-sm inline ml-3">EMail:</p>
-                                <input type="text" id="inputContractManagerEmail" class="w-40 h-7 text-sm border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputContractManagerEmail" class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                             </td>
                         </tr>
 
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1">접수경로</td>
                             <td class="border-2 py-1">
-                                <select id="selectAppPath" class="ml-3 border-2 border-gray-400 outline-none">
+                                <select id="selectAppPath" class="ml-3 border-2 border-gray-400 outline-none text-sm">
                                     <option value="다이렉트">다이렉트</option>
                                 </select>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">계약담당자</td>
                             <td class="border-2 py-1">
-                                <select id="selectContractManager" class="ml-3 border-2 border-gray-400 outline-none">
+                                <select id="selectContractManager" class="ml-3 border-2 border-gray-400 outline-none text-sm">
                                     <option>선택하세요</option>
                                 </select>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">영업담당자</td>
                             <td class="border-2 py-1">
-                                <select id="selectSalesManager" class="ml-3 border-2 border-gray-400 outline-none">
+                                <select id="selectSalesManager" class="ml-3 border-2 border-gray-400 outline-none text-sm">
                                     <option>선택하세요</option>
                                 </select>
                             </td>
@@ -173,7 +173,90 @@
                             </td>
                         </tr>
                     </tfoot>
-                </table>                
+                </table>
+
+                <!-- 정산정보 -->
+                <table class="table-fixed w-[90rem] border-collapse mx-auto mt-7">
+                    <thead class="table-header-group">
+                        <tr class="table-row bg-blue-300">
+                            <td colspan="6"><p class="font-bold text-white text-lg py-2 ml-3">정산정보</p></td>
+                        </tr>
+                    </thead>
+                    <tbody class="table-row-group">
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">지급방법</td>
+                            <td class="border-2 py-1">
+                                <select id="selectPaymentMethod" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="MID 정산">MID 정산</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>수수료 지급방법</td>
+                            <td class="border-2 py-1">
+                                <select id="selectFeePaymentMethod" class="w-22 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="선정산">선정산</option>
+                                    <option value="후취정산">후취정산</option>
+                                </select>
+                                <div>
+                                    <label for="inputFeePaymentMethodDate" class="text-sm font-bold ml-3">적용시작일자:</label>
+                                    <input type="text" id="inputFeePaymentMethodDate" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                    <p class="text-sm inline">부터</p>
+                                </div>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">정산 입금통장인자 표기방식</td>
+                            <td class="border-2 py-1">
+                                <div class="">
+                                    <input id="accountFormatUDID" type="radio" value="UDID" name="bordered-radio" class="ml-3 w-4 h-4 text-blue-600 focus:ring-blue-500" checked>
+                                    <label for="accountFormatUDID" class="w-full text-sm font-medium text-gray-900">UDID</label>
+                                    <input checked id="accountFormatMID" type="radio" value="가맹점MID" name="bordered-radio" class="ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="accountFormatMID" class="w-full text-sm font-medium text-gray-900">가맹점MID</label>
+                                </div>
+                                <div class="mt-2">
+                                    <input checked id="accountFormatDirect" type="radio" value="" name="bordered-radio" class="ml-3 mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="accountFormatDirect" class="w-full text-sm font-medium text-gray-900">직접입력</label>
+                                    <input type="text" id="inputDepositAccountFormat" class="w-28 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">세금계산서 발행기준</td>
+                            <td class="border-2 py-1">
+                                <select id="selectTaxInvoiceCriteria" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="미설정">미설정</option>
+                                    <option value="승인기준">승인기준</option>
+                                    <option value="정산기준">정산기준</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">세금계산서 부가세 계산방식</td>
+                            <td class="border-2 py-1">
+                                <select id="selectTaxInvoiceVat" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="미설정">미설정</option>
+                                    <option value="건별10%">건별10%</option>
+                                    <option value="합산10%">합산10%</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>세금계산서 E-Mail</td>
+                            <td class="border-2 py-1">
+                                <input type="text" id="inputTaxInvoiceEmail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">부분취소기능</td>
+                            <td class="border-2 py-1" colspan="5">
+                                <select id="selectPartialCancellationAllowed" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="미사용">미사용</option>
+                                    <option value="사용">사용</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="border-2 py-1" colspan="6">
+                                <button id="settlementInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7 float-right">저장</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
            <!-- <button id="closeModal" class="w-12 h-8 float-end bg-red-500 text-white text-sm rounded">닫기</button> -->
         </div>
@@ -196,7 +279,7 @@
             $("#newModalBtn").click(function () {
                 $("#basicInfoNewModal").removeClass("hidden");
                 $("#basicInfoList").addClass("hidden");
-                
+                setTodayDate("#inputFeePaymentMethodDate");
                 makeAjaxCall('/api/managers', 'GET', function (data) {  //계약담당자, 영업담당자 셀렉트박스 추가
                     getManagers(data);
                 });
@@ -314,9 +397,9 @@
         }
 
         function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
-            let year = dateString.substring(0, 4);
-            let month = dateString.substring(4, 6);
-            let day = dateString.substring(6, 8);
+            const year = dateString.substring(0, 4);
+            const month = dateString.substring(4, 6);
+            const day = dateString.substring(6, 8);
             return year+'/'+month+'/'+day;
         }
 
@@ -327,6 +410,15 @@
                 .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
             $(phone).val(phoneNumber);
             return phoneNumber;
+        }
+
+        function setTodayDate(date){  //오늘 날짜로 설정
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const formattedDate = year+'/'+month+'/'+day;
+            $(date).val(formattedDate);
         }
     </script>
 </body>
