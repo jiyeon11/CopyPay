@@ -197,21 +197,21 @@
                                     <option value="후취정산">후취정산</option>
                                 </select>
                                 <div>
-                                    <label for="inputFeePaymentMethodDate" class="text-sm font-bold ml-3">적용시작일자:</label>
-                                    <input type="text" id="inputFeePaymentMethodDate" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                    <label for="inputFeeSettlementDate" class="text-sm font-bold ml-3">적용시작일자:</label>
+                                    <input type="text" id="inputFeeSettlementDate" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
                                     <p class="text-sm inline">부터</p>
                                 </div>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">정산 입금통장인자 표기방식</td>
                             <td class="border-2 py-1">
                                 <div class="">
-                                    <input id="accountFormatUDID" type="radio" value="UDID" name="bordered-radio" class="ml-3 w-4 h-4 text-blue-600 focus:ring-blue-500" checked>
+                                    <input type="radio" value="UDID" name="bordered-radio" class="ml-3 w-4 h-4 text-blue-600 focus:ring-blue-500">
                                     <label for="accountFormatUDID" class="w-full text-sm font-medium text-gray-900">UDID</label>
-                                    <input checked id="accountFormatMID" type="radio" value="가맹점MID" name="bordered-radio" class="ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <input type="radio" value="가맹점MID" name="bordered-radio" class="ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                     <label for="accountFormatMID" class="w-full text-sm font-medium text-gray-900">가맹점MID</label>
                                 </div>
                                 <div class="mt-2">
-                                    <input checked id="accountFormatDirect" type="radio" value="" name="bordered-radio" class="ml-3 mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <input type="radio" value="직접입력" name="bordered-radio" class="ml-3 mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                     <label for="accountFormatDirect" class="w-full text-sm font-medium text-gray-900">직접입력</label>
                                     <input type="text" id="inputDepositAccountFormat" class="w-28 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
                                 </div>
@@ -279,7 +279,7 @@
             $("#newModalBtn").click(function () {
                 $("#basicInfoNewModal").removeClass("hidden");
                 $("#basicInfoList").addClass("hidden");
-                setTodayDate("#inputFeePaymentMethodDate");
+                // setTodayDate("#inputFeeSettlementDate");
                 makeAjaxCall('/api/managers', 'GET', function (data) {  //계약담당자, 영업담당자 셀렉트박스 추가
                     getManagers(data);
                 });
@@ -336,26 +336,34 @@
         }
 
         function setBasicInfoData(data) {  //일반정보 업데이트
-            $('#inputMID2').val(data.mid);
-            $('#inputBusinessName').val(data.businessName);
-            $('#effectiveDate').text(formatDate(data.effectiveDate) + " ~ " + formatDate(data.completionDate));
-            $('#inputContractDate').val(formatDate(data.contractDate));
-            $('#inputCeoName').val(data.ceoName);
-            $('#ceoBirth').text(formatDate(data.ceoBirth));
-            $('#ceoHP').text(formatPhone(data.ceoHp));
-            $('#ceoTEL').val(formatPhone(data.ceoTel));
-            $('#ceoEmail').val(data.ceoEmail);
-            $('#ceoFAX').val(data.ceoFax);
-            $('#inputPostCode').val(data.businessPostcode);
-            $('#inputAddress1').val(data.businessAddressLine1);
-            $('#inputAddress2').val(data.businessAddressLine2);
-            $('#businessType').text(data.businessType);
-            $('#inputContractManagerName').val(data.franchiseContractManagerName);
-            $('#inputContractManagerTEL').val(formatPhone(data.franchiseContractManagerTel));
-            $('#inputContractManagerHP').val(formatPhone(data.franchiseContractManagerHp));
-            $('#inputContractManagerEmail').val(data.franchiseContractManagerEmail);
-            $('#selectContractManager').val(data.contractManager).prop("selected", true);
-            $('#selectSalesManager').val(data.salesManager).prop("selected", true);
+            $('#inputMID2').val(data.mid);  //MID
+            $('#inputBusinessName').val(data.businessName);  //상호
+            $('#effectiveDate').text(formatDate(data.effectiveDate) + " ~ " + formatDate(data.completionDate));  //적용일~완료일
+            $('#inputContractDate').val(formatDate(data.contractDate));  //계약일자
+            $('#inputCeoName').val(data.ceoName);  //대표자명
+            $('#ceoBirth').text(formatDate(data.ceoBirth));  //대표자 생년월일
+            $('#ceoHP').text(formatPhone(data.ceoHp));  //대표자 HP
+            $('#ceoTEL').val(formatPhone(data.ceoTel));  //대표자 TEL
+            $('#ceoEmail').val(data.ceoEmail);  //대표자 Email
+            $('#ceoFAX').val(data.ceoFax);  //대표자 FAX
+            $('#inputPostCode').val(data.businessPostcode);  //사업장 우편번호
+            $('#inputAddress1').val(data.businessAddressLine1);  //사업장 주소1
+            $('#inputAddress2').val(data.businessAddressLine2);  //사업장 주소2
+            $('#businessType').text(data.businessType);  //사업체구분
+            $('#inputContractManagerName').val(data.franchiseContractManagerName);  //가맹점 계약담당 성명
+            $('#inputContractManagerTEL').val(formatPhone(data.franchiseContractManagerTel));  //가맹점 계약담당 TEL
+            $('#inputContractManagerHP').val(formatPhone(data.franchiseContractManagerHp));  //가맹점 계약담당 HP
+            $('#inputContractManagerEmail').val(data.franchiseContractManagerEmail);  //가맹점 계약담당 Email
+            $('#selectContractManager').val(data.contractManager);  //계약담당자
+            $('#selectSalesManager').val(data.salesManager);  //영업담당자
+            $('#selectFeePaymentMethod').val(data.feePaymentMethod);  //수수료 지급방법
+            $('#inputFeeSettlementDate').val(formatDate(data.feeSettlementDate));  //수수료 정산일자
+            $('input:radio[name="bordered-radio"][value="' + data.depositAccountFormat + '"]').prop("checked", true); //정산 입금 통장 인자 표기 방법
+            $('#inputDepositAccountFormat').val(data.accountParameterName);  //통장 인자명
+            $('#selectTaxInvoiceCriteria').val(data.taxInvoiceCriteria);  //세금계산서 발행 기준
+            $('#selectTaxInvoiceVat').val(data.taxInvoiceVat);  //세금계산서 부가세 계산 방식
+            $('#inputTaxInvoiceEmail').val(data.taxInvoiceEmail);  //세금계산서 이메일
+            $('#selectPartialCancellationAllowed').val(data.partialCancellationAllowed);  //부분취소 가능 여부
         }
 
         function populateTable(data) {  //받아온 데이터로 기본 정보 조회 테이블 행 추가

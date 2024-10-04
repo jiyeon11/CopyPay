@@ -50,8 +50,17 @@
 			FRANCHISE_CONTRACT_MANAGER_Email AS franchiseContractManagerEmail,
 			APPLICATION_PATH AS applicationPath,
 			CONTRACT_MANAGER AS contractManager,
-			SALES_MANAGER AS salesManager
-		FROM CONTRACT
+			SALES_MANAGER AS salesManager,
+			SETTLEMENT_INFO.PAYMENT_METHOD AS paymentMethod,
+			FEE_PAYMENT_METHOD AS feePaymentMethod,
+			FEE_SETTLEMENT_DATE AS feeSettlementDate,
+			DEPOSIT_ACCOUNT_FORMAT AS depositAccountFormat,
+			ACCOUNT_PARAMETER_NAME AS accountParameterName,
+			TAX_INVOICE_CRITERIA AS taxInvoiceCriteria,
+			TAX_INVOICE_VAT AS taxInvoiceVat,
+			SETTLEMENT_INFO.TAX_INVOICE_EMAIL AS taxInvoiceEmail,
+			PARTIAL_CANCELLATION_ALLOWED AS partialCancellationAllowed
+		FROM CONTRACT JOIN SETTLEMENT_INFO ON CONTRACT.NO = SETTLEMENT_INFO.NO
 		WHERE BUSINESS_REG_NUMBER = #{inputBusinessRegNumber}
 		]]>
 	</select>
