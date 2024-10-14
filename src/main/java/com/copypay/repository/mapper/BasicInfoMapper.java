@@ -2,6 +2,7 @@ package com.copypay.repository.mapper;
 
 import com.copypay.dto.response.BasicInfoListResponse;
 import com.copypay.dto.response.BasicInfoResponse;
+import com.copypay.dto.response.MemoResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface BasicInfoMapper {
     List<BasicInfoListResponse> getBasicInfoList(String inputMid);
     List<String> getManagerId();
     BasicInfoResponse getBasicInfo(String inputBusinessRegNumber);
+    List<MemoResponse> getMemoList(String inputMid);
 }

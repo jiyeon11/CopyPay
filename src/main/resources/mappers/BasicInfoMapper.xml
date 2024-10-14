@@ -25,6 +25,16 @@
         ]]>
 	</select>
 
+	<select id="getMemoList" parameterType="string" resultType="com.copypay.dto.response.MemoResponse">
+		<![CDATA[
+			SELECT 	REG_DNT AS regDnt,
+		 		   	ID AS id,
+		 			CONTENT AS content
+			FROM MEMO
+			WHERE MID = #{inputMid};
+		]]>
+	</select>
+
 	<select id="getBasicInfo" parameterType="string" resultType="com.copypay.dto.response.BasicInfoResponse">
 	<![CDATA[
 		SELECT

@@ -2,8 +2,10 @@ package com.copypay.service;
 
 import com.copypay.dto.response.BasicInfoListResponse;
 import com.copypay.dto.response.BasicInfoResponse;
+import com.copypay.dto.response.MemoResponse;
 import com.copypay.exception.BusinessRegNumberNotFoundException;
 import com.copypay.exception.DataNotFoundException;
+import com.copypay.exception.MemoNotFoundException;
 import com.copypay.repository.BasicInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,5 +44,15 @@ public class BasicInfoService {
         }
         log.info("사업자번호 {}에 대한 기본 정보를 성공적으로 가져왔습니다.", businessRegNumber);
         return basicInfo;
+    }
+
+    public List<MemoResponse> getMemoList(String inputMid){
+        List<MemoResponse> memoList = basicInfoRepository.getMemoList(inputMid);
+        if(memoList.isEmpty()) {
+            log.info("MID {}에 대한 메모내역이 없습니다.", inputMid);
+        }else{
+            log.info("총 {}개의 메모를 성공적으로 가져왔습니다", memoList.size());
+        }
+        return memoList;
     }
 }
