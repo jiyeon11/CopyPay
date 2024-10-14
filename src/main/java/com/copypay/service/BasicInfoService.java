@@ -50,6 +50,7 @@ public class BasicInfoService {
         List<MemoResponse> memoList = basicInfoRepository.getMemoList(inputMid);
         if(memoList.isEmpty()) {
             log.info("MID {}에 대한 메모내역이 없습니다.", inputMid);
+            throw new MemoNotFoundException();
         }else{
             log.info("총 {}개의 메모를 성공적으로 가져왔습니다", memoList.size());
         }
