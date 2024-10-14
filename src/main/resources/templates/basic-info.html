@@ -574,10 +574,15 @@
                     alert('사업자번호는 10자리가 유효합니다.')
                 } else {
                     makeAjaxCall('/api/basic-info/' + regNumber, 'GET', function (data) {
-                        setBasicInfoData(data);
+                        setBasicInfoData(data);  //기본정보 가져오기
+                        //mid로 메모 데이터 가져오기
+                        makeAjaxCall('api/memo/'+ data.mid, 'GET', function(data){
+                            populateMemo(data);
+                        });
                     });
                 }
             });
+
             //사용불가 카드사 MAJOR(국내), MINOR(국내), MINOR(해외) 모든 체크박스 선택/해제
             $('#minor-foreign-checkbox').change(function() {
                 const isChecked = $(this).is(':checked');
@@ -710,13 +715,14 @@
         function populateMemo(data) {  //받아온 데이터로 메모 테이블 행 추가
             const tbody = $('#memoList');
             tbody.empty();
+
             if (data) {
                 $.each(data, function(index, item){
                     const row = `
-                            <tr class="">
+                            <tr class="even:bg-slate-200 odd:bg-white">
                                 <td class="table-cell px-2 py-1">${item.regDnt}</td>
                                 <td class="table-cell px-2 py-1">${item.id}</td>
-                                <td class="table-cell px-2 py-1">${item.content}</td>
+                                <td class="table-cell px-2 py-1" colspan="4">${item.content}</td>
                             </tr>
                         `;
                     tbody.append(row);
@@ -724,8 +730,8 @@
             }else{
                 const noDataRow = `
                             <tr class="table-row">
-                                <td class="text-center pt-36" colspan="6">
-                                    <p class="text-lg">조회 결과가 없습니다.</p>
+                                <td class="text-center pt-2" colspan="6">
+                                    <p class="text-base">메모내역이 없습니다.</p>
                                 </td>
                             </tr>
                         `;
