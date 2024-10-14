@@ -31,7 +31,7 @@
 			BUSINESS_REG_NUMBER AS businessRegNumber,
 			MID AS mid,
 			BUSINESS_NAME AS businessName,
-			EFFECTIVE_DATE AS effectiveDate,
+			CONTRACT.EFFECTIVE_DATE AS effectiveDate,
 			COMPLETION_DATE AS completionDate,
 			CONTRACT_DATE AS contractDate,
 			CEO_NAME AS ceoName,
@@ -59,8 +59,22 @@
 			TAX_INVOICE_CRITERIA AS taxInvoiceCriteria,
 			TAX_INVOICE_VAT AS taxInvoiceVat,
 			SETTLEMENT_INFO.TAX_INVOICE_EMAIL AS taxInvoiceEmail,
-			PARTIAL_CANCELLATION_ALLOWED AS partialCancellationAllowed
-		FROM CONTRACT JOIN SETTLEMENT_INFO ON CONTRACT.NO = SETTLEMENT_INFO.NO
+			PARTIAL_CANCELLATION_ALLOWED AS partialCancellationAllowed,
+			IS_USED AS isUsed,
+			AUTHENTICATION_TYPE AS authenticationType,
+			SETTLEMENT_CYCLE AS settlementCycle,
+			PAYMENT_METHOD.EFFECTIVE_DATE AS settlementCycleEffectiveDate,
+			PURCHASE_METHOD AS purchaseMethod,
+			PURCHASE_DATE AS purchaseDate,
+			DEBITCARD_FEE_MANAGEMENT_USED AS debitcardFeeManagement,
+			INSTALLMENT_MONTHS AS installmentMonths,
+			IS_SMALL_MID_USED AS isSmallMidUsed,
+			SMALL_MID_BALANCE_SETTLEMENT_REQ AS smallMidBalanceSettlementReq,
+			DIFFRENCE_SETTLEMENT_CYCLE AS diffrenceSettlementCycle,
+			MAJOR_DOMESTIC_UNUSABLE_CARD AS majorDomesticUnusableCard,
+			MINOR_DOMESTIC_UNUSABLE_CARD AS minorDomesticUnusableCard,
+			MINOR_FOREIGN_UNUSABLE_CARD AS minorForeignUnusableCard
+		FROM CONTRACT JOIN SETTLEMENT_INFO ON CONTRACT.NO = SETTLEMENT_INFO.NO JOIN PAYMENT_METHOD ON CONTRACT.NO = PAYMENT_METHOD.NO
 		WHERE BUSINESS_REG_NUMBER = #{inputBusinessRegNumber}
 		]]>
 	</select>

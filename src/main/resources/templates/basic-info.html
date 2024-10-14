@@ -337,7 +337,7 @@
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1">체크카드 가맹점 수수료 별도관리</td>
                             <td class="border-2 py-1">
-                                <select id="selectDebitcardFeeManagementUsed" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                <select id="selectDebitcardFeeManagement" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
                                     <option value="미사용">미사용</option>
                                     <option value="사용">사용</option>
                                 </select>
@@ -364,7 +364,7 @@
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1">영중소 사용여부</td>
                             <td class="border-2 py-1">
-                                <select id="selectisSmallMidUsed" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                <select id="selectIsSmallMidUsed" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
                                     <option value="미사용">미사용</option>
                                     <option value="사용">사용</option>
                                 </select>
@@ -654,6 +654,28 @@
             $('#selectTaxInvoiceVat').val(data.taxInvoiceVat);  //세금계산서 부가세 계산 방식
             $('#inputTaxInvoiceEmail').val(data.taxInvoiceEmail);  //세금계산서 이메일
             $('#selectPartialCancellationAllowed').val(data.partialCancellationAllowed);  //부분취소 가능 여부
+            $('#selectIsUsed').val(data.isUsed);  //사용전환
+            $('#selectAuthenticationType').val(data.authenticationType);  //인증형태
+            $('#selectSettlementCycle').val(data.settlementCycle);  //정산주기
+            $('#inputEffectiveDate').val(data.settlementCycleEffectiveDate);  //정산주기 적용일자
+            $('#selectPurchaseMethod').val(data.purchaseMethod);  //매입방법
+            $('#selectPurchaseDate').val(data.purchaseDate);  //매입일자
+            $('#selectDebitcardFeeManagement').val(data.debitcardFeeManagement);  //체크카드 가맹점 수수료 별도관리
+            $('#selectInstallmentMonths').val(data.installmentMonths);  //할부개월수제한
+            $('#selectIsSmallMidUsed').val(data.isSmallMidUsed);  //영중소 사용여부
+            $('selectSmallMidBalanceSettlementReq').val(data.smallMidBalanceSettlementReq);  //영중소 차액정산 요청
+            $('#selectDiffrenceSettlementCycle').val(data.dffrenceSettlementCycle);  //영중소 차액정산주기
+            checkCardArray(data.majorDomesticUnusableCard);  //국내 사용불가 카드사(메이저)
+            checkCardArray(data.minorDomesticUnusableCard);  //국내 사용불가 카드사(마이너)
+            checkCardArray(data.minorForeignUnusableCard);  //해외 사용불가 카드사
+        }
+
+        
+        function checkCardArray(data) {  //사용불가 카드사 체크박스 체크
+            const checkedArray = (data||"").split(",");
+            $.each(checkedArray, function(index, item){
+                $(`input[type="checkbox"][value="${item}"]`).prop("checked", true);
+            });
         }
 
         function populateTable(data) {  //받아온 데이터로 기본 정보 조회 테이블 행 추가
