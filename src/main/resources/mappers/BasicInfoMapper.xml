@@ -31,7 +31,8 @@
 		 		   	ID AS id,
 		 			CONTENT AS content
 			FROM MEMO
-			WHERE MID = #{inputMid};
+			WHERE MID = #{inputMid}
+			ORDER BY REG_DNT DESC
 		]]>
 	</select>
 
