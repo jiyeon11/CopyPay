@@ -672,13 +672,13 @@
             $('#selectIsUsed').val(data.isUsed);  //사용전환
             $('#selectAuthenticationType').val(data.authenticationType);  //인증형태
             $('#selectSettlementCycle').val(data.settlementCycle);  //정산주기
-            $('#inputEffectiveDate').val(data.settlementCycleEffectiveDate);  //정산주기 적용일자
+            $('#inputEffectiveDate').val(formatDate(data.settlementCycleEffectiveDate));  //정산주기 적용일자
             $('#selectPurchaseMethod').val(data.purchaseMethod);  //매입방법
             $('#selectPurchaseDate').val(data.purchaseDate);  //매입일자
             $('#selectDebitcardFeeManagement').val(data.debitcardFeeManagement);  //체크카드 가맹점 수수료 별도관리
             $('#selectInstallmentMonths').val(data.installmentMonths);  //할부개월수제한
             $('#selectIsSmallMidUsed').val(data.isSmallMidUsed);  //영중소 사용여부
-            $('selectSmallMidBalanceSettlementReq').val(data.smallMidBalanceSettlementReq);  //영중소 차액정산 요청
+            $('#selectSmallMidBalanceSettlementReq').val(data.smallMidBalanceSettlementReq);  //영중소 차액정산 요청
             $('#selectDifferenceSettlementCycle').val(data.differenceSettlementCycle);  //영중소 차액정산주기
             checkCardArray(data.majorDomesticUnusableCard);  //국내 사용불가 카드사(메이저)
             checkCardArray(data.minorDomesticUnusableCard);  //국내 사용불가 카드사(마이너)
@@ -759,6 +759,10 @@
         }
 
         function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
+            if (!/^\d{8}$/.test(dateString)) {
+                console.error('잘못된 날짜 형식입니다:', dateString);
+                return '';
+            }
             const year = dateString.substring(0, 4);
             const month = dateString.substring(4, 6);
             const day = dateString.substring(6, 8);
