@@ -81,7 +81,7 @@
 			INSTALLMENT_MONTHS AS installmentMonths,
 			IS_SMALL_MID_USED AS isSmallMidUsed,
 			SMALL_MID_BALANCE_SETTLEMENT_REQ AS smallMidBalanceSettlementReq,
-			DIFFRENCE_SETTLEMENT_CYCLE AS diffrenceSettlementCycle,
+			DIFFERENCE_SETTLEMENT_CYCLE AS differenceSettlementCycle,
 			MAJOR_DOMESTIC_UNUSABLE_CARD AS majorDomesticUnusableCard,
 			MINOR_DOMESTIC_UNUSABLE_CARD AS minorDomesticUnusableCard,
 			MINOR_FOREIGN_UNUSABLE_CARD AS minorForeignUnusableCard

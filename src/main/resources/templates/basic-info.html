@@ -381,7 +381,7 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">영중소 차액정산주기</td>
                             <td class="border-2 py-1">
-                                <select id="selectDiffrenceSettlementCycle" class="w-52 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                <select id="selectDifferenceSettlementCycle" class="w-52 ml-3 border-2 border-gray-400 outline-none text-sm">
                                     <option value="일일(+1일)">일일(+1일)</option>
                                     <option value="일일(+2일)">일일(+2일)</option>
                                     <option value="일일(+3일)">일일(+3일)</option>
@@ -679,7 +679,7 @@
             $('#selectInstallmentMonths').val(data.installmentMonths);  //할부개월수제한
             $('#selectIsSmallMidUsed').val(data.isSmallMidUsed);  //영중소 사용여부
             $('selectSmallMidBalanceSettlementReq').val(data.smallMidBalanceSettlementReq);  //영중소 차액정산 요청
-            $('#selectDiffrenceSettlementCycle').val(data.dffrenceSettlementCycle);  //영중소 차액정산주기
+            $('#selectDifferenceSettlementCycle').val(data.differenceSettlementCycle);  //영중소 차액정산주기
             checkCardArray(data.majorDomesticUnusableCard);  //국내 사용불가 카드사(메이저)
             checkCardArray(data.minorDomesticUnusableCard);  //국내 사용불가 카드사(마이너)
             checkCardArray(data.minorForeignUnusableCard);  //해외 사용불가 카드사
