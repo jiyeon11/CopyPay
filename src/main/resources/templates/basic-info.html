@@ -591,20 +591,14 @@
                     });
                 }
             });
-
             //사용불가 카드사 MAJOR(국내), MINOR(국내), MINOR(해외) 모든 체크박스 선택/해제
-            $('#minor-foreign-checkbox').change(function() {
-                const isChecked = $(this).is(':checked');
-                $('.minor-foreign-card').prop('checked', isChecked);
-            });
-            $('#minor-domestic-checkbox').change(function() {
-                const isChecked = $(this).is(':checked');
-                $('.minor-domestic-card').prop('checked', isChecked);
-            });
-            $('#major-domestic-checkbox').change(function() {
-                const isChecked = $(this).is(':checked');
-                $('.major-domestic-card').prop('checked', isChecked);
-            });
+            const checkboxGroups = [
+                { id: 'minor-foreign-checkbox', childClass: 'minor-foreign-card' },
+                { id: 'minor-domestic-checkbox', childClass: 'minor-domestic-card' },
+                { id: 'major-domestic-checkbox', childClass: 'major-domestic-card' }
+            ];
+            checkboxGroups.forEach(group => setupCheckboxGroup(group.id, group.childClass));
+            
         });
 
         /**
@@ -694,7 +688,19 @@
             setCardCheckboxes(data.minorDomesticUnusableCard);  //국내 사용불가 카드사(마이너)
             setCardCheckboxes(data.minorForeignUnusableCard);  //해외 사용불가 카드사
         }
-        
+
+        function setupCheckboxGroup(groupId, childClass) {  //모든 체크박스 체크/해제
+            const $group = $(`#${groupId}`);
+            const $children = $(`.${childClass}`);
+
+            $group.change(function() {
+                const isChecked = this.checked;
+                $children.each(function() {
+                    this.checked = isChecked;
+                });
+            });
+        }
+
         function setCardCheckboxes(data) {  //사용불가 카드사 체크박스 체크
             const checkedArray = (data || "").split(",");
             $.each(checkedArray, function(index, item){
