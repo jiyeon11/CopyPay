@@ -13,6 +13,10 @@
         $(document).on('click', '#registrationChangeBtn', function (e) {
             $("#content").load("/basic-info", function () {});
         });
+        // 영업관리의 계약 진행현황 클릭 시
+        $(document).on('click', '#contractProgressBtn', function (e) {
+            $("#content").load("/contract-progress", function () {});
+        });
 
     </script>
 </body>
