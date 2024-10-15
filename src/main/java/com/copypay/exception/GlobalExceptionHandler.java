@@ -31,4 +31,11 @@ public class GlobalExceptionHandler {
                 .status(ErrorCode.DATA_NOT_FOUND.getStatus().value())
                 .body(new ErrorResponse(ErrorCode.DATA_NOT_FOUND));
     }
+
+    @ExceptionHandler(MemoNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> memoNotFoundExceptionHandler(MemoNotFoundException e) {
+        return ResponseEntity
+                .status(ErrorCode.MEMO_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponse(ErrorCode.MEMO_NOT_FOUND));
+    }
 }

@@ -4,34 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.copypay.repository.mapper.BasicInfoMapper">
 
-    <select id="getBasicInfoList" parameterType="string" resultType="com.copypay.dto.response.BasicInfoListResponse">
+    <select id="getContractByBusinessRegNumber" parameterType="string" resultType="com.copypay.dto.response.ContractResponse">
 	<![CDATA[
 		SELECT
-			BUSINESS_REG_NUMBER AS businessRegNumber,
-			BUSINESS_NAME AS businessName,
-			MID AS mid,
-			BUSINESS_TYPE AS businessType,
-			PAYMENT_METHOD.IS_USED AS isUsed,
-			IS_SMALL_MID_USED AS isSmallMidUsed
-		FROM CONTRACT
-		JOIN PAYMENT_METHOD ON CONTRACT.NO = PAYMENT_METHOD.NO
-		WHERE #{inputMid} IS NULL OR MID LIKE CONCAT('%', #{inputMid}, '%')
-        ]]>
-	</select>
-
-    <select id="getManagerId" resultType="string">
-	<![CDATA[
-		SELECT ID FROM USER
-        ]]>
-	</select>
-
-	<select id="getBasicInfo" parameterType="string" resultType="com.copypay.dto.response.BasicInfoResponse">
-	<![CDATA[
-		SELECT
+			NO AS no,
 			BUSINESS_REG_NUMBER AS businessRegNumber,
 			MID AS mid,
 			BUSINESS_NAME AS businessName,
-			EFFECTIVE_DATE AS effectiveDate,
+			CONTRACT.EFFECTIVE_DATE AS effectiveDate,
 			COMPLETION_DATE AS completionDate,
 			CONTRACT_DATE AS contractDate,
 			CEO_NAME AS ceoName,
@@ -52,6 +32,131 @@
 			CONTRACT_MANAGER AS contractManager,
 			SALES_MANAGER AS salesManager
 		FROM CONTRACT
+		WHERE BUSINESS_REG_NUMBER = #{inputBusinessRegNumber}
+        ]]>
+	</select>
+
+	<select id="getPaymentMethodByNo" parameterType="int" resultType="com.copypay.dto.response.PaymentMethodResponse">
+		<![CDATA[
+			SELECT
+				IS_USED AS isUsed,
+				AUTHENTICATION_TYPE AS authenticationType,
+				SETTLEMENT_CYCLE AS settlementCycle,
+				PAYMENT_METHOD.EFFECTIVE_DATE AS settlementCycleEffectiveDate,
+				PURCHASE_METHOD AS purchaseMethod,
+				PURCHASE_DATE AS purchaseDate,
+				DEBITCARD_FEE_MANAGEMENT_USED AS debitcardFeeManagement,
+				INSTALLMENT_MONTHS AS installmentMonths,
+				IS_SMALL_MID_USED AS isSmallMidUsed,
+				SMALL_MID_BALANCE_SETTLEMENT_REQ AS smallMidBalanceSettlementReq,
+				DIFFERENCE_SETTLEMENT_CYCLE AS differenceSettlementCycle,
+				MAJOR_DOMESTIC_UNUSABLE_CARD AS majorDomesticUnusableCard,
+				MINOR_DOMESTIC_UNUSABLE_CARD AS minorDomesticUnusableCard,
+				MINOR_FOREIGN_UNUSABLE_CARD AS minorForeignUnusableCard
+			FROM PAYMENT_METHOD
+			WHERE NO = #{no}
+		]]>
+	</select>
+
+	<select id="getSettlementInfoByNo" parameterType="int" resultType="com.copypay.dto.response.SettlementInfoResponse">
+		<![CDATA[
+			SELECT
+				PAYMENT_METHOD AS paymentMethod,
+				FEE_PAYMENT_METHOD AS feePaymentMethod,
+				FEE_SETTLEMENT_DATE AS feeSettlementDate,
+				DEPOSIT_ACCOUNT_FORMAT AS depositAccountFormat,
+				ACCOUNT_PARAMETER_NAME AS accountParameterName,
+				TAX_INVOICE_CRITERIA AS taxInvoiceCriteria,
+				TAX_INVOICE_VAT AS taxInvoiceVat,
+				SETTLEMENT_INFO.TAX_INVOICE_EMAIL AS taxInvoiceEmail,
+				PARTIAL_CANCELLATION_ALLOWED AS partialCancellationAllowed
+			FROM SETTLEMENT_INFO
+			WHERE NO = #{no}
+		]]>
+	</select>
+
+	<select id="getBasicInfoList" parameterType="string" resultType="com.copypay.dto.response.BasicInfoListResponse">
+		<![CDATA[
+		SELECT
+			BUSINESS_REG_NUMBER AS businessRegNumber,
+			BUSINESS_NAME AS businessName,
+			MID AS mid,
+			BUSINESS_TYPE AS businessType,
+			PAYMENT_METHOD.IS_USED AS isUsed,
+			IS_SMALL_MID_USED AS isSmallMidUsed
+		FROM CONTRACT
+		JOIN PAYMENT_METHOD ON CONTRACT.NO = PAYMENT_METHOD.NO
+		WHERE #{inputMid} IS NULL OR MID LIKE CONCAT('%', #{inputMid}, '%')
+        ]]>
+	</select>
+
+    <select id="getManagerId" resultType="string">
+	<![CDATA[
+		SELECT ID FROM USER
+        ]]>
+	</select>
+
+	<select id="getMemoList" parameterType="string" resultType="com.copypay.dto.response.MemoResponse">
+		<![CDATA[
+			SELECT 	REG_DNT AS regDnt,
+		 		   	ID AS id,
+		 			CONTENT AS content
+			FROM MEMO
+			WHERE MID = #{inputMid}
+			ORDER BY REG_DNT DESC
+		]]>
+	</select>
+
+	<select id="getBasicInfo" parameterType="string" resultType="com.copypay.dto.response.BasicInfoResponse">
+	<![CDATA[
+		SELECT
+			BUSINESS_REG_NUMBER AS businessRegNumber,
+			MID AS mid,
+			BUSINESS_NAME AS businessName,
+			CONTRACT.EFFECTIVE_DATE AS effectiveDate,
+			COMPLETION_DATE AS completionDate,
+			CONTRACT_DATE AS contractDate,
+			CEO_NAME AS ceoName,
+			CEO_BIRTH AS ceoBirth,
+			CEO_HP AS ceoHp,
+			CEO_TEL AS ceoTel,
+			CEO_EMAIL AS ceoEmail,
+			CEO_FAX AS ceoFax,
+			BUSINESS_POSTCODE AS businessPostcode,
+			BUSINESS_ADDRESS_LINE1 AS businessAddressLine1,
+			BUSINESS_ADDRESS_LINE2 AS businessAddressLine2,
+			BUSINESS_TYPE AS businessType,
+			FRANCHISE_CONTRACT_MANAGER_NAME AS franchiseContractManagerName,
+			FRANCHISE_CONTRACT_MANAGER_TEL AS franchiseContractManagerTel,
+			FRANCHISE_CONTRACT_MANAGER_HP AS franchiseContractManagerHp,
+			FRANCHISE_CONTRACT_MANAGER_Email AS franchiseContractManagerEmail,
+			APPLICATION_PATH AS applicationPath,
+			CONTRACT_MANAGER AS contractManager,
+			SALES_MANAGER AS salesManager,
+			SETTLEMENT_INFO.PAYMENT_METHOD AS paymentMethod,
+			FEE_PAYMENT_METHOD AS feePaymentMethod,
+			FEE_SETTLEMENT_DATE AS feeSettlementDate,
+			DEPOSIT_ACCOUNT_FORMAT AS depositAccountFormat,
+			ACCOUNT_PARAMETER_NAME AS accountParameterName,
+			TAX_INVOICE_CRITERIA AS taxInvoiceCriteria,
+			TAX_INVOICE_VAT AS taxInvoiceVat,
+			SETTLEMENT_INFO.TAX_INVOICE_EMAIL AS taxInvoiceEmail,
+			PARTIAL_CANCELLATION_ALLOWED AS partialCancellationAllowed,
+			IS_USED AS isUsed,
+			AUTHENTICATION_TYPE AS authenticationType,
+			SETTLEMENT_CYCLE AS settlementCycle,
+			PAYMENT_METHOD.EFFECTIVE_DATE AS settlementCycleEffectiveDate,
+			PURCHASE_METHOD AS purchaseMethod,
+			PURCHASE_DATE AS purchaseDate,
+			DEBITCARD_FEE_MANAGEMENT_USED AS debitcardFeeManagement,
+			INSTALLMENT_MONTHS AS installmentMonths,
+			IS_SMALL_MID_USED AS isSmallMidUsed,
+			SMALL_MID_BALANCE_SETTLEMENT_REQ AS smallMidBalanceSettlementReq,
+			DIFFERENCE_SETTLEMENT_CYCLE AS differenceSettlementCycle,
+			MAJOR_DOMESTIC_UNUSABLE_CARD AS majorDomesticUnusableCard,
+			MINOR_DOMESTIC_UNUSABLE_CARD AS minorDomesticUnusableCard,
+			MINOR_FOREIGN_UNUSABLE_CARD AS minorForeignUnusableCard
+		FROM CONTRACT JOIN SETTLEMENT_INFO ON CONTRACT.NO = SETTLEMENT_INFO.NO JOIN PAYMENT_METHOD ON CONTRACT.NO = PAYMENT_METHOD.NO
 		WHERE BUSINESS_REG_NUMBER = #{inputBusinessRegNumber}
 		]]>
 	</select>
