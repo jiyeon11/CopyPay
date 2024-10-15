@@ -546,7 +546,7 @@
 
     <script>
         $(document).ready(function () {
-            // 조회 버튼 클릭 시
+            //기본 정보 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
                 const midValue = $("#inputMid").val();
                 const url = midValue === "" ? '/api/basic-info/list' : '/api/basic-info/list/' + midValue;
@@ -556,7 +556,7 @@
                 $("#basicInfoList").removeClass("hidden");
              });
 
-            // 신규 모달 열기
+            //신규 모달 열기
             $("#newModalBtn").click(function () {
                 $("#basicInfoNewModal").removeClass("hidden");
                 $("#basicInfoList").addClass("hidden");
@@ -569,21 +569,19 @@
                 });
             });
 
-            // 신규 모달 닫기
+            //신규 모달 닫기
             $("#closeModalBtn").click(function () {
-                //입력 내용 초기화
-                $("#basicInfoNewModal")[0].reset();
-                $("#basicInfoNewModal p").text('');
-                $("#memoList").empty();
+                clearModal();
                 $("#basicInfoNewModal").addClass("hidden");
             });
 
             //사업자 번호로 일반정보 데이터 가져오기
             $("#getBasicInfoBtn").click(function () {
-               const regNumber = $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, '')
+                const regNumber = $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, '');
                 if (!/^\d{10}$/.test(regNumber)) {
                     alert('사업자번호는 10자리가 유효합니다.')
                 } else {
+                    clearModal();
                     makeAjaxCall('/api/basic-info/' + regNumber, 'GET', function (data) {
                         setBasicInfoData(data);  //기본정보 가져오기
                         //mid로 메모 데이터 가져오기
@@ -633,7 +631,16 @@
                 }
             });
         }
-        
+
+        function clearModal(){  //입력 내용 초기화
+            $("#basicInfoNewModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
+            $("#basicInfoNewModal input[type='checkbox']").prop('checked', false); // 모든 체크박스 초기화
+            $("#basicInfoNewModal input[type='radio']").prop('checked', false); // 모든 라디오 초기화
+            $("#basicInfoNewModal select").prop('selectedIndex', 0); // 모든 셀렉트 박스 초기화
+            $("#basicInfoNewModal p").text(''); // 모든 p 태그 텍스트 초기화
+            $("#memoList").empty(); // 메모 리스트 초기화
+        }
+
         function getManagers(data) {  //담당자 id 가져오기
             $.each(data, function(index, item) {
                 $('#selectContractManager, #selectSalesManager').append(
@@ -643,6 +650,7 @@
         }
 
         function setBasicInfoData(data) {  //일반정보 업데이트
+            $('#inputBusinessRegNumber').val(formatBusinessRegNumber(data.businessRegNumber));  //사업자번호
             $('#inputMID2').val(data.mid);  //MID
             $('#inputBusinessName').val(data.businessName);  //상호
             $('#effectiveDate').text(formatDate(data.effectiveDate) + " ~ " + formatDate(data.completionDate));  //적용일~완료일
