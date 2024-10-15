@@ -680,16 +680,15 @@
             $('#selectIsSmallMidUsed').val(data.isSmallMidUsed);  //영중소 사용여부
             $('#selectSmallMidBalanceSettlementReq').val(data.smallMidBalanceSettlementReq);  //영중소 차액정산 요청
             $('#selectDifferenceSettlementCycle').val(data.differenceSettlementCycle);  //영중소 차액정산주기
-            checkCardArray(data.majorDomesticUnusableCard);  //국내 사용불가 카드사(메이저)
-            checkCardArray(data.minorDomesticUnusableCard);  //국내 사용불가 카드사(마이너)
-            checkCardArray(data.minorForeignUnusableCard);  //해외 사용불가 카드사
+            setCardCheckboxes(data.majorDomesticUnusableCard);  //국내 사용불가 카드사(메이저)
+            setCardCheckboxes(data.minorDomesticUnusableCard);  //국내 사용불가 카드사(마이너)
+            setCardCheckboxes(data.minorForeignUnusableCard);  //해외 사용불가 카드사
         }
-
         
-        function checkCardArray(data) {  //사용불가 카드사 체크박스 체크
-            const checkedArray = (data||"").split(",");
+        function setCardCheckboxes(data) {  //사용불가 카드사 체크박스 체크
+            const checkedArray = (data || "").split(",");
             $.each(checkedArray, function(index, item){
-                $(`input[type="checkbox"][value="${item}"]`).prop("checked", true);
+                $('input:checkbox[value="' + item + '"]').prop("checked", true);
             });
         }
 
