@@ -22,7 +22,7 @@ public class ContractProgressService {
         }else{
             log.info("총 {}개의 계약 진행현황 항목을 성공적으로 가져왔습니다", contractProgressList.size());
         }
-        return contractProgressRepository.getContractProgressList(checkedDate, startDate, endDate);
+        return contractProgressList;
     }
 
 }
