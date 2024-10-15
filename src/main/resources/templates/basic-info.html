@@ -49,31 +49,34 @@
     </div>
 
     <!-- 신규 모달 -->
-    <div id="basicInfoNewModal" class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-[120rem] h-full justify-center">
-        <div class="flex bg-white rounded-lg shadow-lg p-6 w-5/6 h-3/4 overflow-y-auto mx-auto">
-            <div class="bg-white mt-2 rounded-lg shadow-2xl w-[110rem] h-[44rem]">
+    <form id="basicInfoNewModal" class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-[120rem] h-full flex justify-center items-center">
+        <div class="fixed bg-blue-500 w-5/6 py-2 z-10 top-14">
+            <h3 class="font-bold text-white text-lg ml-2">기본정보</h3>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 h-4/5 overflow-y-auto">
+            <div class="bg-white mt-2 rounded-lg shadow-2xl w-full h-fit">
                 <!-- 일반 정보 -->
                 <table class="table-fixed w-[90rem] border-collapse mx-auto">
                     <thead class="table-header-group">
                         <tr class="table-row bg-blue-300">
-                            <td class="" colspan="6"><p class="font-bold text-white text-lg py-2 ml-3">일반정보</p></td>
+                            <td colspan="6"><h3 class="font-bold text-white text-lg py-2 ml-3">일반정보</h3></td>
                         </tr>
                     </thead>
                     <tbody class="table-row-group">
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업자번호</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputBusinessRegNumber" class="w-28 h-7 text-sm ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
-                                <button id="getBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7">가져오기</button>
+                                <input type="text" id="inputBusinessRegNumber" class="w-28 h-7 text-sm pl-1 ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
+                                <button type="button" id="getBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7">가져오기</button>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>MID</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputMID2" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputMID2" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                                 <button id="checkDuplicateBtn" class="text-white text-xs bg-green-700 w-16 h-7">중복확인</button>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">상호</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputBusinessName" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputBusinessName" class="w-28 h-7 ml-3 pl-1 text-sm border-2 border-gray-400 outline-none">
                             </td>
                         </tr>
                 
@@ -84,11 +87,11 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">계약일자</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputContractDate" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputContractDate" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자명</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputCeoName" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputCeoName" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                             </td>
                         </tr>
                 
@@ -103,27 +106,27 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-600">*</span>대표 TEL</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="ceoTEL" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="ceoTEL" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                             </td>
                         </tr>
                 
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 E-Mail</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="ceoEmail" class="w-40 h-7 ml-3 text-sm border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="ceoEmail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자 FAX</td>
                             <td class="border-2 py-1" colspan="3">
-                                <input type="text" id="ceoFAX" class="w-28 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">
+                                <input type="text" id="ceoFAX" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                             </td>
                         </tr>
                 
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1">사업장 주소</td>
                             <td class="border-2 py-1" colspan="3">
-                                <input type="text" id="inputPostCode" class="w-24 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">  <!-- 우편번호 -->
-                                <input type="text" id="inputAddress1" class="w-52 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">  <!-- 주소1 -->
-                                <input type="text" id="inputAddress2" class="w-32 h-7 ml-3 text-sm border-2 border-gray-400 outline-none">  <!-- 주소2 -->
+                                <input type="text" id="inputPostCode" class="w-24 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">  <!-- 우편번호 -->
+                                <input type="text" id="inputAddress1" class="w-52 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">  <!-- 주소1 -->
+                                <input type="text" id="inputAddress2" class="w-32 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">  <!-- 주소2 -->
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">사업체구분</td>
                             <td class="border-2 py-1">
@@ -135,32 +138,32 @@
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>가맹점 계약담당</td>
                             <td class="border-2 py-1" colspan="5">
                                 <p class="text-sm inline ml-3">성명:</p>
-                                <input type="text" id="inputContractManagerName" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputContractManagerName" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                                 <p class="text-sm inline ml-3">TEL:</p>
-                                <input type="text" id="inputContractManagerTEL" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="inputContractManagerTEL" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                                 <p class="text-sm inline ml-3">HP:</p>
-                                <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                                 <p class="text-sm inline ml-3">EMail:</p>
-                                <input type="text" id="inputContractManagerEmail" class="w-40 h-7 text-sm border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputContractManagerEmail" class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                             </td>
                         </tr>
 
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1">접수경로</td>
                             <td class="border-2 py-1">
-                                <select id="selectAppPath" class="ml-3 border-2 border-gray-400 outline-none">
+                                <select id="selectAppPath" class="ml-3 border-2 border-gray-400 outline-none text-sm">
                                     <option value="다이렉트">다이렉트</option>
                                 </select>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">계약담당자</td>
                             <td class="border-2 py-1">
-                                <select id="selectContractManager" class="ml-3 border-2 border-gray-400 outline-none">
+                                <select id="selectContractManager" class="ml-3 border-2 border-gray-400 outline-none text-sm">
                                     <option>선택하세요</option>
                                 </select>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">영업담당자</td>
                             <td class="border-2 py-1">
-                                <select id="selectSalesManager" class="ml-3 border-2 border-gray-400 outline-none">
+                                <select id="selectSalesManager" class="ml-3 border-2 border-gray-400 outline-none text-sm">
                                     <option>선택하세요</option>
                                 </select>
                             </td>
@@ -173,51 +176,429 @@
                             </td>
                         </tr>
                     </tfoot>
-                </table>                
-            </div>
-           <!-- <button id="closeModal" class="w-12 h-8 float-end bg-red-500 text-white text-sm rounded">닫기</button> -->
-        </div>
-    </div>
+                </table>
 
+                <!-- 정산정보 -->
+                <table class="table-fixed w-[90rem] border-collapse mx-auto mt-7">
+                    <thead class="table-header-group">
+                        <tr class="table-row bg-blue-300">
+                            <td colspan="6"><h3 class="font-bold text-white text-lg py-2 ml-3">정산정보</h3></td>
+                        </tr>
+                    </thead>
+                    <tbody class="table-row-group">
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">지급방법</td>
+                            <td class="border-2 py-1">
+                                <select id="selectPaymentMethod" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="MID 정산">MID 정산</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>수수료 지급방법</td>
+                            <td class="border-2 py-1">
+                                <select id="selectFeePaymentMethod" class="w-22 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="선정산">선정산</option>
+                                    <option value="후취정산">후취정산</option>
+                                </select>
+                                <div>
+                                    <label for="inputFeeSettlementDate" class="text-sm font-bold ml-3">적용시작일자:</label>
+                                    <input type="text" id="inputFeeSettlementDate" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                    <p class="text-sm inline">부터</p>
+                                </div>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">정산 입금통장인자 표기방식</td>
+                            <td class="border-2 py-1">
+                                <div class="">
+                                    <input id="accountFormatUDID" type="radio" value="UDID" name="bordered-radio" class="ml-3 w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                    <label for="accountFormatUDID" class="w-full text-sm font-medium text-gray-900">UDID</label>
+                                    <input id="accountFormatMID" type="radio" value="가맹점MID" name="bordered-radio" class="ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="accountFormatMID" class="w-full text-sm font-medium text-gray-900">가맹점MID</label>
+                                </div>
+                                <div class="mt-2">
+                                    <input id="accountFormatDirect" type="radio" value="직접입력" name="bordered-radio" class="ml-3 mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <label for="accountFormatDirect" class="w-full text-sm font-medium text-gray-900">직접입력</label>
+                                    <input type="text" id="inputDepositAccountFormat" class="w-28 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">세금계산서 발행기준</td>
+                            <td class="border-2 py-1">
+                                <select id="selectTaxInvoiceCriteria" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="미설정">미설정</option>
+                                    <option value="승인기준">승인기준</option>
+                                    <option value="정산기준">정산기준</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">세금계산서 부가세 계산방식</td>
+                            <td class="border-2 py-1">
+                                <select id="selectTaxInvoiceVat" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="미설정">미설정</option>
+                                    <option value="건별10%">건별10%</option>
+                                    <option value="합산10%">합산10%</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>세금계산서 E-Mail</td>
+                            <td class="border-2 py-1">
+                                <input type="text" id="inputTaxInvoiceEmail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">부분취소기능</td>
+                            <td class="border-2 py-1" colspan="5">
+                                <select id="selectPartialCancellationAllowed" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="미사용">미사용</option>
+                                    <option value="사용">사용</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="border-2 py-1" colspan="6">
+                                <button id="settlementInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7 float-right">저장</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- 결제수단 -->
+                <table class="table-fixed w-[90rem] border-collapse mx-auto mt-7">
+                    <thead class="table-header-group">
+                        <tr class="table-row bg-blue-300">
+                            <td colspan="6">
+                                <h3 class="font-bold text-white text-lg py-2 ml-3">결제수단</h3>
+                            </td>
+                        </tr>
+                        <tr class="table-row bg-blue-100">
+                            <td colspan="6">
+                                <p class="text-center text-black text-base py-1">신용카드-인증</p>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody class="table-row-group">
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">사용전환</td>
+                            <td class="border-2 py-1">
+                                <select id="selectIsUsed" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="사용안함">사용안함</option>
+                                    <option value="사용">사용</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">인증형태</td>
+                            <td class="border-2 py-1">
+                                <select id="selectAuthenticationType" class="w-52 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="인증">인증</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">정산주기</td>
+                            <td class="border-2 py-1">
+                                <select id="selectSettlementCycle" class="w-52 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="일일(+1일)">일일(+1일)</option>
+                                    <option value="일일(+2일)">일일(+2일)</option>
+                                    <option value="일일(+3일)">일일(+3일)</option>
+                                    <option value="일일(+4일)">일일(+4일)</option>
+                                    <option value="일일(+5일)">일일(+5일)</option>
+                                    <option value="일일(+6일)">일일(+6일)</option>
+                                    <option value="일일(+7일)">일일(+7일)</option>
+                                    <option value="월1회">월1회</option>
+                                    <option value="월2회">월2회</option>
+                                    <option value="월3회">월3회</option>
+                                    <option value="요청1일">요청1일</option>
+                                </select>
+                                <label for="inputEffectiveDate" class="text-sm font-bold ml-3">적용시작일자:</label>
+                                <input type="text" id="inputEffectiveDate" class="w-[5.5rem] h-7 text-sm mt-2 pl-1 border-2 border-gray-400 outline-none">
+                                <p class="text-sm inline">부터</p>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">매입방법</td>
+                            <td class="border-2 py-1">
+                                <select id="selectPurchaseMethod" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="자동">자동</option>
+                                    <option value="수동">수동</option>
+                                    <option value="반자동">반자동</option>
+                                    <option value="미매입">미매입</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">매입일자</td>
+                            <td class="border-2 py-1" colspan="3">
+                                <select id="selectPurchaseDate" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <p class="font-bold text-sm text-red-500 inline">*매입방법이 [반자동]일 경우만 설정.</p>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">체크카드 가맹점 수수료 별도관리</td>
+                            <td class="border-2 py-1">
+                                <select id="selectDebitcardFeeManagement" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="미사용">미사용</option>
+                                    <option value="사용">사용</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">할부개월수제한</td>
+                            <td class="border-2 py-1" colspan="3">
+                                <select id="selectInstallmentMonths" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="1개월">1개월</option>
+                                    <option value="2개월">2개월</option>
+                                    <option value="3개월">3개월</option>
+                                    <option value="4개월">4개월</option>
+                                    <option value="5개월">5개월</option>
+                                    <option value="6개월">6개월</option>
+                                    <option value="7개월">7개월</option>
+                                    <option value="8개월">8개월</option>
+                                    <option value="9개월">9개월</option>
+                                    <option value="10개월">10개월</option>
+                                    <option value="11개월">11개월</option>
+                                    <option value="12개월">12개월</option>
+                                </select>
+                                <p class="text-sm ml-3">(선택한 할부개월까지 거래 가능.)</p>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">영중소 사용여부</td>
+                            <td class="border-2 py-1">
+                                <select id="selectIsSmallMidUsed" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="미사용">미사용</option>
+                                    <option value="사용">사용</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">영중소 차액정산요청</td>
+                            <td class="border-2 py-1">
+                                <select id="selectSmallMidBalanceSettlementReq" class="w-28 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="자동">자동</option>
+                                    <option value="수동">수동</option>
+                                </select>
+                            </td>
+                            <td class="text-center border-2 bg-stone-300 py-1">영중소 차액정산주기</td>
+                            <td class="border-2 py-1">
+                                <select id="selectDifferenceSettlementCycle" class="w-52 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                    <option value="일일(+1일)">일일(+1일)</option>
+                                    <option value="일일(+2일)">일일(+2일)</option>
+                                    <option value="일일(+3일)">일일(+3일)</option>
+                                    <option value="일일(+4일)">일일(+4일)</option>
+                                    <option value="일일(+5일)">일일(+5일)</option>
+                                    <option value="일일(+6일)">일일(+6일)</option>
+                                    <option value="일일(+7일)">일일(+7일)</option>
+                                    <option value="월1회">월1회</option>
+                                    <option value="월2회">월2회</option>
+                                    <option value="월3회">월3회</option>
+                                    <option value="요청1일">요청1일</option>
+                                </select>
+                            </td>
+                        </tr>
+                        
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1" rowspan="3">사용불가 카드사<br>(체크시 미사용)</td>
+                            <td class="text-center border-2 bg-stone-300 py-1">
+                                <label for="major-domestic-checkbox" class="ms-2 text-sm font-bold">MAJOR(국내)</label>
+                                <input id="major-domestic-checkbox" type="checkbox" value="major" class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                            </td>
+                            <td class="border-2 py-1" colspan="4">
+                                <input id="bc-checkbox" type="checkbox" value="비씨" class="major-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="bc-checkbox" class="text-sm">비씨</label>
+                                <input id="kb-checkbox" type="checkbox" value="국민" class="major-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="kb-checkbox" class="text-sm">국민</label>
+                                <input id="hana-checkbox" type="checkbox" value="하나" class="major-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="hana-checkbox" class="text-sm">하나</label>
+                                <input id="samsung-checkbox" type="checkbox" value="삼성" class="major-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="samsung-checkbox" class="text-sm">삼성</label>
+                                <input id="shinhan-checkbox" type="checkbox" value="신한" class="major-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="shinhan-checkbox" class="text-sm">신한</label>
+                                <input id="hyundai-checkbox" type="checkbox" value="현대" class="major-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="hyundai-checkbox" class="text-sm">현대</label>
+                                <input id="lotte-checkbox" type="checkbox" value="롯데" class="major-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="lotte-checkbox" class="text-sm">롯데</label>
+                                <input id="nh-checkbox" type="checkbox" value="NH농협" class="major-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="nh-checkbox" class="text-sm">NH농협</label>
+                                <input id="woori-checkbox" type="checkbox" value="우리" class="major-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="woori-checkbox" class="text-sm">우리</label>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">
+                                <label for="minor-domestic-checkbox" class="ms-2 text-sm font-bold">MINOR(국내)</label>
+                                <input id="minor-domestic-checkbox" type="checkbox" value="major" class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                            </td>
+                            <td class="border-2 py-1" colspan="4">
+                                <input id="citi-checkbox" type="checkbox" value="시티" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="citi-checkbox" class="text-sm">시티</label>
+                                <input id="suhyup-checkbox" type="checkbox" value="수협" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="suhyup-checkbox" class="text-sm">수협</label>
+                                <input id="gwangju-checkbox" type="checkbox" value="광주" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="gwangju-checkbox" class="text-sm">광주</label>
+                                <input id="jeonbuk-checkbox" type="checkbox" value="전북" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="jeonbuk-checkbox" class="text-sm">전북</label>
+                                <input id="jeju-checkbox" type="checkbox" value="제주" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="jeju-checkbox" class="text-sm">제주</label>
+                                <input id="post-checkbox" type="checkbox" value="우체국" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="post-checkbox" class="text-sm">우체국</label>
+                                <input id="mg-checkbox" type="checkbox" value="MG새마을체크" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="mg-checkbox" class="text-sm">MG새마을체크</label>
+                                <input id="hanaSK-checkbox" type="checkbox" value="하나SK" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="hanaSK-checkbox" class="text-sm">하나SK</label>
+                                <input id="payco-checkbox" type="checkbox" value="PAYCO포인트" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="payco-checkbox" class="text-sm">PAYCO포인트</label>
+                                <input id="credit-union-checkbox" type="checkbox" value="신협" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="credit-union-checkbox" class="text-sm">신협</label>
+                                <input id="savings-checkbox" type="checkbox" value="저축은행" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="savings-checkbox" class="text-sm">저축은행</label>
+                                <input id="kakaobank-checkbox" type="checkbox" value="카카오뱅크" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="kakaobank-checkbox" class="text-sm">카카오뱅크</label><br>
+                                <input id="kbank-checkbox" type="checkbox" value="케이뱅크" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="kbank-checkbox" class="text-sm">케이뱅크</label>
+                                <input id="kakaomoney-checkbox" type="checkbox" value="카카오머니" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="kakaomoney-checkbox" class="text-sm">카카오머니</label>
+                                <input id="ssg-checkbox" type="checkbox" value="SSG머니" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="ssg-checkbox" class="text-sm">SSG머니</label>
+                                <input id="toss-checkbox" type="checkbox" value="토스뱅크" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="toss-checkbox" class="text-sm">토스뱅크</label>
+                                <input id="overseas-checkbox" type="checkbox" value="해외디스커버" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="overseas-checkbox" class="text-sm">해외디스커버</label>
+                                <input id="smile-checkbox" type="checkbox" value="스마일캐시" class="minor-domestic-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="smile-checkbox" class="text-sm">스마일캐시</label>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1">
+                                <label for="minor-foreign-checkbox" class="ms-2 text-sm font-bold">MINOR(해외)</label>
+                                <input id="minor-foreign-checkbox" type="checkbox" value="major" class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                            </td>
+                            <td class="border-2 py-1" colspan="4">
+                                <input id="visa-checkbox" type="checkbox" value="해외비자" class="minor-foreign-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="visa-checkbox" class="text-sm">해외비자</label>
+                                <input id="master-checkbox" type="checkbox" value="해외마스터" class="minor-foreign-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="master-checkbox" class="text-sm">해외마스터</label>
+                                <input id="diners-checkbox" type="checkbox" value="해외다이너스" class="minor-foreign-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="diners-checkbox" class="text-sm">해외다이너스</label>
+                                <input id="amex-checkbox" type="checkbox" value="해외AMX" class="minor-foreign-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="amex-checkbox" class="text-sm">해외AMX</label>
+                                <input id="jcb-checkbox" type="checkbox" value="해외JCB" class="minor-foreign-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="jcb-checkbox" class="text-sm">해외JCB</label>
+                                <input id="unionpay-checkbox" type="checkbox" value="UNIONPAY" class="minor-foreign-card w-3 h-3 ml-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="unionpay-checkbox" class="text-sm">UNIONPAY</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="border-2 py-1" colspan="6">
+                                <button id="paymentMethodBtn" class="text-white text-xs bg-green-700 w-16 h-7 float-right">저장</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <!-- 메모 -->
+                <table class="table-fixed w-[90rem] border-collapse mx-auto mt-7">
+                    <thead class="table-header-group">
+                        <tr class="py-1">
+                            <th class="text-center border-r bg-stone-300 py-1">등록 일시</th>
+                            <th class="text-center border-r bg-stone-300 py-1">이름(사번)</th>
+                            <th class="text-center border-r bg-stone-300 py-1" colspan="4">메모 내역</th>
+                        </tr>
+                    </thead>
+                    <tbody id="memoList" class="text-sm">
+                    </tbody>
+                </table>
+                <!-- 기타 -->
+                <table class="table-fixed w-[90rem] border-collapse mx-auto mt-7">
+                    <thead class="table-header-group">
+                        <tr class="table-row bg-blue-300">
+                            <td colspan="6">
+                                <h3 class="font-bold text-white text-lg py-2 ml-3">기타</h3>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody class="table-row-group">
+                        <tr class="table-row">
+                            <td class="text-center border-2 bg-stone-300 py-1 text-black font-bold">MEMO</td>
+                            <td class="border-2 m-2" colspan="5">
+                                <textarea id="memoContent" rows="5" cols="158" class="border-2 outline-none"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="border-2 py-1" colspan="6">
+                                <button id="memoBtn" class="text-white text-xs bg-green-700 w-16 h-7 float-right">메모 등록</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="fixed bottom-14 w-5/6 bg-white py-2 text-center z-10">
+            <button id="closeModalBtn" class="text-white text-xs bg-slate-500 w-16 h-7 float-right rounded-md mr-2">닫기</button>
+            <button id="allRegisterBtn" class="text-white text-xs bg-green-700 w-24 h-7 float-right rounded-md mr-2">전체 등록</button>
+        </div>
+        </div>
+    </form>
 
     <script>
         $(document).ready(function () {
-            // 조회 버튼 클릭 시
+            //기본 정보 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
                 const midValue = $("#inputMid").val();
                 const url = midValue === "" ? '/api/basic-info/list' : '/api/basic-info/list/' + midValue;
                 makeAjaxCall(url, 'GET', function (data) {
                     populateTable(data);
-                });
+                }, showEmptyDataRow);
                 $("#basicInfoList").removeClass("hidden");
              });
 
-            // 신규 모달 열기
+            //신규 모달 열기
             $("#newModalBtn").click(function () {
                 $("#basicInfoNewModal").removeClass("hidden");
                 $("#basicInfoList").addClass("hidden");
-                
+                //오늘날짜 넣음
+                $("#inputFeeSettlementDate").val(setTodayDate());
+                $("#inputEffectiveDate").val(setTodayDate());
+
                 makeAjaxCall('/api/managers', 'GET', function (data) {  //계약담당자, 영업담당자 셀렉트박스 추가
                     getManagers(data);
                 });
             });
 
-            // 신규 모달 닫기
-            $("#closeModal").click(function () {
+            //신규 모달 닫기
+            $("#closeModalBtn").click(function () {
+                clearModal();
                 $("#basicInfoNewModal").addClass("hidden");
             });
 
             //사업자 번호로 일반정보 데이터 가져오기
             $("#getBasicInfoBtn").click(function () {
-                const regNumber = $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, '')
+                const regNumber = $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, '');
                 if (!/^\d{10}$/.test(regNumber)) {
                     alert('사업자번호는 10자리가 유효합니다.')
                 } else {
+                    clearModal();
                     makeAjaxCall('/api/basic-info/' + regNumber, 'GET', function (data) {
-                        setBasicInfoData(data);
+                        setBasicInfoData(data);  //기본정보 가져오기
+                        //mid로 메모 데이터 가져오기
+                        makeAjaxCall('api/memo/'+ data.contract.mid, 'GET', function(data){
+                            populateMemo(data);
+                        }, showEmptyMemoDataRow);
                     });
                 }
             });
+            //사용불가 카드사 MAJOR(국내), MINOR(국내), MINOR(해외) 모든 체크박스 선택/해제
+            const checkboxGroups = [
+                { id: 'minor-foreign-checkbox', childClass: 'minor-foreign-card' },
+                { id: 'minor-domestic-checkbox', childClass: 'minor-domestic-card' },
+                { id: 'major-domestic-checkbox', childClass: 'major-domestic-card' }
+            ];
+            checkboxGroups.forEach(group => setupCheckboxGroup(group.id, group.childClass));
+            
         });
 
         /**
@@ -225,8 +606,9 @@
          * @param {string} url - 요청 URL
          * @param {string} method - HTTP 메서드
          * @param {function} successCallback - 성공 시 콜백 함수
+         * @param {function} errorCallback - 에러 시 콜백 함수
          */
-        function makeAjaxCall(url, method, successCallback) {
+        function makeAjaxCall(url, method, successCallback, errorCallback) {
             $.ajax({
                 url: url,
                 method: method,
@@ -234,16 +616,28 @@
                     successCallback(data);
                 },
                 error: function (error) {
-                    if(error.responseJSON.message){
+                    if(errorCallback){
+                        errorCallback();
+                    }
+                    else if(error.responseJSON.message){
                         alert(error.responseJSON.message);
-                    }else{
+                    }
+                    else if(!error.responseJSON.message){
                         alert("데이터를 가져오는 데 실패했습니다. 다시 시도해 주세요.");
                     }
-
                 }
             });
         }
-        
+
+        function clearModal(){  //입력 내용 초기화
+            $("#basicInfoNewModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
+            $("#basicInfoNewModal input[type='checkbox']").prop('checked', false); // 모든 체크박스 초기화
+            $("#basicInfoNewModal input[type='radio']").prop('checked', false); // 모든 라디오 초기화
+            $("#basicInfoNewModal select").prop('selectedIndex', 0); // 모든 셀렉트 박스 초기화
+            $("#basicInfoNewModal p").text(''); // 모든 p 태그 텍스트 초기화
+            $("#memoList").empty(); // 메모 리스트 초기화
+        }
+
         function getManagers(data) {  //담당자 id 가져오기
             $.each(data, function(index, item) {
                 $('#selectContractManager, #selectSalesManager').append(
@@ -253,33 +647,76 @@
         }
 
         function setBasicInfoData(data) {  //일반정보 업데이트
-            $('#inputMID2').val(data.mid);
-            $('#inputBusinessName').val(data.businessName);
-            $('#effectiveDate').text(formatDate(data.effectiveDate) + " ~ " + formatDate(data.completionDate));
-            $('#inputContractDate').val(formatDate(data.contractDate));
-            $('#inputCeoName').val(data.ceoName);
-            $('#ceoBirth').text(formatDate(data.ceoBirth));
-            $('#ceoHP').text(formatPhone(data.ceoHp));
-            $('#ceoTEL').val(formatPhone(data.ceoTel));
-            $('#ceoEmail').val(data.ceoEmail);
-            $('#ceoFAX').val(data.ceoFax);
-            $('#inputPostCode').val(data.businessPostcode);
-            $('#inputAddress1').val(data.businessAddressLine1);
-            $('#inputAddress2').val(data.businessAddressLine2);
-            $('#businessType').text(data.businessType);
-            $('#inputContractManagerName').val(data.franchiseContractManagerName);
-            $('#inputContractManagerTEL').val(formatPhone(data.franchiseContractManagerTel));
-            $('#inputContractManagerHP').val(formatPhone(data.franchiseContractManagerHp));
-            $('#inputContractManagerEmail').val(data.franchiseContractManagerEmail);
-            $('#selectContractManager').val(data.contractManager).prop("selected", true);
-            $('#selectSalesManager').val(data.salesManager).prop("selected", true);
+            $('#inputBusinessRegNumber').val(formatBusinessRegNumber(data.contract.businessRegNumber));  //사업자번호
+            $('#inputMID2').val(data.contract.mid);  //MID
+            $('#inputBusinessName').val(data.contract.businessName);  //상호
+            $('#effectiveDate').text(formatDate(data.contract.effectiveDate) + " ~ " + formatDate(data.contract.completionDate));  //적용일~완료일
+            $('#inputContractDate').val(formatDate(data.contract.contractDate));  //계약일자
+            $('#inputCeoName').val(data.contract.ceoName);  //대표자명
+            $('#ceoBirth').text(formatDate(data.contract.ceoBirth));  //대표자 생년월일
+            $('#ceoHP').text(formatPhone(data.contract.ceoHp));  //대표자 HP
+            $('#ceoTEL').val(formatPhone(data.contract.ceoTel));  //대표자 TEL
+            $('#ceoEmail').val(data.contract.ceoEmail);  //대표자 Email
+            $('#ceoFAX').val(data.contract.ceoFax);  //대표자 FAX
+            $('#inputPostCode').val(data.contract.businessPostcode);  //사업장 우편번호
+            $('#inputAddress1').val(data.contract.businessAddressLine1);  //사업장 주소1
+            $('#inputAddress2').val(data.contract.businessAddressLine2);  //사업장 주소2
+            $('#businessType').text(data.contract.businessType);  //사업체구분
+            $('#inputContractManagerName').val(data.contract.franchiseContractManagerName);  //가맹점 계약담당 성명
+            $('#inputContractManagerTEL').val(formatPhone(data.contract.franchiseContractManagerTel));  //가맹점 계약담당 TEL
+            $('#inputContractManagerHP').val(formatPhone(data.contract.franchiseContractManagerHp));  //가맹점 계약담당 HP
+            $('#inputContractManagerEmail').val(data.contract.franchiseContractManagerEmail);  //가맹점 계약담당 Email
+            $('#selectContractManager').val(data.contract.contractManager);  //계약담당자
+            $('#selectSalesManager').val(data.contract.salesManager);  //영업담당자
+
+            $('#selectFeePaymentMethod').val(data.settlementInfo.feePaymentMethod);  //수수료 지급방법
+            $('#inputFeeSettlementDate').val(formatDate(data.settlementInfo.feeSettlementDate));  //수수료 정산일자
+            $('input:radio[name="bordered-radio"][value="' + data.settlementInfo.depositAccountFormat + '"]').prop("checked", true); //정산 입금 통장 인자 표기 방법
+            $('#inputDepositAccountFormat').val(data.settlementInfo.accountParameterName);  //통장 인자명
+            $('#selectTaxInvoiceCriteria').val(data.settlementInfo.taxInvoiceCriteria);  //세금계산서 발행 기준
+            $('#selectTaxInvoiceVat').val(data.settlementInfo.taxInvoiceVat);  //세금계산서 부가세 계산 방식
+            $('#inputTaxInvoiceEmail').val(data.settlementInfo.taxInvoiceEmail);  //세금계산서 이메일
+            $('#selectPartialCancellationAllowed').val(data.settlementInfo.partialCancellationAllowed);  //부분취소 가능 여부
+
+            $('#selectIsUsed').val(data.paymentMethod.isUsed);  //사용전환
+            $('#selectAuthenticationType').val(data.paymentMethod.authenticationType);  //인증형태
+            $('#selectSettlementCycle').val(data.paymentMethod.settlementCycle);  //정산주기
+            $('#inputEffectiveDate').val(formatDate(data.paymentMethod.settlementCycleEffectiveDate));  //정산주기 적용일자
+            $('#selectPurchaseMethod').val(data.paymentMethod.purchaseMethod);  //매입방법
+            $('#selectPurchaseDate').val(data.paymentMethod.purchaseDate);  //매입일자
+            $('#selectDebitcardFeeManagement').val(data.paymentMethod.debitcardFeeManagement);  //체크카드 가맹점 수수료 별도관리
+            $('#selectInstallmentMonths').val(data.paymentMethod.installmentMonths);  //할부개월수제한
+            $('#selectIsSmallMidUsed').val(data.paymentMethod.isSmallMidUsed);  //영중소 사용여부
+            $('#selectSmallMidBalanceSettlementReq').val(data.paymentMethod.smallMidBalanceSettlementReq);  //영중소 차액정산 요청
+            $('#selectDifferenceSettlementCycle').val(data.paymentMethod.differenceSettlementCycle);  //영중소 차액정산주기
+            setCardCheckboxes(data.paymentMethod.majorDomesticUnusableCard);  //국내 사용불가 카드사(메이저)
+            setCardCheckboxes(data.paymentMethod.minorDomesticUnusableCard);  //국내 사용불가 카드사(마이너)
+            setCardCheckboxes(data.paymentMethod.minorForeignUnusableCard);  //해외 사용불가 카드사
+        }
+
+        function setupCheckboxGroup(groupId, childClass) {  //모든 체크박스 체크/해제
+            const $group = $(`#${groupId}`);
+            const $children = $(`.${childClass}`);
+
+            $group.change(function() {
+                const isChecked = this.checked;
+                $children.each(function() {
+                    this.checked = isChecked;
+                });
+            });
+        }
+
+        function setCardCheckboxes(data) {  //사용불가 카드사 체크박스 체크
+            const checkedArray = (data || "").split(",");
+            $.each(checkedArray, function(index, item){
+                $('input:checkbox[value="' + item + '"]').prop("checked", true);
+            });
         }
 
         function populateTable(data) {  //받아온 데이터로 기본 정보 조회 테이블 행 추가
             const tbody = $('#list');
             tbody.empty();
-            if (data) {
-                $.each(data, function(index, item){
+            $.each(data, function(index, item){
                     const row = `
                             <tr class="even:bg-blue-300 odd:bg-white hover:bg-slate-400">
                                 <td class="table-cell px-2 py-1">${formatBusinessRegNumber(item.businessRegNumber)}</td>
@@ -290,18 +727,49 @@
                                 <td class="table-cell px-2 py-1">${item.isSmallMidUsed}</td>
                             </tr>
                         `;
-                    tbody.append(row);
-                });
-            }else{
-                const noDataRow = `
+                tbody.append(row);
+            });
+        }
+
+        function showEmptyDataRow(){  //기본 정보 조회 테이블의 조회 결과가 없을 때
+            const tbody = $('#list');
+            tbody.empty();
+            const noDataRow = `
                             <tr class="table-row">
                                 <td class="text-center pt-36" colspan="6">
                                     <p class="text-lg">조회 결과가 없습니다.</p>
                                 </td>
                             </tr>
                         `;
-                tbody.append(noDataRow);
-            }
+            tbody.append(noDataRow);
+        }
+
+        function populateMemo(data) {  //받아온 데이터로 메모 테이블 행 추가
+            const tbody = $('#memoList');
+            tbody.empty();
+            $.each(data, function(index, item){
+                    const row = `
+                            <tr class="even:bg-slate-200 odd:bg-white">
+                                <td class="table-cell px-2 py-1">${item.regDnt}</td>
+                                <td class="table-cell px-2 py-1">${item.id}</td>
+                                <td class="table-cell px-2 py-1" colspan="4">${item.content}</td>
+                            </tr>
+                        `;
+                tbody.append(row);
+            });
+        }
+
+        function showEmptyMemoDataRow(){  //메모 내역이 없을 때
+            const noDataRow = `
+                            <tr class="table-row">
+                                <td class="text-center pt-2" colspan="6">
+                                    <p class="text-base">메모내역이 없습니다.</p>
+                                </td>
+                            </tr>
+                        `;
+            const tbody = $('#memoList');
+            tbody.empty();
+            tbody.append(noDataRow);
         }
 
         function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
@@ -314,9 +782,13 @@
         }
 
         function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
-            let year = dateString.substring(0, 4);
-            let month = dateString.substring(4, 6);
-            let day = dateString.substring(6, 8);
+            if (!/^\d{8}$/.test(dateString)) {
+                console.error('잘못된 날짜 형식입니다:', dateString);
+                return '';
+            }
+            const year = dateString.substring(0, 4);
+            const month = dateString.substring(4, 6);
+            const day = dateString.substring(6, 8);
             return year+'/'+month+'/'+day;
         }
 
@@ -327,6 +799,15 @@
                 .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
             $(phone).val(phoneNumber);
             return phoneNumber;
+        }
+
+        function setTodayDate(){  //오늘 날짜로 설정
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const formattedDate = year+'/'+month+'/'+day;
+            return formattedDate;
         }
     </script>
 </body>

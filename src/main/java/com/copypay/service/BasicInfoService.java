@@ -1,9 +1,9 @@
 package com.copypay.service;
 
-import com.copypay.dto.response.BasicInfoListResponse;
-import com.copypay.dto.response.BasicInfoResponse;
+import com.copypay.dto.response.*;
 import com.copypay.exception.BusinessRegNumberNotFoundException;
 import com.copypay.exception.DataNotFoundException;
+import com.copypay.exception.MemoNotFoundException;
 import com.copypay.repository.BasicInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +35,32 @@ public class BasicInfoService {
     }
 
     public BasicInfoResponse getBasicInfo(String businessRegNumber){
-        BasicInfoResponse basicInfo = basicInfoRepository.getBasicInfo(businessRegNumber);
-        if (basicInfo == null) {
+        ContractResponse contract = basicInfoRepository.getContractByBusinessRegNumber(businessRegNumber);
+        if (contract == null) {
             log.error("사업자번호 {}에 대한 기본 정보가 없습니다.", businessRegNumber);
             throw new BusinessRegNumberNotFoundException();
         }
+        SettlementInfoResponse settlementInfo = basicInfoRepository.getSettlementInfoByNo(contract.getNo());
+        PaymentMethodResponse paymentMethod = basicInfoRepository.getPaymentMethodByNo(contract.getNo());
+
+        if(settlementInfo == null){
+            log.error("사업자번호 {}에 대한 정산 정보가 없습니다.", businessRegNumber);
+        } else if(paymentMethod == null){
+            log.error("사업자번호 {}에 대한 결제수단 정보가 없습니다.", businessRegNumber);
+        }
+
         log.info("사업자번호 {}에 대한 기본 정보를 성공적으로 가져왔습니다.", businessRegNumber);
-        return basicInfo;
+        return new BasicInfoResponse(contract, settlementInfo, paymentMethod);
+    }
+
+    public List<MemoResponse> getMemoList(String inputMid){
+        List<MemoResponse> memoList = basicInfoRepository.getMemoList(inputMid);
+        if(memoList.isEmpty()) {
+            log.info("MID {}에 대한 메모내역이 없습니다.", inputMid);
+            throw new MemoNotFoundException();
+        }else{
+            log.info("총 {}개의 메모를 성공적으로 가져왔습니다", memoList.size());
+        }
+        return memoList;
     }
 }
