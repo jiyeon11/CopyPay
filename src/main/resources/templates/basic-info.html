@@ -585,7 +585,7 @@
                     makeAjaxCall('/api/basic-info/' + regNumber, 'GET', function (data) {
                         setBasicInfoData(data);  //기본정보 가져오기
                         //mid로 메모 데이터 가져오기
-                        makeAjaxCall('api/memo/'+ data.mid, 'GET', function(data){
+                        makeAjaxCall('api/memo/'+ data.contract.mid, 'GET', function(data){
                             populateMemo(data);
                         }, showEmptyMemoDataRow);
                     });
@@ -619,6 +619,9 @@
                     if(errorCallback){
                         errorCallback();
                     }
+                    else if(error.responseJSON.message){
+                        alert(error.responseJSON.message);
+                    }
                     else if(!error.responseJSON.message){
                         alert("데이터를 가져오는 데 실패했습니다. 다시 시도해 주세요.");
                     }
@@ -644,49 +647,51 @@
         }
 
         function setBasicInfoData(data) {  //일반정보 업데이트
-            $('#inputBusinessRegNumber').val(formatBusinessRegNumber(data.businessRegNumber));  //사업자번호
-            $('#inputMID2').val(data.mid);  //MID
-            $('#inputBusinessName').val(data.businessName);  //상호
-            $('#effectiveDate').text(formatDate(data.effectiveDate) + " ~ " + formatDate(data.completionDate));  //적용일~완료일
-            $('#inputContractDate').val(formatDate(data.contractDate));  //계약일자
-            $('#inputCeoName').val(data.ceoName);  //대표자명
-            $('#ceoBirth').text(formatDate(data.ceoBirth));  //대표자 생년월일
-            $('#ceoHP').text(formatPhone(data.ceoHp));  //대표자 HP
-            $('#ceoTEL').val(formatPhone(data.ceoTel));  //대표자 TEL
-            $('#ceoEmail').val(data.ceoEmail);  //대표자 Email
-            $('#ceoFAX').val(data.ceoFax);  //대표자 FAX
-            $('#inputPostCode').val(data.businessPostcode);  //사업장 우편번호
-            $('#inputAddress1').val(data.businessAddressLine1);  //사업장 주소1
-            $('#inputAddress2').val(data.businessAddressLine2);  //사업장 주소2
-            $('#businessType').text(data.businessType);  //사업체구분
-            $('#inputContractManagerName').val(data.franchiseContractManagerName);  //가맹점 계약담당 성명
-            $('#inputContractManagerTEL').val(formatPhone(data.franchiseContractManagerTel));  //가맹점 계약담당 TEL
-            $('#inputContractManagerHP').val(formatPhone(data.franchiseContractManagerHp));  //가맹점 계약담당 HP
-            $('#inputContractManagerEmail').val(data.franchiseContractManagerEmail);  //가맹점 계약담당 Email
-            $('#selectContractManager').val(data.contractManager);  //계약담당자
-            $('#selectSalesManager').val(data.salesManager);  //영업담당자
-            $('#selectFeePaymentMethod').val(data.feePaymentMethod);  //수수료 지급방법
-            $('#inputFeeSettlementDate').val(formatDate(data.feeSettlementDate));  //수수료 정산일자
-            $('input:radio[name="bordered-radio"][value="' + data.depositAccountFormat + '"]').prop("checked", true); //정산 입금 통장 인자 표기 방법
-            $('#inputDepositAccountFormat').val(data.accountParameterName);  //통장 인자명
-            $('#selectTaxInvoiceCriteria').val(data.taxInvoiceCriteria);  //세금계산서 발행 기준
-            $('#selectTaxInvoiceVat').val(data.taxInvoiceVat);  //세금계산서 부가세 계산 방식
-            $('#inputTaxInvoiceEmail').val(data.taxInvoiceEmail);  //세금계산서 이메일
-            $('#selectPartialCancellationAllowed').val(data.partialCancellationAllowed);  //부분취소 가능 여부
-            $('#selectIsUsed').val(data.isUsed);  //사용전환
-            $('#selectAuthenticationType').val(data.authenticationType);  //인증형태
-            $('#selectSettlementCycle').val(data.settlementCycle);  //정산주기
-            $('#inputEffectiveDate').val(formatDate(data.settlementCycleEffectiveDate));  //정산주기 적용일자
-            $('#selectPurchaseMethod').val(data.purchaseMethod);  //매입방법
-            $('#selectPurchaseDate').val(data.purchaseDate);  //매입일자
-            $('#selectDebitcardFeeManagement').val(data.debitcardFeeManagement);  //체크카드 가맹점 수수료 별도관리
-            $('#selectInstallmentMonths').val(data.installmentMonths);  //할부개월수제한
-            $('#selectIsSmallMidUsed').val(data.isSmallMidUsed);  //영중소 사용여부
-            $('#selectSmallMidBalanceSettlementReq').val(data.smallMidBalanceSettlementReq);  //영중소 차액정산 요청
-            $('#selectDifferenceSettlementCycle').val(data.differenceSettlementCycle);  //영중소 차액정산주기
-            setCardCheckboxes(data.majorDomesticUnusableCard);  //국내 사용불가 카드사(메이저)
-            setCardCheckboxes(data.minorDomesticUnusableCard);  //국내 사용불가 카드사(마이너)
-            setCardCheckboxes(data.minorForeignUnusableCard);  //해외 사용불가 카드사
+            $('#inputBusinessRegNumber').val(formatBusinessRegNumber(data.contract.businessRegNumber));  //사업자번호
+            $('#inputMID2').val(data.contract.mid);  //MID
+            $('#inputBusinessName').val(data.contract.businessName);  //상호
+            $('#effectiveDate').text(formatDate(data.contract.effectiveDate) + " ~ " + formatDate(data.contract.completionDate));  //적용일~완료일
+            $('#inputContractDate').val(formatDate(data.contract.contractDate));  //계약일자
+            $('#inputCeoName').val(data.contract.ceoName);  //대표자명
+            $('#ceoBirth').text(formatDate(data.contract.ceoBirth));  //대표자 생년월일
+            $('#ceoHP').text(formatPhone(data.contract.ceoHp));  //대표자 HP
+            $('#ceoTEL').val(formatPhone(data.contract.ceoTel));  //대표자 TEL
+            $('#ceoEmail').val(data.contract.ceoEmail);  //대표자 Email
+            $('#ceoFAX').val(data.contract.ceoFax);  //대표자 FAX
+            $('#inputPostCode').val(data.contract.businessPostcode);  //사업장 우편번호
+            $('#inputAddress1').val(data.contract.businessAddressLine1);  //사업장 주소1
+            $('#inputAddress2').val(data.contract.businessAddressLine2);  //사업장 주소2
+            $('#businessType').text(data.contract.businessType);  //사업체구분
+            $('#inputContractManagerName').val(data.contract.franchiseContractManagerName);  //가맹점 계약담당 성명
+            $('#inputContractManagerTEL').val(formatPhone(data.contract.franchiseContractManagerTel));  //가맹점 계약담당 TEL
+            $('#inputContractManagerHP').val(formatPhone(data.contract.franchiseContractManagerHp));  //가맹점 계약담당 HP
+            $('#inputContractManagerEmail').val(data.contract.franchiseContractManagerEmail);  //가맹점 계약담당 Email
+            $('#selectContractManager').val(data.contract.contractManager);  //계약담당자
+            $('#selectSalesManager').val(data.contract.salesManager);  //영업담당자
+
+            $('#selectFeePaymentMethod').val(data.settlementInfo.feePaymentMethod);  //수수료 지급방법
+            $('#inputFeeSettlementDate').val(formatDate(data.settlementInfo.feeSettlementDate));  //수수료 정산일자
+            $('input:radio[name="bordered-radio"][value="' + data.settlementInfo.depositAccountFormat + '"]').prop("checked", true); //정산 입금 통장 인자 표기 방법
+            $('#inputDepositAccountFormat').val(data.settlementInfo.accountParameterName);  //통장 인자명
+            $('#selectTaxInvoiceCriteria').val(data.settlementInfo.taxInvoiceCriteria);  //세금계산서 발행 기준
+            $('#selectTaxInvoiceVat').val(data.settlementInfo.taxInvoiceVat);  //세금계산서 부가세 계산 방식
+            $('#inputTaxInvoiceEmail').val(data.settlementInfo.taxInvoiceEmail);  //세금계산서 이메일
+            $('#selectPartialCancellationAllowed').val(data.settlementInfo.partialCancellationAllowed);  //부분취소 가능 여부
+
+            $('#selectIsUsed').val(data.paymentMethod.isUsed);  //사용전환
+            $('#selectAuthenticationType').val(data.paymentMethod.authenticationType);  //인증형태
+            $('#selectSettlementCycle').val(data.paymentMethod.settlementCycle);  //정산주기
+            $('#inputEffectiveDate').val(formatDate(data.paymentMethod.settlementCycleEffectiveDate));  //정산주기 적용일자
+            $('#selectPurchaseMethod').val(data.paymentMethod.purchaseMethod);  //매입방법
+            $('#selectPurchaseDate').val(data.paymentMethod.purchaseDate);  //매입일자
+            $('#selectDebitcardFeeManagement').val(data.paymentMethod.debitcardFeeManagement);  //체크카드 가맹점 수수료 별도관리
+            $('#selectInstallmentMonths').val(data.paymentMethod.installmentMonths);  //할부개월수제한
+            $('#selectIsSmallMidUsed').val(data.paymentMethod.isSmallMidUsed);  //영중소 사용여부
+            $('#selectSmallMidBalanceSettlementReq').val(data.paymentMethod.smallMidBalanceSettlementReq);  //영중소 차액정산 요청
+            $('#selectDifferenceSettlementCycle').val(data.paymentMethod.differenceSettlementCycle);  //영중소 차액정산주기
+            setCardCheckboxes(data.paymentMethod.majorDomesticUnusableCard);  //국내 사용불가 카드사(메이저)
+            setCardCheckboxes(data.paymentMethod.minorDomesticUnusableCard);  //국내 사용불가 카드사(마이너)
+            setCardCheckboxes(data.paymentMethod.minorForeignUnusableCard);  //해외 사용불가 카드사
         }
 
         function setupCheckboxGroup(groupId, childClass) {  //모든 체크박스 체크/해제
