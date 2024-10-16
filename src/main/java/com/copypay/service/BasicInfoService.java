@@ -68,7 +68,7 @@ public class BasicInfoService {
         int rowsAffected = basicInfoRepository.updateContract(contractRequest);
         if(rowsAffected == 0) {
             log.error("사업자번호 : {} 계약 업데이트 실패",contractRequest.getBusinessRegNumber());
-            throw new ContractUpdateFailedException();
+            throw new UpdateFailedException();
         }else{
             log.info("사업자번호 : {} 계약 정보가 성공적으로 업데이트 되었습니다.", contractRequest.getBusinessRegNumber());
         }
@@ -82,6 +82,7 @@ public class BasicInfoService {
         int rowsAffected = basicInfoRepository.insertSettlementInfo(settlementInfoRequest);
         if(rowsAffected == 0){
             log.error("NO : {} 정산정보 업데이트 실패", settlementInfoRequest.getNo());
+            throw new UpdateFailedException();
         }else{
             log.info("NO : {} 정산정보 정보가 성공적으로 업데이트 되었습니다.", settlementInfoRequest.getNo());
         }

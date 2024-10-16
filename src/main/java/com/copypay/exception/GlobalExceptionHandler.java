@@ -1,7 +1,6 @@
 package com.copypay.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,10 +38,10 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(ErrorCode.MEMO_NOT_FOUND));
     }
 
-    @ExceptionHandler(ContractUpdateFailedException.class)
-    protected ResponseEntity<ErrorResponse> contractUpdateFailedExceptionHandler(ContractUpdateFailedException e) {
+    @ExceptionHandler(UpdateFailedException.class)
+    protected ResponseEntity<ErrorResponse> updateFailedExceptionHandler(UpdateFailedException e) {
         return ResponseEntity
-                .status(ErrorCode.CONTRACT_UPDATE_FAILED.getStatus().value())
-                .body(new ErrorResponse(ErrorCode.CONTRACT_UPDATE_FAILED));
+                .status(ErrorCode.UPDATE_FAILED.getStatus().value())
+                .body(new ErrorResponse(ErrorCode.UPDATE_FAILED));
     }
 }
