@@ -195,13 +195,13 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>수수료 지급방법</td>
                             <td class="border-2 py-1">
-                                <select id="selectFeePaymentMethod" class="w-22 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                <select id="selectFeePaymentMethod" name="수수료 지급방법" class="w-22 ml-3 border-2 border-gray-400 outline-none text-sm" required>
                                     <option value="선정산">선정산</option>
                                     <option value="후취정산">후취정산</option>
                                 </select>
                                 <div>
                                     <label for="inputFeeSettlementDate" class="text-sm font-bold ml-3">적용시작일자:</label>
-                                    <input type="text" id="inputFeeSettlementDate" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                    <input type="text" id="inputFeeSettlementDate" name="적용시작일자" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                                     <p class="text-sm inline">부터</p>
                                 </div>
                             </td>
@@ -239,7 +239,7 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>세금계산서 E-Mail</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputTaxInvoiceEmail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputTaxInvoiceEmail" name="세금계산서 E-mail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                             </td>
                         </tr>
                         <tr class="table-row">
@@ -545,6 +545,7 @@
     </form>
 
     <script>
+        var no;
         $(document).ready(function () {
             //기본 정보 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
@@ -559,21 +560,19 @@
             //일반정보 등록 버튼 클릭 시
             $("#registerBasicInfoBtn").click(function (){
                 event.preventDefault();
-                let isValid = true;
-                $("#basicInfoNewModal").find('input[required]').each(function() {
-                    if (!$(this).val()) {
-                        alert($(this).attr('name') + ' 필드는 필수입니다.');
-                        isValid = false;
-                        $(this).focus();
-                        return false;
-                    }
-                });
-
-                if (isValid) {
+                if(validRequiredFields($("#basicInfoNewModal"))){
                     saveContractData();
                 }
             });
-            
+
+            //정산정보 저장 버튼 클릭 시
+            $("#settlementInfoBtn").click(function (){
+                event.preventDefault();
+                if(validRequiredFields($("#basicInfoNewModal"))){
+                    insertSettlementInfoData();
+                }
+            });
+        
             //신규 모달 열기
             $("#newModalBtn").click(function () {
                 $("#basicInfoNewModal").removeClass("hidden");
@@ -606,6 +605,9 @@
                         makeAjaxCall('api/memo/'+ data.contract.mid, 'GET', null, function(data){
                             populateMemo(data);
                         }, showEmptyMemoDataRow);
+                    });
+                    makeAjaxCall('/api/no/'+regNumber, 'GET', null, function(data) {   //사업자번호로 NO 가져오기
+                        no = data;
                     });
                 }
             });
@@ -683,6 +685,49 @@
             makeAjaxCall('/api/contracts/'+regNumber, 'PUT', contractData, function(data){
                 alert('계약 정보가 성공적으로 업데이트 되었습니다.');
             });
+        }
+
+        //정산정보 등록
+        function insertSettlementInfoData() {
+            var depositAccountFormat = $('input:radio[name="bordered-radio"]:checked').val();
+            var accountParameterName;
+
+            if (depositAccountFormat === '직접입력') {  //직접입력한걸로 설정
+                accountParameterName = $('#inputDepositAccountFormat').val();
+            } else if (depositAccountFormat === 'UDID') {  //UDID인 경우 UDID로 설정
+                accountParameterName = "UDID";
+            } else {
+                accountParameterName = $('#inputMID2').val(); //가맹점 MID인 경우 MID로 설정
+            }
+
+            var settlementInfoData = {
+                no: no,
+                paymentMethod: $('#selectPaymentMethod').val(),
+                feePaymentMethod: $('#selectFeePaymentMethod').val(),
+                feeSettlementDate: $('#inputFeeSettlementDate').val().replace(/[-/]/g, ''),
+                depositAccountFormat: depositAccountFormat,
+                accountParameterName: accountParameterName,
+                taxInvoiceCriteria: $('#selectTaxInvoiceCriteria').val(),
+                taxInvoiceVat: $('#selectTaxInvoiceVat').val(),
+                taxInvoiceEmail: $('#inputTaxInvoiceEmail').val(),
+                partialCancellationAllowed: $('#selectPartialCancellationAllowed').val()
+            };
+            makeAjaxCall('/api/settlement-info/'+no, 'POST', settlementInfoData, function(data){
+                alert('정산 정보가 성공적으로 업데이트 되었습니다.');
+            });
+        }
+
+        function validRequiredFields(modal){  //필수 입력 필드 검사
+            let isValid = true;
+            modal.find('input[required]').each(function() {
+                if (!$(this).val()) {
+                    alert($(this).attr('name') + ' 필드는 필수입니다.');
+                    isValid = false;
+                    $(this).focus();
+                    return false;
+                }
+            });
+            return isValid;
         }
 
         function clearModal(){  //입력 내용 초기화

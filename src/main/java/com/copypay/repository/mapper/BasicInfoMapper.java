@@ -18,4 +18,5 @@ public interface BasicInfoMapper {
     SettlementInfoResponse getSettlementInfoByNo(int no);
     String getNoByBusinessRegNumber(String businessRegNumber);
     int updateContract(ContractRequest contractRequest);
+    int insertSettlementInfo(SettlementInfoRequest settlementInfoRequest);
 }

@@ -44,9 +44,9 @@ public class BasicInfoService {
         PaymentMethodResponse paymentMethod = basicInfoRepository.getPaymentMethodByNo(contract.getNo());
 
         if(settlementInfo == null){
-            log.error("사업자번호 {}에 대한 정산 정보가 없습니다.", businessRegNumber);
+            log.info("사업자번호 {}에 대한 정산 정보가 없습니다.", businessRegNumber);
         } else if(paymentMethod == null){
-            log.error("사업자번호 {}에 대한 결제수단 정보가 없습니다.", businessRegNumber);
+            log.info("사업자번호 {}에 대한 결제수단 정보가 없습니다.", businessRegNumber);
         }
 
         log.info("사업자번호 {}에 대한 기본 정보를 성공적으로 가져왔습니다.", businessRegNumber);
@@ -76,5 +76,14 @@ public class BasicInfoService {
 
     public String getNoByBusinessRegNumber(String businessRegNumber){
         return basicInfoRepository.getNoByBusinessRegNumber(businessRegNumber);
+    }
+
+    public void insertSettlementInfo(SettlementInfoRequest settlementInfoRequest){
+        int rowsAffected = basicInfoRepository.insertSettlementInfo(settlementInfoRequest);
+        if(rowsAffected == 0){
+            log.error("NO : {} 정산정보 업데이트 실패", settlementInfoRequest.getNo());
+        }else{
+            log.info("NO : {} 정산정보 정보가 성공적으로 업데이트 되었습니다.", settlementInfoRequest.getNo());
+        }
     }
 }

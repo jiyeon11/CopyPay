@@ -59,4 +59,8 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
         return basicInfoMapper.updateContract(contractRequest);
     }
 
+    @Override
+    public int insertSettlementInfo(SettlementInfoRequest settlementInfoRequest) {
+        return basicInfoMapper.insertSettlementInfo(settlementInfoRequest);
+    }
 }

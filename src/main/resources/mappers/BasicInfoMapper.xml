@@ -192,4 +192,42 @@
 			WHERE BUSINESS_REG_NUMBER = #{businessRegNumber}
 		]]>
 	</update>
+
+	<insert id="insertSettlementInfo" parameterType="com.copypay.dto.request.SettlementInfoRequest">
+		<![CDATA[
+			INSERT INTO SETTLEMENT_INFO (
+				NO,
+				PAYMENT_METHOD,
+				FEE_PAYMENT_METHOD,
+				FEE_SETTLEMENT_DATE,
+				DEPOSIT_ACCOUNT_FORMAT,
+				ACCOUNT_PARAMETER_NAME,
+				TAX_INVOICE_CRITERIA,
+				TAX_INVOICE_VAT,
+				TAX_INVOICE_EMAIL,
+				PARTIAL_CANCELLATION_ALLOWED
+			) VALUES (
+				#{no},
+				#{paymentMethod},
+				#{feePaymentMethod},
+				#{feeSettlementDate},
+				#{depositAccountFormat},
+				#{accountParameterName},
+				#{taxInvoiceCriteria},
+				#{taxInvoiceVat},
+				#{taxInvoiceEmail},
+				#{partialCancellationAllowed}
+			)
+			ON DUPLICATE KEY UPDATE
+				PAYMENT_METHOD = #{paymentMethod},
+				FEE_PAYMENT_METHOD = #{feePaymentMethod},
+				FEE_SETTLEMENT_DATE = #{feeSettlementDate},
+				DEPOSIT_ACCOUNT_FORMAT = #{depositAccountFormat},
+				ACCOUNT_PARAMETER_NAME = #{accountParameterName},
+				TAX_INVOICE_CRITERIA = #{taxInvoiceCriteria},
+				TAX_INVOICE_VAT = #{taxInvoiceVat},
+				TAX_INVOICE_EMAIL = #{taxInvoiceEmail},
+				PARTIAL_CANCELLATION_ALLOWED = #{partialCancellationAllowed}
+		]]>
+	</insert>
 </mapper>

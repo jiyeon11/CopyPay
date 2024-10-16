@@ -60,4 +60,11 @@ public class BasicInfoController {
     public ResponseEntity<?> getNoByBusinessRegNumber(@PathVariable String businessRegNumber){
         return ResponseEntity.ok().body(basicInfoService.getNoByBusinessRegNumber(businessRegNumber));
     }
+
+    @PostMapping("/api/settlement-info/{no}")
+    @ResponseBody
+    public ResponseEntity<?> insertSettlementInfo(@RequestBody SettlementInfoRequest settlementInfoRequest){
+        basicInfoService.insertSettlementInfo(settlementInfoRequest);
+        return ResponseEntity.noContent().build();
+    }
 }
