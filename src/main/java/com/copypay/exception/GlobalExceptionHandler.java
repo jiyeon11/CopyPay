@@ -38,4 +38,11 @@ public class GlobalExceptionHandler {
                 .status(ErrorCode.MEMO_NOT_FOUND.getStatus().value())
                 .body(new ErrorResponse(ErrorCode.MEMO_NOT_FOUND));
     }
+
+    @ExceptionHandler(ContractUpdateFailedException.class)
+    protected ResponseEntity<ErrorResponse> contractUpdateFailedExceptionHandler(ContractUpdateFailedException e) {
+        return ResponseEntity
+                .status(ErrorCode.CONTRACT_UPDATE_FAILED.getStatus().value())
+                .body(new ErrorResponse(ErrorCode.CONTRACT_UPDATE_FAILED));
+    }
 }

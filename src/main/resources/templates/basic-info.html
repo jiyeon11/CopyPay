@@ -66,12 +66,12 @@
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업자번호</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputBusinessRegNumber" class="w-28 h-7 text-sm pl-1 ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
+                                <input type="text" id="inputBusinessRegNumber" name="사업자번호" class="w-28 h-7 text-sm pl-1 ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
                                 <button type="button" id="getBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7">가져오기</button>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>MID</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputMID2" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputMID2" name="MID" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                                 <button id="checkDuplicateBtn" class="text-white text-xs bg-green-700 w-16 h-7">중복확인</button>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">상호</td>
@@ -106,14 +106,14 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-600">*</span>대표 TEL</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="ceoTEL" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="ceoTEL" name="대표 TEL" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                             </td>
                         </tr>
                 
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 E-Mail</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="ceoEmail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="ceoEmail" name="대표 E-Mail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자 FAX</td>
                             <td class="border-2 py-1" colspan="3">
@@ -138,13 +138,13 @@
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>가맹점 계약담당</td>
                             <td class="border-2 py-1" colspan="5">
                                 <p class="text-sm inline ml-3">성명:</p>
-                                <input type="text" id="inputContractManagerName" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputContractManagerName" name="가맹점 계약담당 성명" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                                 <p class="text-sm inline ml-3">TEL:</p>
-                                <input type="text" id="inputContractManagerTEL" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="inputContractManagerTEL" name="가맹점 계약담당 TEL" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                                 <p class="text-sm inline ml-3">HP:</p>
-                                <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="inputContractManagerHP" name="가맹점 계약담당 HP" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
                                 <p class="text-sm inline ml-3">EMail:</p>
-                                <input type="text" id="inputContractManagerEmail" class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputContractManagerEmail" name="가맹점 계약담당" class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
                             </td>
                         </tr>
 
@@ -550,12 +550,30 @@
             $("#basicInfoCheckBtn").on('click', function () {
                 const midValue = $("#inputMid").val();
                 const url = midValue === "" ? '/api/basic-info/list' : '/api/basic-info/list/' + midValue;
-                makeAjaxCall(url, 'GET', function (data) {
+                makeAjaxCall(url, 'GET', null, function (data) {
                     populateTable(data);
                 }, showEmptyDataRow);
                 $("#basicInfoList").removeClass("hidden");
-             });
+            });
 
+            //일반정보 등록 버튼 클릭 시
+            $("#registerBasicInfoBtn").click(function (){
+                event.preventDefault();
+                let isValid = true;
+                $("#basicInfoNewModal").find('input[required]').each(function() {
+                    if (!$(this).val()) {
+                        alert($(this).attr('name') + ' 필드는 필수입니다.');
+                        isValid = false;
+                        $(this).focus();
+                        return false;
+                    }
+                });
+
+                if (isValid) {
+                    saveContractData();
+                }
+            });
+            
             //신규 모달 열기
             $("#newModalBtn").click(function () {
                 $("#basicInfoNewModal").removeClass("hidden");
@@ -564,7 +582,7 @@
                 $("#inputFeeSettlementDate").val(setTodayDate());
                 $("#inputEffectiveDate").val(setTodayDate());
 
-                makeAjaxCall('/api/managers', 'GET', function (data) {  //계약담당자, 영업담당자 셀렉트박스 추가
+                makeAjaxCall('/api/managers', 'GET', null, function (data) {  //계약담당자, 영업담당자 셀렉트박스 추가
                     getManagers(data);
                 });
             });
@@ -582,10 +600,10 @@
                     alert('사업자번호는 10자리가 유효합니다.')
                 } else {
                     clearModal();
-                    makeAjaxCall('/api/basic-info/' + regNumber, 'GET', function (data) {
+                    makeAjaxCall('/api/basic-info/' + regNumber, 'GET', null, function (data) {
                         setBasicInfoData(data);  //기본정보 가져오기
                         //mid로 메모 데이터 가져오기
-                        makeAjaxCall('api/memo/'+ data.contract.mid, 'GET', function(data){
+                        makeAjaxCall('api/memo/'+ data.contract.mid, 'GET', null, function(data){
                             populateMemo(data);
                         }, showEmptyMemoDataRow);
                     });
@@ -598,22 +616,30 @@
                 { id: 'major-domestic-checkbox', childClass: 'major-domestic-card' }
             ];
             checkboxGroups.forEach(group => setupCheckboxGroup(group.id, group.childClass));
-            
         });
 
         /**
          * AJAX 요청을 처리하는 공통 함수
          * @param {string} url - 요청 URL
          * @param {string} method - HTTP 메서드
+         * @param {object} data - 전송할 데이터 (JSON 형식)
          * @param {function} successCallback - 성공 시 콜백 함수
          * @param {function} errorCallback - 에러 시 콜백 함수
          */
-        function makeAjaxCall(url, method, successCallback, errorCallback) {
+        function makeAjaxCall(url, method, data, successCallback, errorCallback) {
+            const token = $("meta[name='_csrf']").attr("content")
+            const header = $("meta[name='_csrf_header']").attr("content");
+
             $.ajax({
                 url: url,
                 method: method,
-                success: function (data) {
-                    successCallback(data);
+                data: JSON.stringify(data),
+                contentType : 'application/json; charset=utf-8',
+                beforeSend: function(xhr){  //CSRF 토큰 설정
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (responseData) {
+                    successCallback(responseData);
                 },
                 error: function (error) {
                     if(errorCallback){
@@ -626,6 +652,36 @@
                         alert("데이터를 가져오는 데 실패했습니다. 다시 시도해 주세요.");
                     }
                 }
+            });
+        }
+
+        //일반정보(계약) 등록
+        function saveContractData() {
+            const regNumber = $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, '');
+            var contractData = {
+                businessRegNumber: regNumber,
+                mid: $('#inputMID2').val(),
+                businessName: $('#inputBusinessName').val(),
+                contractDate: $('#inputContractDate').val().replace(/[-/]/g, ''),
+                ceoName: $('#inputCeoName').val(),
+                ceoBirth: $('#ceoBirth').text().replace(/[-/]/g, ''),
+                ceoHp: $('#ceoHP').text().replace(/[-/]/g, ''),
+                ceoTel: $('#ceoTEL').val().replace(/[-/]/g, ''),
+                ceoEmail: $('#ceoEmail').val(),
+                ceoFax: $('#ceoFAX').val(),
+                businessPostcode: $('#inputPostCode').val(),
+                businessAddressLine1: $('#inputAddress1').val(),
+                businessAddressLine2: $('#inputAddress2').val(),
+                businessType: $('#businessType').text(),
+                franchiseContractManagerName: $('#inputContractManagerName').val(),
+                franchiseContractManagerTel: $('#inputContractManagerTEL').val().replace(/[-/]/g, ''),
+                franchiseContractManagerHp: $('#inputContractManagerHP').val().replace(/[-/]/g, ''),
+                franchiseContractManagerEmail: $('#inputContractManagerEmail').val(),
+                contractManager: $('#selectContractManager').val(),
+                salesManager: $('#selectSalesManager').val()
+            };
+            makeAjaxCall('/api/contracts/'+regNumber, 'PUT', contractData, function(data){
+                alert('계약 정보가 성공적으로 업데이트 되었습니다.');
             });
         }
 

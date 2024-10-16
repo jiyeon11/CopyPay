@@ -1,9 +1,8 @@
 package com.copypay.service;
 
+import com.copypay.dto.request.ContractRequest;
 import com.copypay.dto.response.*;
-import com.copypay.exception.BusinessRegNumberNotFoundException;
-import com.copypay.exception.DataNotFoundException;
-import com.copypay.exception.MemoNotFoundException;
+import com.copypay.exception.*;
 import com.copypay.repository.BasicInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,5 +61,15 @@ public class BasicInfoService {
             log.info("총 {}개의 메모를 성공적으로 가져왔습니다", memoList.size());
         }
         return memoList;
+    }
+
+    public void updateContract(ContractRequest contractRequest) {
+        int rowsAffected = basicInfoRepository.updateContract(contractRequest);
+        if (rowsAffected == 0) {
+            log.error("사업자번호 : {} 계약 업데이트 실패",contractRequest.getBusinessRegNumber());
+            throw new ContractUpdateFailedException();
+        }else{
+            log.info("사업자번호 : {} 계약 정보가 성공적으로 업데이트 되었습니다.", contractRequest.getBusinessRegNumber());
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.copypay.controller;
 
+import com.copypay.dto.request.ContractRequest;
 import com.copypay.dto.response.BasicInfoListResponse;
 import com.copypay.dto.response.MemoResponse;
 import com.copypay.service.BasicInfoService;
@@ -7,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,5 +45,12 @@ public class BasicInfoController {
     @ResponseBody
     public ResponseEntity<List<MemoResponse>> getMemoList(@PathVariable String inputMid){
         return ResponseEntity.ok(basicInfoService.getMemoList(inputMid));
+    }
+
+    @PutMapping("/api/contracts/{businessRegNumber}")
+    @ResponseBody
+    public ResponseEntity<?> updatedContract(@RequestBody ContractRequest contractRequest){
+        basicInfoService.updateContract(contractRequest);
+        return ResponseEntity.noContent().build();
     }
 }

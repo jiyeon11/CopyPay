@@ -1,5 +1,6 @@
 package com.copypay.repository;
 
+import com.copypay.dto.request.ContractRequest;
 import com.copypay.dto.response.*;
 import com.copypay.repository.mapper.BasicInfoMapper;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +46,10 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     @Override
     public SettlementInfoResponse getSettlementInfoByNo(int no) {
         return basicInfoMapper.getSettlementInfoByNo(no);
+    }
+
+    @Override
+    public int updateContract(ContractRequest contractRequest) {
+        return basicInfoMapper.updateContract(contractRequest);
     }
 }

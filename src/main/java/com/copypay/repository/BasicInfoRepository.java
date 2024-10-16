@@ -1,5 +1,6 @@
 package com.copypay.repository;
 
+import com.copypay.dto.request.ContractRequest;
 import com.copypay.dto.response.*;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface BasicInfoRepository {
     ContractResponse getContractByBusinessRegNumber(String inputBusinessRegNumber);
     PaymentMethodResponse getPaymentMethodByNo(int no);
     SettlementInfoResponse getSettlementInfoByNo(int no);
+    int updateContract(ContractRequest contractRequest);
 }

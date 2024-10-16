@@ -160,4 +160,28 @@
 		WHERE BUSINESS_REG_NUMBER = #{inputBusinessRegNumber}
 		]]>
 	</select>
+
+	<update id="updateContract" parameterType="com.copypay.dto.request.ContractRequest">
+		<![CDATA[
+			UPDATE CONTRACT SET
+				MID = #{mid},
+				BUSINESS_NAME = #{businessName},
+				CONTRACT_DATE = date_format(now(), _utf8mb4'%Y%m%d'),
+				CEO_NAME = #{ceoName},
+				CEO_TEL = #{ceoTel},
+				CEO_EMAIL = #{ceoEmail},
+				CEO_FAX = #{ceoFax},
+				BUSINESS_POSTCODE = #{businessPostcode},
+				BUSINESS_ADDRESS_LINE1 = #{businessAddressLine1},
+				BUSINESS_ADDRESS_LINE2 = #{businessAddressLine2},
+				FRANCHISE_CONTRACT_MANAGER_NAME = #{franchiseContractManagerName},
+				FRANCHISE_CONTRACT_MANAGER_TEL = #{franchiseContractManagerTel},
+				FRANCHISE_CONTRACT_MANAGER_HP = #{franchiseContractManagerHp},
+				FRANCHISE_CONTRACT_MANAGER_EMAIL = #{franchiseContractManagerEmail},
+				APPLICATION_PATH = #{applicationPath},
+				CONTRACT_MANAGER = #{contractManager},
+				SALES_MANAGER = #{salesManager}
+			WHERE BUSINESS_REG_NUMBER = #{businessRegNumber}
+		]]>
+	</update>
 </mapper>
