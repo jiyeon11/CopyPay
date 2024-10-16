@@ -1,6 +1,7 @@
 package com.copypay.controller;
 
 import com.copypay.dto.request.ContractRequest;
+import com.copypay.dto.request.SettlementInfoRequest;
 import com.copypay.dto.response.BasicInfoListResponse;
 import com.copypay.dto.response.MemoResponse;
 import com.copypay.service.BasicInfoService;
@@ -49,8 +50,14 @@ public class BasicInfoController {
 
     @PutMapping("/api/contracts/{businessRegNumber}")
     @ResponseBody
-    public ResponseEntity<?> updatedContract(@RequestBody ContractRequest contractRequest){
+    public ResponseEntity<?> updateContract(@RequestBody ContractRequest contractRequest){
         basicInfoService.updateContract(contractRequest);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/api/no/{businessRegNumber}")
+    @ResponseBody
+    public ResponseEntity<?> getNoByBusinessRegNumber(@PathVariable String businessRegNumber){
+        return ResponseEntity.ok().body(basicInfoService.getNoByBusinessRegNumber(businessRegNumber));
     }
 }

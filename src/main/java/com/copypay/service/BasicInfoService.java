@@ -1,6 +1,7 @@
 package com.copypay.service;
 
 import com.copypay.dto.request.ContractRequest;
+import com.copypay.dto.request.SettlementInfoRequest;
 import com.copypay.dto.response.*;
 import com.copypay.exception.*;
 import com.copypay.repository.BasicInfoRepository;
@@ -65,11 +66,15 @@ public class BasicInfoService {
 
     public void updateContract(ContractRequest contractRequest) {
         int rowsAffected = basicInfoRepository.updateContract(contractRequest);
-        if (rowsAffected == 0) {
+        if(rowsAffected == 0) {
             log.error("사업자번호 : {} 계약 업데이트 실패",contractRequest.getBusinessRegNumber());
             throw new ContractUpdateFailedException();
         }else{
             log.info("사업자번호 : {} 계약 정보가 성공적으로 업데이트 되었습니다.", contractRequest.getBusinessRegNumber());
         }
+    }
+
+    public String getNoByBusinessRegNumber(String businessRegNumber){
+        return basicInfoRepository.getNoByBusinessRegNumber(businessRegNumber);
     }
 }

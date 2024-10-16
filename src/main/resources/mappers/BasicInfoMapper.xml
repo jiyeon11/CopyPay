@@ -161,12 +161,20 @@
 		]]>
 	</select>
 
+	<select id="getNoByBusinessRegNumber" parameterType="string" resultType="string">
+		<![CDATA[
+			SELECT NO
+			FROM CONTRACT
+			WHERE BUSINESS_REG_NUMBER = #{businessRegNumber}
+		]]>
+	</select>
+
 	<update id="updateContract" parameterType="com.copypay.dto.request.ContractRequest">
 		<![CDATA[
 			UPDATE CONTRACT SET
 				MID = #{mid},
 				BUSINESS_NAME = #{businessName},
-				CONTRACT_DATE = date_format(now(), _utf8mb4'%Y%m%d'),
+				CONTRACT_DATE = #{contractDate},
 				CEO_NAME = #{ceoName},
 				CEO_TEL = #{ceoTel},
 				CEO_EMAIL = #{ceoEmail},
