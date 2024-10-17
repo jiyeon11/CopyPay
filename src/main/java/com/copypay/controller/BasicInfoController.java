@@ -5,6 +5,7 @@ import com.copypay.dto.request.SettlementInfoRequest;
 import com.copypay.dto.response.BasicInfoListResponse;
 import com.copypay.dto.response.MemoResponse;
 import com.copypay.service.BasicInfoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class BasicInfoController {
 
     @PutMapping("/api/contracts/{businessRegNumber}")
     @ResponseBody
-    public ResponseEntity<?> updateContract(@RequestBody ContractRequest contractRequest){
+    public ResponseEntity<?> updateContract(@Valid @RequestBody ContractRequest contractRequest){
         basicInfoService.updateContract(contractRequest);
         return ResponseEntity.noContent().build();
     }
@@ -63,7 +64,7 @@ public class BasicInfoController {
 
     @PostMapping("/api/settlement-info/{no}")
     @ResponseBody
-    public ResponseEntity<?> insertSettlementInfo(@RequestBody SettlementInfoRequest settlementInfoRequest){
+    public ResponseEntity<?> insertSettlementInfo(@Valid @RequestBody SettlementInfoRequest settlementInfoRequest){
         basicInfoService.insertSettlementInfo(settlementInfoRequest);
         return ResponseEntity.noContent().build();
     }

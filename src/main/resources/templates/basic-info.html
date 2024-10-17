@@ -560,17 +560,13 @@
             //일반정보 등록 버튼 클릭 시
             $("#registerBasicInfoBtn").click(function (){
                 event.preventDefault();
-                if(validRequiredFields($("#basicInfoNewModal"))){
-                    saveContractData();
-                }
+                saveContractData();
             });
 
             //정산정보 저장 버튼 클릭 시
             $("#settlementInfoBtn").click(function (){
                 event.preventDefault();
-                if(validRequiredFields($("#basicInfoNewModal"))){
-                    insertSettlementInfoData();
-                }
+                saveSettlementInfoData();
             });
         
             //신규 모달 열기
@@ -688,7 +684,7 @@
         }
 
         //정산정보 등록
-        function insertSettlementInfoData() {
+        function saveSettlementInfoData() {
             var depositAccountFormat = $('input:radio[name="bordered-radio"]:checked').val();
             var accountParameterName;
 
@@ -715,19 +711,6 @@
             makeAjaxCall('/api/settlement-info/'+no, 'POST', settlementInfoData, function(data){
                 alert('정산 정보가 성공적으로 업데이트 되었습니다.');
             });
-        }
-
-        function validRequiredFields(modal){  //필수 입력 필드 검사
-            let isValid = true;
-            modal.find('input[required]').each(function() {
-                if (!$(this).val()) {
-                    alert($(this).attr('name') + ' 필드는 필수입니다.');
-                    isValid = false;
-                    $(this).focus();
-                    return false;
-                }
-            });
-            return isValid;
         }
 
         function clearModal(){  //입력 내용 초기화
