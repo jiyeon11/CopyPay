@@ -17,6 +17,6 @@ public interface BasicInfoMapper {
     PaymentMethodResponse getPaymentMethodByNo(int no);
     SettlementInfoResponse getSettlementInfoByNo(int no);
     String getNoByBusinessRegNumber(String businessRegNumber);
-    int updateContract(ContractRequest contractRequest);
-    int insertSettlementInfo(SettlementInfoRequest settlementInfoRequest);
+    int saveContract(ContractRequest contractRequest);
+    int saveSettlementInfo(SettlementInfoRequest settlementInfoRequest);
 }

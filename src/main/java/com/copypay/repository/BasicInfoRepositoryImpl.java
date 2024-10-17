@@ -55,12 +55,12 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     }
 
     @Override
-    public int updateContract(ContractRequest contractRequest) {
-        return basicInfoMapper.updateContract(contractRequest);
+    public int saveContract(ContractRequest contractRequest) {
+        return basicInfoMapper.saveContract(contractRequest);
     }
 
     @Override
-    public int insertSettlementInfo(SettlementInfoRequest settlementInfoRequest) {
-        return basicInfoMapper.insertSettlementInfo(settlementInfoRequest);
+    public int saveSettlementInfo(SettlementInfoRequest settlementInfoRequest) {
+        return basicInfoMapper.saveSettlementInfo(settlementInfoRequest);
     }
 }

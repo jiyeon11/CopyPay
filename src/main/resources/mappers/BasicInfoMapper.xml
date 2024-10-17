@@ -169,7 +169,7 @@
 		]]>
 	</select>
 
-	<update id="updateContract" parameterType="com.copypay.dto.request.ContractRequest">
+	<update id="saveContract" parameterType="com.copypay.dto.request.ContractRequest">
 		<![CDATA[
 			UPDATE CONTRACT SET
 				MID = #{mid},
@@ -193,7 +193,7 @@
 		]]>
 	</update>
 
-	<insert id="insertSettlementInfo" parameterType="com.copypay.dto.request.SettlementInfoRequest">
+	<insert id="saveSettlementInfo" parameterType="com.copypay.dto.request.SettlementInfoRequest">
 		<![CDATA[
 			INSERT INTO SETTLEMENT_INFO (
 				NO,

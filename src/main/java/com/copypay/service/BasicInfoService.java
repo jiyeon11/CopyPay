@@ -64,8 +64,8 @@ public class BasicInfoService {
         return memoList;
     }
 
-    public void updateContract(ContractRequest contractRequest) {
-        int rowsAffected = basicInfoRepository.updateContract(contractRequest);
+    public void saveContract(ContractRequest contractRequest) {
+        int rowsAffected = basicInfoRepository.saveContract(contractRequest);
         if(rowsAffected == 0) {
             log.error("사업자번호 : {} 계약 업데이트 실패",contractRequest.getBusinessRegNumber());
             throw new UpdateFailedException();
@@ -78,8 +78,8 @@ public class BasicInfoService {
         return basicInfoRepository.getNoByBusinessRegNumber(businessRegNumber);
     }
 
-    public void insertSettlementInfo(SettlementInfoRequest settlementInfoRequest){
-        int rowsAffected = basicInfoRepository.insertSettlementInfo(settlementInfoRequest);
+    public void saveSettlementInfo(SettlementInfoRequest settlementInfoRequest){
+        int rowsAffected = basicInfoRepository.saveSettlementInfo(settlementInfoRequest);
         if(rowsAffected == 0){
             log.error("NO : {} 정산정보 업데이트 실패", settlementInfoRequest.getNo());
             throw new UpdateFailedException();

@@ -51,8 +51,8 @@ public class BasicInfoController {
 
     @PutMapping("/api/contracts/{businessRegNumber}")
     @ResponseBody
-    public ResponseEntity<?> updateContract(@Valid @RequestBody ContractRequest contractRequest){
-        basicInfoService.updateContract(contractRequest);
+    public ResponseEntity<?> saveContract(@Valid @RequestBody ContractRequest contractRequest){
+        basicInfoService.saveContract(contractRequest);
         return ResponseEntity.noContent().build();
     }
 
@@ -64,8 +64,8 @@ public class BasicInfoController {
 
     @PostMapping("/api/settlement-info/{no}")
     @ResponseBody
-    public ResponseEntity<?> insertSettlementInfo(@Valid @RequestBody SettlementInfoRequest settlementInfoRequest){
-        basicInfoService.insertSettlementInfo(settlementInfoRequest);
+    public ResponseEntity<?> saveSettlementInfo(@Valid @RequestBody SettlementInfoRequest settlementInfoRequest){
+        basicInfoService.saveSettlementInfo(settlementInfoRequest);
         return ResponseEntity.noContent().build();
     }
 }
