@@ -40,11 +40,11 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(ErrorCode.MEMO_NOT_FOUND));
     }
 
-    @ExceptionHandler(UpdateFailedException.class)
-    protected ResponseEntity<ErrorResponse> updateFailedExceptionHandler(UpdateFailedException e) {
+    @ExceptionHandler(SaveFailedException.class)
+    protected ResponseEntity<ErrorResponse> saveFailedExceptionHandler(SaveFailedException e) {
         return ResponseEntity
-                .status(ErrorCode.UPDATE_FAILED.getStatus().value())
-                .body(new ErrorResponse(ErrorCode.UPDATE_FAILED));
+                .status(ErrorCode.SAVE_FAILED.getStatus().value())
+                .body(new ErrorResponse(ErrorCode.SAVE_FAILED));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
