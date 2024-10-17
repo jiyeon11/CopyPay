@@ -607,7 +607,7 @@
                             populateMemo(data);
                         }, showEmptyMemoDataRow);
                     });
-                    makeAjaxCall('/api/no/'+regNumber, 'GET', null, function(data) {   //사업자번호로 NO 가져오기
+                    makeAjaxCall('/api/'+regNumber+'/no', 'GET', null, function(data) {   //사업자번호로 NO 가져오기
                         no = data;
                     });
                 }
@@ -660,9 +660,8 @@
 
         //일반정보(계약) 등록
         function saveContractData() {
-            const regNumber = $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, '');
             var contractData = {
-                businessRegNumber: regNumber,
+                businessRegNumber: $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, ''),
                 mid: $('#inputMID2').val(),
                 businessName: $('#inputBusinessName').val(),
                 contractDate: $('#inputContractDate').val().replace(/[-/]/g, ''),
@@ -683,7 +682,7 @@
                 contractManager: $('#selectContractManager').val(),
                 salesManager: $('#selectSalesManager').val()
             };
-            makeAjaxCall('/api/contracts/'+regNumber, 'PUT', contractData, function(data){
+            makeAjaxCall('/api/contracts', 'PUT', contractData, function(data){
                 alert('계약 정보가 성공적으로 저장되었습니다.');
             });
         }
@@ -713,7 +712,7 @@
                 taxInvoiceEmail: $('#inputTaxInvoiceEmail').val(),
                 partialCancellationAllowed: $('#selectPartialCancellationAllowed').val()
             };
-            makeAjaxCall('/api/settlement-info/'+no, 'POST', settlementInfoData, function(data){
+            makeAjaxCall('/api/settlement-infos', 'POST', settlementInfoData, function(data){
                 alert('정산 정보가 성공적으로 저장되었습니다.');
             });
         }
@@ -750,8 +749,8 @@
                 minorDomesticUnusableCard: minorDomesticCardArray.join(","),
                 minorForeignUnusableCard: minorForeignCardArray.join(",")
             };
-            
-            makeAjaxCall('/api/payment-method/'+no, 'POST', paymentMethodData, function(data){
+
+            makeAjaxCall('/api/payment-methods', 'POST', paymentMethodData, function(data){
                 alert('결제수단이 성공적으로 저장되었습니다.');
             });
         }

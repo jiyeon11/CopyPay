@@ -50,27 +50,27 @@ public class BasicInfoController {
         return ResponseEntity.ok(basicInfoService.getMemoList(inputMid));
     }
 
-    @PutMapping("/api/contracts/{businessRegNumber}")
+    @PutMapping("/api/contracts")
     @ResponseBody
     public ResponseEntity<?> saveContract(@Valid @RequestBody ContractRequest contractRequest){
         basicInfoService.saveContract(contractRequest);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/api/no/{businessRegNumber}")
+    @GetMapping("/api/{businessRegNumber}/no")
     @ResponseBody
     public ResponseEntity<?> getNoByBusinessRegNumber(@PathVariable String businessRegNumber){
         return ResponseEntity.ok().body(basicInfoService.getNoByBusinessRegNumber(businessRegNumber));
     }
 
-    @PostMapping("/api/settlement-info/{no}")
+    @PostMapping("/api/settlement-infos")
     @ResponseBody
     public ResponseEntity<?> saveSettlementInfo(@Valid @RequestBody SettlementInfoRequest settlementInfoRequest){
         basicInfoService.saveSettlementInfo(settlementInfoRequest);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/api/payment-method/{no}")
+    @PostMapping("/api/payment-methods")
     @ResponseBody
     public ResponseEntity<?> savePaymentMethod(@Valid @RequestBody PaymentMethodRequest paymentMethodRequest){
         basicInfoService.savePaymentMethod(paymentMethodRequest);
