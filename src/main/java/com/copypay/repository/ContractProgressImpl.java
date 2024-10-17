@@ -1,5 +1,6 @@
 package com.copypay.repository;
 
+import com.copypay.dto.request.ContractRegisterRequest;
 import com.copypay.dto.response.ContractProgressListResponse;
 import com.copypay.repository.mapper.ContractProgressMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,5 +14,10 @@ public class ContractProgressImpl implements ContractProgressRepository{
     @Override
     public List<ContractProgressListResponse> getContractProgressList(String checkedDate, String startDate, String endDate) {
         return contractProgressMapper.getContractProgressList(checkedDate, startDate, endDate);
+    }
+
+    @Override
+    public void registerContract(ContractRegisterRequest contractRegisterRequest) {
+        contractProgressMapper.registerContract(contractRegisterRequest);
     }
 }

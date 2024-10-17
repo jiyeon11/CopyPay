@@ -1,5 +1,6 @@
 package com.copypay.service;
 
+import com.copypay.dto.request.ContractRegisterRequest;
 import com.copypay.dto.response.ContractProgressListResponse;
 import com.copypay.exception.DataNotFoundException;
 import com.copypay.repository.ContractProgressRepository;
@@ -23,6 +24,10 @@ public class ContractProgressService {
             log.info("총 {}개의 계약 진행현황 항목을 성공적으로 가져왔습니다", contractProgressList.size());
         }
         return contractProgressList;
+    }
+
+    public void registerContract(ContractRegisterRequest contractRegisterRequest) {
+        contractProgressRepository.registerContract(contractRegisterRequest);
     }
 
 }
