@@ -560,24 +560,58 @@
             //일반정보 등록 버튼 클릭 시
             $("#registerBasicInfoBtn").click(function (){
                 event.preventDefault();
-                saveContractData();
+                console.log(getContractData());
+                makeAjaxCall('/api/contracts', 'PUT', getContractData(), function(data){
+                    alert('계약 정보가 성공적으로 저장되었습니다.');
+                });
             });
 
             //정산정보 저장 버튼 클릭 시
             $("#settlementInfoBtn").click(function (){
                 event.preventDefault();
-                saveSettlementInfoData();
+                makeAjaxCall('/api/settlement-infos', 'POST', getSettlementInfoData(), function(data){
+                    alert('정산 정보가 성공적으로 저장되었습니다.');
+                });
             });
+
             //결제수단 저장 버튼 클릭 시
             $("#paymentMethodBtn").click(function (){
                 event.preventDefault();
-                savePaymentMethodData();
+                makeAjaxCall('/api/payment-methods', 'POST', getPaymentMethodData(), function(data){
+                    alert('결제수단이 성공적으로 저장되었습니다.');
+                });
             });
 
             //메모 등록 버튼 클릭 시
             $("#memoBtn").click(function (){
                 event.preventDefault();
-                saveMemoData();
+                makeAjaxCall('/api/memos', 'POST', getMemoData(), function(data){
+                    alert('메모가 성공적으로 저장되었습니다.');
+                    $('#memoContent').val('');
+                    //mid로 메모 데이터 가져오기
+                    makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
+                        populateMemo(data);
+                    });
+                });
+            });
+            
+            //전체 등록 버튼 클릭 시
+            $("#allRegisterBtn").click(function (){
+                event.preventDefault();
+                var basicInfoData = {
+                    contractRequest: getContractData(),
+                    settlementInfoRequest: getSettlementInfoData(),
+                    paymentMethodRequest: getPaymentMethodData(),
+                    memoRequest: getMemoData()
+                };
+                makeAjaxCall('/api/basic-infos', 'POST', basicInfoData, function(data){
+                    alert('성공적으로 저장되었습니다.');
+                    $('#memoContent').val('');
+                    //mid로 메모 데이터 가져오기
+                    makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
+                        populateMemo(data);
+                    });
+                });
             });
 
             //신규 모달 열기
@@ -665,7 +699,7 @@
         }
 
         //일반정보(계약) 등록
-        function saveContractData() {
+        function getContractData() {
             var contractData = {
                 businessRegNumber: $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, ''),
                 mid: $('#inputMID2').val(),
@@ -688,13 +722,11 @@
                 contractManager: $('#selectContractManager').val(),
                 salesManager: $('#selectSalesManager').val()
             };
-            makeAjaxCall('/api/contracts', 'PUT', contractData, function(data){
-                alert('계약 정보가 성공적으로 저장되었습니다.');
-            });
+            return contractData;
         }
 
         //정산정보 저장
-        function saveSettlementInfoData() {
+        function getSettlementInfoData() {
             var depositAccountFormat = $('input:radio[name="bordered-radio"]:checked').val();
             var accountParameterName;
 
@@ -718,13 +750,11 @@
                 taxInvoiceEmail: $('#inputTaxInvoiceEmail').val(),
                 partialCancellationAllowed: $('#selectPartialCancellationAllowed').val()
             };
-            makeAjaxCall('/api/settlement-infos', 'POST', settlementInfoData, function(data){
-                alert('정산 정보가 성공적으로 저장되었습니다.');
-            });
+            return settlementInfoData;
         }
 
         //결제수단 저장
-        function savePaymentMethodData(){
+        function getPaymentMethodData(){
             var majorDomesticCardArray = [];
             var minorDomesticCardArray = [];
             var minorForeignCardArray = [];
@@ -755,27 +785,18 @@
                 minorDomesticUnusableCard: minorDomesticCardArray.join(","),
                 minorForeignUnusableCard: minorForeignCardArray.join(",")
             };
-
-            makeAjaxCall('/api/payment-methods', 'POST', paymentMethodData, function(data){
-                alert('결제수단이 성공적으로 저장되었습니다.');
-            });
+            return paymentMethodData;
         }
 
         //메모 등록
-        function saveMemoData(){
+        function getMemoData(){
             var memoData = {
                 mid: $('#inputMID2').val(),
                 content: $('#memoContent').val()
             };
-            makeAjaxCall('/api/memos', 'POST', memoData, function(data){
-                alert('메모가 성공적으로 저장되었습니다.');
-                $('#memoContent').val('');
-                //mid로 메모 데이터 가져오기
-                makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
-                    populateMemo(data);
-                });
-            });
+            return memoData;
         }
+        
         function clearModal(){  //입력 내용 초기화
             $("#basicInfoNewModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
             $("#basicInfoNewModal input[type='checkbox']").prop('checked', false); // 모든 체크박스 초기화

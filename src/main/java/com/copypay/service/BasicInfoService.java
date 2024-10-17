@@ -1,15 +1,13 @@
 package com.copypay.service;
 
-import com.copypay.dto.request.ContractRequest;
-import com.copypay.dto.request.MemoRequest;
-import com.copypay.dto.request.PaymentMethodRequest;
-import com.copypay.dto.request.SettlementInfoRequest;
+import com.copypay.dto.request.*;
 import com.copypay.dto.response.*;
 import com.copypay.exception.*;
 import com.copypay.repository.BasicInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -107,6 +105,21 @@ public class BasicInfoService {
             throw new SaveFailedException();
         }else{
             log.info("MID : {} 메모가 성공적으로 저장되었습니다.", memoRequest.getMid());
+        }
+    }
+
+    @Transactional
+    public void saveBasicInfo(BasicInfoRequest basicInfoRequest){
+        int rowsAffected = basicInfoRepository.saveContract(basicInfoRequest.getContractRequest());
+        rowsAffected += basicInfoRepository.saveSettlementInfo(basicInfoRequest.getSettlementInfoRequest());
+        rowsAffected += basicInfoRepository.savePaymentMethod(basicInfoRequest.getPaymentMethodRequest());
+        rowsAffected += basicInfoRepository.saveMemo(basicInfoRequest.getMemoRequest());
+
+        if(rowsAffected != 4){
+            log.error("사업자번호 : {} 기본정보 저장 실패", basicInfoRequest.getContractRequest().getBusinessRegNumber());
+            throw new SaveFailedException();
+        }else{
+            log.info("사업자번호 : {} 기본정보가 성공적으로 저장되었습니다.", basicInfoRequest.getContractRequest().getBusinessRegNumber());
         }
     }
 }

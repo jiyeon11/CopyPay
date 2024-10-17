@@ -1,9 +1,6 @@
 package com.copypay.controller;
 
-import com.copypay.dto.request.ContractRequest;
-import com.copypay.dto.request.MemoRequest;
-import com.copypay.dto.request.PaymentMethodRequest;
-import com.copypay.dto.request.SettlementInfoRequest;
+import com.copypay.dto.request.*;
 import com.copypay.dto.response.BasicInfoListResponse;
 import com.copypay.dto.response.MemoResponse;
 import com.copypay.service.BasicInfoService;
@@ -45,6 +42,15 @@ public class BasicInfoController {
     @ResponseBody
     public ResponseEntity<?> getBasicInfo(@PathVariable String businessRegNumber){
         return ResponseEntity.ok(basicInfoService.getBasicInfo(businessRegNumber));
+    }
+
+    @PostMapping("/api/basic-infos")
+    @ResponseBody
+    public ResponseEntity<?> saveBasicInfo(@Valid @RequestBody BasicInfoRequest basicInfoRequest, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        basicInfoRequest.getMemoRequest().setId((String)session.getAttribute("username"));
+        basicInfoService.saveBasicInfo(basicInfoRequest);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/api/memo/{inputMid}")
