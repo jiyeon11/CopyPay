@@ -1,6 +1,7 @@
 package com.copypay.service;
 
 import com.copypay.dto.request.ContractRequest;
+import com.copypay.dto.request.PaymentMethodRequest;
 import com.copypay.dto.request.SettlementInfoRequest;
 import com.copypay.dto.response.*;
 import com.copypay.exception.*;
@@ -67,10 +68,10 @@ public class BasicInfoService {
     public void saveContract(ContractRequest contractRequest) {
         int rowsAffected = basicInfoRepository.saveContract(contractRequest);
         if(rowsAffected == 0) {
-            log.error("사업자번호 : {} 계약 업데이트 실패",contractRequest.getBusinessRegNumber());
+            log.error("사업자번호 : {} 계약 저장 실패",contractRequest.getBusinessRegNumber());
             throw new UpdateFailedException();
         }else{
-            log.info("사업자번호 : {} 계약 정보가 성공적으로 업데이트 되었습니다.", contractRequest.getBusinessRegNumber());
+            log.info("사업자번호 : {} 계약 정보가 성공적으로 저장되었습니다.", contractRequest.getBusinessRegNumber());
         }
     }
 
@@ -81,10 +82,20 @@ public class BasicInfoService {
     public void saveSettlementInfo(SettlementInfoRequest settlementInfoRequest){
         int rowsAffected = basicInfoRepository.saveSettlementInfo(settlementInfoRequest);
         if(rowsAffected == 0){
-            log.error("NO : {} 정산정보 업데이트 실패", settlementInfoRequest.getNo());
+            log.error("NO : {} 정산정보 저장 실패", settlementInfoRequest.getNo());
             throw new UpdateFailedException();
         }else{
-            log.info("NO : {} 정산정보 정보가 성공적으로 업데이트 되었습니다.", settlementInfoRequest.getNo());
+            log.info("NO : {} 정산정보 정보가 성공적으로 저장되었습니다.", settlementInfoRequest.getNo());
+        }
+    }
+
+    public void savePaymentMethod(PaymentMethodRequest paymentMethodRequest){
+        int rowsAffected = basicInfoRepository.savePaymentMethod(paymentMethodRequest);
+        if(rowsAffected == 0){
+            log.error("NO : {} 결제수단 저장 실패", paymentMethodRequest.getNo());
+            throw new UpdateFailedException();
+        }else{
+            log.info("NO : {} 결제수단이 성공적으로 저장되었습니다.", paymentMethodRequest.getNo());
         }
     }
 }

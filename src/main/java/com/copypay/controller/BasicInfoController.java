@@ -1,6 +1,7 @@
 package com.copypay.controller;
 
 import com.copypay.dto.request.ContractRequest;
+import com.copypay.dto.request.PaymentMethodRequest;
 import com.copypay.dto.request.SettlementInfoRequest;
 import com.copypay.dto.response.BasicInfoListResponse;
 import com.copypay.dto.response.MemoResponse;
@@ -53,7 +54,7 @@ public class BasicInfoController {
     @ResponseBody
     public ResponseEntity<?> saveContract(@Valid @RequestBody ContractRequest contractRequest){
         basicInfoService.saveContract(contractRequest);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/api/no/{businessRegNumber}")
@@ -66,6 +67,13 @@ public class BasicInfoController {
     @ResponseBody
     public ResponseEntity<?> saveSettlementInfo(@Valid @RequestBody SettlementInfoRequest settlementInfoRequest){
         basicInfoService.saveSettlementInfo(settlementInfoRequest);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/api/payment-method/{no}")
+    @ResponseBody
+    public ResponseEntity<?> savePaymentMethod(@Valid @RequestBody PaymentMethodRequest paymentMethodRequest){
+        basicInfoService.savePaymentMethod(paymentMethodRequest);
+        return ResponseEntity.ok().build();
     }
 }

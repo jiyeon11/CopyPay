@@ -1,6 +1,7 @@
 package com.copypay.repository.mapper;
 
 import com.copypay.dto.request.ContractRequest;
+import com.copypay.dto.request.PaymentMethodRequest;
 import com.copypay.dto.request.SettlementInfoRequest;
 import com.copypay.dto.response.*;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,4 +20,5 @@ public interface BasicInfoMapper {
     String getNoByBusinessRegNumber(String businessRegNumber);
     int saveContract(ContractRequest contractRequest);
     int saveSettlementInfo(SettlementInfoRequest settlementInfoRequest);
+    int savePaymentMethod(PaymentMethodRequest paymentMethodRequest);
 }

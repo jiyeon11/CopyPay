@@ -568,7 +568,12 @@
                 event.preventDefault();
                 saveSettlementInfoData();
             });
-        
+            //결제수단 저장 버튼 클릭 시
+            $("#paymentMethodBtn").click(function (){
+                event.preventDefault();
+                savePaymentMethodData();
+            });
+
             //신규 모달 열기
             $("#newModalBtn").click(function () {
                 $("#basicInfoNewModal").removeClass("hidden");
@@ -679,11 +684,11 @@
                 salesManager: $('#selectSalesManager').val()
             };
             makeAjaxCall('/api/contracts/'+regNumber, 'PUT', contractData, function(data){
-                alert('계약 정보가 성공적으로 업데이트 되었습니다.');
+                alert('계약 정보가 성공적으로 저장되었습니다.');
             });
         }
 
-        //정산정보 등록
+        //정산정보 저장
         function saveSettlementInfoData() {
             var depositAccountFormat = $('input:radio[name="bordered-radio"]:checked').val();
             var accountParameterName;
@@ -709,7 +714,45 @@
                 partialCancellationAllowed: $('#selectPartialCancellationAllowed').val()
             };
             makeAjaxCall('/api/settlement-info/'+no, 'POST', settlementInfoData, function(data){
-                alert('정산 정보가 성공적으로 업데이트 되었습니다.');
+                alert('정산 정보가 성공적으로 저장되었습니다.');
+            });
+        }
+
+        //결제수단 저장
+        function savePaymentMethodData(){
+            var majorDomesticCardArray = [];
+            var minorDomesticCardArray = [];
+            var minorForeignCardArray = [];
+            $(".major-domestic-card:checked").each(function(){
+                majorDomesticCardArray.push($(this).val());
+            });
+            $(".minor-domestic-card:checked").each(function(){
+                minorDomesticCardArray.push($(this).val());
+            });
+            $(".minor-foreign-card:checked").each(function(){
+                minorForeignCardArray.push($(this).val());
+            });
+
+            var paymentMethodData = {
+                no: no,
+                isUsed: $('#selectIsUsed').val(),
+                authenticationType: $('#selectAuthenticationType').val(),
+                settlementCycle: $('#selectSettlementCycle').val(),
+                settlementCycleEffectiveDate: $('#inputEffectiveDate').val().replace(/[-/]/g, ''),
+                purchaseMethod: $('#selectPurchaseMethod').val(),
+                purchaseDate: $('#selectPurchaseDate').val(),
+                debitcardFeeManagement: $('#selectDebitcardFeeManagement').val(),
+                installmentMonths: $('#selectInstallmentMonths').val(),
+                isSmallMidUsed: $('#selectIsSmallMidUsed').val(),
+                smallMidBalanceSettlementReq: $('#selectSmallMidBalanceSettlementReq').val(),
+                differenceSettlementCycle: $('#selectDifferenceSettlementCycle').val(),
+                majorDomesticUnusableCard: majorDomesticCardArray.join(","),
+                minorDomesticUnusableCard: minorDomesticCardArray.join(","),
+                minorForeignUnusableCard: minorForeignCardArray.join(",")
+            };
+            
+            makeAjaxCall('/api/payment-method/'+no, 'POST', paymentMethodData, function(data){
+                alert('결제수단이 성공적으로 저장되었습니다.');
             });
         }
 

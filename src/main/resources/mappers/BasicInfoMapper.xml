@@ -230,4 +230,58 @@
 				PARTIAL_CANCELLATION_ALLOWED = #{partialCancellationAllowed}
 		]]>
 	</insert>
+
+	<insert id="savePaymentMethod" parameterType="com.copypay.dto.request.PaymentMethodRequest">
+		<![CDATA[
+			INSERT INTO PAYMENT_METHOD (
+				NO,
+				IS_USED,
+				AUTHENTICATION_TYPE,
+				SETTLEMENT_CYCLE,
+				EFFECTIVE_DATE,
+				PURCHASE_METHOD,
+				PURCHASE_DATE,
+				DEBITCARD_FEE_MANAGEMENT_USED,
+				INSTALLMENT_MONTHS,
+				IS_SMALL_MID_USED,
+				SMALL_MID_BALANCE_SETTLEMENT_REQ,
+				DIFFERENCE_SETTLEMENT_CYCLE,
+				MAJOR_DOMESTIC_UNUSABLE_CARD,
+				MINOR_DOMESTIC_UNUSABLE_CARD,
+				MINOR_FOREIGN_UNUSABLE_CARD
+			) VALUES (
+				#{no},
+				#{isUsed},
+				#{authenticationType},
+				#{settlementCycle},
+				#{settlementCycleEffectiveDate},
+				#{purchaseMethod},
+				#{purchaseDate},
+				#{debitcardFeeManagement},
+				#{installmentMonths},
+				#{isSmallMidUsed},
+				#{smallMidBalanceSettlementReq},
+				#{differenceSettlementCycle},
+				#{majorDomesticUnusableCard},
+				#{minorDomesticUnusableCard},
+				#{minorForeignUnusableCard}
+			)
+			ON DUPLICATE KEY UPDATE
+				NO = #{no},
+				IS_USED = #{isUsed},
+				AUTHENTICATION_TYPE = #{authenticationType},
+				SETTLEMENT_CYCLE = #{settlementCycle},
+				EFFECTIVE_DATE = #{settlementCycleEffectiveDate},
+				PURCHASE_METHOD = #{purchaseMethod},
+				PURCHASE_DATE = #{purchaseDate},
+				DEBITCARD_FEE_MANAGEMENT_USED = #{debitcardFeeManagement},
+				INSTALLMENT_MONTHS = #{installmentMonths},
+				IS_SMALL_MID_USED = #{isSmallMidUsed},
+				SMALL_MID_BALANCE_SETTLEMENT_REQ = #{smallMidBalanceSettlementReq},
+				DIFFERENCE_SETTLEMENT_CYCLE = #{differenceSettlementCycle},
+				MAJOR_DOMESTIC_UNUSABLE_CARD = #{majorDomesticUnusableCard},
+				MINOR_DOMESTIC_UNUSABLE_CARD = #{minorDomesticUnusableCard},
+				MINOR_FOREIGN_UNUSABLE_CARD = #{minorForeignUnusableCard}
+		]]>
+	</insert>
 </mapper>
