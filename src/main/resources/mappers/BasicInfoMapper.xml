@@ -284,4 +284,18 @@
 				MINOR_FOREIGN_UNUSABLE_CARD = #{minorForeignUnusableCard}
 		]]>
 	</insert>
+
+	<insert id="saveMemo" parameterType="com.copypay.dto.request.MemoRequest">
+		<![CDATA[
+			INSERT INTO MEMO (
+				MID,
+				ID,
+				CONTENT
+			) VALUES (
+				#{mid},
+				#{id},
+				#{content}
+			)
+		]]>
+	</insert>
 </mapper>

@@ -574,6 +574,12 @@
                 savePaymentMethodData();
             });
 
+            //메모 등록 버튼 클릭 시
+            $("#memoBtn").click(function (){
+                event.preventDefault();
+                saveMemoData();
+            });
+
             //신규 모달 열기
             $("#newModalBtn").click(function () {
                 $("#basicInfoNewModal").removeClass("hidden");
@@ -755,6 +761,21 @@
             });
         }
 
+        //메모 등록
+        function saveMemoData(){
+            var memoData = {
+                mid: $('#inputMID2').val(),
+                content: $('#memoContent').val()
+            };
+            makeAjaxCall('/api/memos', 'POST', memoData, function(data){
+                alert('메모가 성공적으로 저장되었습니다.');
+                $('#memoContent').val('');
+                //mid로 메모 데이터 가져오기
+                makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
+                    populateMemo(data);
+                });
+            });
+        }
         function clearModal(){  //입력 내용 초기화
             $("#basicInfoNewModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
             $("#basicInfoNewModal input[type='checkbox']").prop('checked', false); // 모든 체크박스 초기화

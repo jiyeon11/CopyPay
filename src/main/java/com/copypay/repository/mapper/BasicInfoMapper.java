@@ -1,6 +1,7 @@
 package com.copypay.repository.mapper;
 
 import com.copypay.dto.request.ContractRequest;
+import com.copypay.dto.request.MemoRequest;
 import com.copypay.dto.request.PaymentMethodRequest;
 import com.copypay.dto.request.SettlementInfoRequest;
 import com.copypay.dto.response.*;
@@ -21,4 +22,5 @@ public interface BasicInfoMapper {
     int saveContract(ContractRequest contractRequest);
     int saveSettlementInfo(SettlementInfoRequest settlementInfoRequest);
     int savePaymentMethod(PaymentMethodRequest paymentMethodRequest);
+    int saveMemo(MemoRequest memoRequest);
 }

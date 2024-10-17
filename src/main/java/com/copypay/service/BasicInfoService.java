@@ -1,6 +1,7 @@
 package com.copypay.service;
 
 import com.copypay.dto.request.ContractRequest;
+import com.copypay.dto.request.MemoRequest;
 import com.copypay.dto.request.PaymentMethodRequest;
 import com.copypay.dto.request.SettlementInfoRequest;
 import com.copypay.dto.response.*;
@@ -96,6 +97,15 @@ public class BasicInfoService {
             throw new UpdateFailedException();
         }else{
             log.info("NO : {} 결제수단이 성공적으로 저장되었습니다.", paymentMethodRequest.getNo());
+        }
+    }
+
+    public void saveMemo(MemoRequest memoRequest){
+        int rowsAffected = basicInfoRepository.saveMemo(memoRequest);
+        if(rowsAffected == 0){
+            log.error("MID : {} 메모 저장 실패", memoRequest.getMid());
+        }else{
+            log.info("MID : {} 메모가 성공적으로 저장되었습니다.", memoRequest.getMid());
         }
     }
 }

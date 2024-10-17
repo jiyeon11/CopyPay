@@ -1,11 +1,14 @@
 package com.copypay.controller;
 
 import com.copypay.dto.request.ContractRequest;
+import com.copypay.dto.request.MemoRequest;
 import com.copypay.dto.request.PaymentMethodRequest;
 import com.copypay.dto.request.SettlementInfoRequest;
 import com.copypay.dto.response.BasicInfoListResponse;
 import com.copypay.dto.response.MemoResponse;
 import com.copypay.service.BasicInfoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,6 +77,15 @@ public class BasicInfoController {
     @ResponseBody
     public ResponseEntity<?> savePaymentMethod(@Valid @RequestBody PaymentMethodRequest paymentMethodRequest){
         basicInfoService.savePaymentMethod(paymentMethodRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/api/memos")
+    @ResponseBody
+    public ResponseEntity<?> saveMemo(@Valid @RequestBody MemoRequest memoRequest, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        memoRequest.setId((String)session.getAttribute("username"));
+        basicInfoService.saveMemo(memoRequest);
         return ResponseEntity.ok().build();
     }
 }
