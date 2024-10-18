@@ -1,9 +1,10 @@
 package com.copypay.service;
 
 import com.copypay.dto.request.ContractRegisterRequest;
+import com.copypay.dto.response.ContractDoneListResponse;
 import com.copypay.dto.response.ContractProgressListResponse;
 import com.copypay.exception.DataNotFoundException;
-import com.copypay.repository.ContractProgressRepository;
+import com.copypay.repository.SalesManagementRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,12 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ContractProgressService {
-    private final ContractProgressRepository contractProgressRepository;
+public class SalesManagementService {
+    private final SalesManagementRepository salesManagementRepository;
 
+    // 계약 진행현황 조회
     public List<ContractProgressListResponse> getContractProgressList(String checkedDate, String startDate, String endDate) {
-        List<ContractProgressListResponse> contractProgressList = contractProgressRepository.getContractProgressList(checkedDate, startDate, endDate);
+        List<ContractProgressListResponse> contractProgressList = salesManagementRepository.getContractProgressList(checkedDate, startDate, endDate);
         if(contractProgressList.isEmpty()) {
             log.error("접수일자 {} ~ {}  에 일치하는 정보가 없습니다.", startDate, endDate);
             throw new DataNotFoundException();
@@ -26,8 +28,9 @@ public class ContractProgressService {
         return contractProgressList;
     }
 
+    // 신규 계약 등록
     public void registerContract(ContractRegisterRequest contractRegisterRequest) {
-        contractProgressRepository.registerContract(contractRegisterRequest);
+        salesManagementRepository.registerContract(contractRegisterRequest);
     }
 
 }
