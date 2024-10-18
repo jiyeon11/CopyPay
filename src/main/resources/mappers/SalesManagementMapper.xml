@@ -2,8 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.copypay.repository.mapper.ContractProgressMapper">
-	<!-- 조회 -->
+<mapper namespace="com.copypay.repository.mapper.SalesManagementMapper">
+
+	<!-- 계약 진행현황 조회 -->
     <select id="getContractProgressList" parameterType="string" resultType="com.copypay.dto.response.ContractProgressListResponse">
 	<![CDATA[
 		SELECT
@@ -18,7 +19,7 @@
 		]]>
 	</select>
 
-	<!-- 신규등록 -->
+	<!-- 신규 계약 등록 -->
 	<insert id="registerContract" parameterType="com.copypay.dto.request.ContractRegisterRequest">
 		INSERT INTO CONTRACT (APPLICATION_PATH, BUSINESS_NAME, BUSINESS_TYPE, BUSINESS_REG_NUMBER,
 		                      CEO_NAME, CEO_BIRTH, CEO_HP, CEO_TEL, CEO_EMAIL, CEO_FAX,
