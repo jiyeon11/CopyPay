@@ -21,6 +21,16 @@ import java.util.List;
 public class BasicInfoController {
     private final BasicInfoService basicInfoService;
 
+    private String getUsernameFromSession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("username");
+        if (username == null) {
+            log.error("사용자 id가 세션에 존재하지 않습니다.");
+            throw new IllegalArgumentException("사용자 id가 세션에 존재하지 않습니다.");
+        }
+        return username;
+    }
+
     @GetMapping("/basic-info")
     public String basic_info(){
         return "basic-info";
@@ -47,8 +57,7 @@ public class BasicInfoController {
     @PostMapping("/api/basic-infos")
     @ResponseBody
     public ResponseEntity<?> saveBasicInfo(@Valid @RequestBody BasicInfoRequest basicInfoRequest, HttpServletRequest request){
-        HttpSession session = request.getSession();
-        basicInfoRequest.getMemoRequest().setId((String)session.getAttribute("username"));
+        basicInfoRequest.getMemoRequest().setId(getUsernameFromSession(request));
         basicInfoService.saveBasicInfo(basicInfoRequest);
         return ResponseEntity.ok().build();
     }
@@ -89,8 +98,7 @@ public class BasicInfoController {
     @PostMapping("/api/memos")
     @ResponseBody
     public ResponseEntity<?> saveMemo(@Valid @RequestBody MemoRequest memoRequest, HttpServletRequest request){
-        HttpSession session = request.getSession();
-        memoRequest.setId((String)session.getAttribute("username"));
+        memoRequest.setId(getUsernameFromSession(request));
         basicInfoService.saveMemo(memoRequest);
         return ResponseEntity.ok().build();
     }
