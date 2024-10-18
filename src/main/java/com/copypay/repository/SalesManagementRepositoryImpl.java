@@ -19,6 +19,12 @@ public class SalesManagementRepositoryImpl implements SalesManagementRepository 
         return salesManagementMapper.getContractProgressList(checkedDate, startDate, endDate);
     }
 
+    // 계약 완료현황 조회
+    @Override
+    public List<ContractDoneListResponse> getContractDoneList(String searchOption, String searchValue) {
+        return salesManagementMapper.getContractDoneList(searchOption, searchValue);
+    }
+
     // 신규 계약 등록
     @Override
     public void registerContract(ContractRegisterRequest contractRegisterRequest) {

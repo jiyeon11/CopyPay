@@ -19,6 +19,21 @@
 		]]>
 	</select>
 
+	<!-- 계약 완료현황 조회 -->
+	<select id="getContractDoneList" parameterType="string" resultType="com.copypay.dto.response.ContractDoneListResponse">
+	<![CDATA[
+		SELECT
+			CONTRACT_DATE AS contractDate,
+			BUSINESS_REG_NUMBER AS businessRegNumber,
+			BUSINESS_NAME AS businessName,
+			CONTRACT_MANAGER AS contractManager,
+			SALES_MANAGER AS salesManager
+		FROM CONTRACT
+		WHERE #{searchValue} IS NULL OR ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
+		ORDER BY CONTRACT_DATE DESC
+		]]>
+	</select>
+	
 	<!-- 신규 계약 등록 -->
 	<insert id="registerContract" parameterType="com.copypay.dto.request.ContractRegisterRequest">
 		INSERT INTO CONTRACT (APPLICATION_PATH, BUSINESS_NAME, BUSINESS_TYPE, BUSINESS_REG_NUMBER,

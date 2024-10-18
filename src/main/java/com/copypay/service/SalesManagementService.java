@@ -28,6 +28,18 @@ public class SalesManagementService {
         return contractProgressList;
     }
 
+    // 계약 완료현황 조회
+    public List<ContractDoneListResponse> getContractDoneList(String searchOption, String searchValue) {
+        List<ContractDoneListResponse> contractDoneList = salesManagementRepository.getContractDoneList(searchOption, searchValue);
+        if(contractDoneList.isEmpty()) {
+            log.error("검색 조건 {}에 일치하는 정보가 없습니다. 검색어 : {}", searchOption, searchValue);
+            throw new DataNotFoundException();
+        }else{
+            log.info("총 {}개의 계약 완료현황 항목을 성공적으로 가져왔습니다", contractDoneList.size());
+        }
+        return contractDoneList;
+    }
+
     // 신규 계약 등록
     public void registerContract(ContractRegisterRequest contractRegisterRequest) {
         salesManagementRepository.registerContract(contractRegisterRequest);
