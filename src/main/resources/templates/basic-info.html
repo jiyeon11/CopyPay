@@ -558,7 +558,7 @@
             });
 
             //일반정보 등록 버튼 클릭 시
-            $("#registerBasicInfoBtn").click(function (){
+            $("#registerBasicInfoBtn").click(function (event){
                 event.preventDefault();
                 console.log(getContractData());
                 makeAjaxCall('/api/contracts', 'PUT', getContractData(), function(data){
@@ -567,7 +567,7 @@
             });
 
             //정산정보 저장 버튼 클릭 시
-            $("#settlementInfoBtn").click(function (){
+            $("#settlementInfoBtn").click(function (event){
                 event.preventDefault();
                 makeAjaxCall('/api/settlement-infos', 'POST', getSettlementInfoData(), function(data){
                     alert('정산 정보가 성공적으로 저장되었습니다.');
@@ -575,7 +575,7 @@
             });
 
             //결제수단 저장 버튼 클릭 시
-            $("#paymentMethodBtn").click(function (){
+            $("#paymentMethodBtn").click(function (event){
                 event.preventDefault();
                 makeAjaxCall('/api/payment-methods', 'POST', getPaymentMethodData(), function(data){
                     alert('결제수단이 성공적으로 저장되었습니다.');
@@ -583,7 +583,7 @@
             });
 
             //메모 등록 버튼 클릭 시
-            $("#memoBtn").click(function (){
+            $("#memoBtn").click(function (event){
                 event.preventDefault();
                 makeAjaxCall('/api/memos', 'POST', getMemoData(), function(data){
                     alert('메모가 성공적으로 저장되었습니다.');
@@ -596,7 +596,7 @@
             });
             
             //전체 등록 버튼 클릭 시
-            $("#allRegisterBtn").click(function (){
+            $("#allRegisterBtn").click(function (event){
                 event.preventDefault();
                 var basicInfoData = {
                     contractRequest: getContractData(),
