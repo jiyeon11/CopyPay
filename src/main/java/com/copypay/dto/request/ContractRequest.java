@@ -13,6 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 public class ContractRequest {
     @NotBlank(message = "사업자번호를 입력해주세요.")
+    @Size(min = 10, max = 10, message = "사업자번호는 10자리여야 합니다.")
     private String businessRegNumber;  //사업자번호
 
     @NotBlank(message = "MID를 입력해주세요.")
