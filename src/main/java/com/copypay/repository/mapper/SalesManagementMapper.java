@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface ContractProgressMapper {
+public interface SalesManagementMapper {
     List<ContractProgressListResponse> getContractProgressList(String checkedDate, String startDate, String endDate);
     void registerContract(ContractRegisterRequest contractRegisterRequest);
 }
