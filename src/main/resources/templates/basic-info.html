@@ -676,8 +676,8 @@
             $.ajax({
                 url: url,
                 method: method,
-                data: JSON.stringify(data),
-                contentType : 'application/json; charset=utf-8',
+                data: method !== 'GET' ? JSON.stringify(data) : undefined,
+                contentType: method !== 'GET' ? 'application/json; charset=utf-8' : undefined,
                 beforeSend: function(xhr){  //CSRF 토큰 설정
                     xhr.setRequestHeader(header, token);
                 },
