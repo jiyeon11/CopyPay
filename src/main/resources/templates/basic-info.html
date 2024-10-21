@@ -623,7 +623,7 @@
                 };
                 makeAjaxCall('/api/basic-infos', 'POST', basicInfoData, function(data){
                     alert('성공적으로 저장되었습니다.');
-                    $('#memoContent').val('');
+                    $('#memoContent1').val('');
                     //mid로 메모 데이터 가져오기
                     makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
                         populateMemo(data);
@@ -716,7 +716,7 @@
                         }
                     }
                     else if(!error.responseJSON.message){
-                        alert("데이터를 가져오는 데 실패했습니다. 다시 시도해 주세요.");
+                        alert("다시 시도해 주세요.");
                     }
                 }
             });
@@ -832,6 +832,7 @@
             $("#basicInfoNewModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
             $("#basicInfoNewModal input[type='checkbox']").prop('checked', false); // 모든 체크박스 초기화
             $("#basicInfoNewModal input[type='radio']").prop('checked', false); // 모든 라디오 초기화
+            $("#basicInfoNewModal textarea").val(''); // 모든 textarea 입력 필드 초기화
             $("#basicInfoNewModal select").prop('selectedIndex', 0); // 모든 셀렉트 박스 초기화
             $("#basicInfoNewModal p").text(''); // 모든 p 태그 텍스트 초기화
             $("#memoList").empty(); // 메모 리스트 초기화
