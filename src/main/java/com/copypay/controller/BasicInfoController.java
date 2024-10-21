@@ -36,6 +36,11 @@ public class BasicInfoController {
         return "basic-info";
     }
 
+    @GetMapping("/basic-info-view")
+    public String basic_info_view() {
+        return "basic-info-view";
+    }
+
     @GetMapping(value = {"/api/basic-info/list/{inputMid}", "/api/basic-info/list"})
     @ResponseBody
     public ResponseEntity<List<BasicInfoListResponse>> getBasicInfoList(@PathVariable(required = false) String inputMid){

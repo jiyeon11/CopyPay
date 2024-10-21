@@ -13,6 +13,10 @@
         $(document).on('click', '#registrationChangeBtn', function (e) {
             $("#content").load("/basic-info", function () {});
         });
+        //기본정보의 기본정보 조회 클릭 시
+        $(document).on('click', '#infoCheckBtn', function (e) {
+            $("#content").load("/basic-info-view", function () {});
+        });
         // 영업관리의 계약 진행현황 클릭 시
         $(document).on('click', '#contractProgressBtn', function (e) {
             $("#content").load("/contract-progress", function () {});
