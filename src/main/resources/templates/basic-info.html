@@ -586,27 +586,9 @@
                 $("#basicInfoList").removeClass("hidden");
             });
 
-            //일반정보 등록 버튼 클릭 시
-            $("#registerBasicInfoBtn").click(function (event){
-                event.preventDefault();
-                $("#memoModal").removeClass("hidden");
-                currentSaveType = "basic";
-            });
-
-            //정산정보 저장 버튼 클릭 시
-            $("#settlementInfoBtn").click(function (event){
-                event.preventDefault();
-                $("#memoModal").removeClass("hidden");
-                currentSaveType = "settlement";
-            });
-
-            //결제수단 저장 버튼 클릭 시
-            $("#paymentMethodBtn").click(function (event){
-                event.preventDefault();
-                $("#memoModal").removeClass("hidden");
-                currentSaveType = "payment";
-            });
-
+            $("#registerBasicInfoBtn").click(handleFormSubmit("basic"));  //일반정보 등록 버튼 클릭 시
+            $("#settlementInfoBtn").click(handleFormSubmit("settlement"));  //정산정보 저장 버튼 클릭 시
+            $("#paymentMethodBtn").click(handleFormSubmit("payment"));  //결제수단 저장 버튼 클릭 시
 
             //메모 등록 버튼 클릭 시
             $("#memoBtn").click(function (event){
@@ -730,7 +712,14 @@
             ];
             checkboxGroups.forEach(group => setupCheckboxGroup(group.id, group.childClass));
         });
-
+        
+        function handleFormSubmit(saveType) {
+            return function(event) {
+                event.preventDefault();
+                $("#memoModal").removeClass("hidden");
+                currentSaveType = saveType;
+            }
+}
         /**
          * AJAX 요청을 처리하는 공통 함수
          * @param {string} url - 요청 URL

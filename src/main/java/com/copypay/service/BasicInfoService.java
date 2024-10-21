@@ -67,9 +67,7 @@ public class BasicInfoService {
     @Transactional
     public void saveContract(BasicInfoRequest basicInfoRequest) {
         int rowsAffected = basicInfoRepository.saveContract(basicInfoRequest.getContractRequest());
-        System.out.println("saveContract 정보저장:"+rowsAffected);
         rowsAffected += basicInfoRepository.saveMemo(basicInfoRequest.getMemoRequest());
-        System.out.println("saveContract 메모저장:"+rowsAffected);
         if(rowsAffected != 2) {
             log.error("사업자번호 : {} 계약 저장 실패",basicInfoRequest.getContractRequest().getBusinessRegNumber());
             throw new SaveFailedException();
