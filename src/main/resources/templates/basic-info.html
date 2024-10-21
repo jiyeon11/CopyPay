@@ -68,11 +68,12 @@
                             <td class="border-2 py-1">
                                 <input type="text" id="inputBusinessRegNumber" name="사업자번호" class="w-28 h-7 text-sm pl-1 ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
                                 <button type="button" id="getBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7">가져오기</button>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessRegNumber"></p>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>MID</td>
                             <td class="border-2 py-1">
                                 <input type="text" id="inputMID2" name="MID" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
-                                <button id="checkDuplicateBtn" class="text-white text-xs bg-green-700 w-16 h-7">중복확인</button>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorMid"></p>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">상호</td>
                             <td class="border-2 py-1">
@@ -107,6 +108,7 @@
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-600">*</span>대표 TEL</td>
                             <td class="border-2 py-1">
                                 <input type="text" id="ceoTEL" name="대표 TEL" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoTel"></p>
                             </td>
                         </tr>
                 
@@ -114,6 +116,7 @@
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 E-Mail</td>
                             <td class="border-2 py-1">
                                 <input type="text" id="ceoEmail" name="대표 E-Mail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoEmail"></p>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자 FAX</td>
                             <td class="border-2 py-1" colspan="3">
@@ -137,14 +140,21 @@
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>가맹점 계약담당</td>
                             <td class="border-2 py-1" colspan="5">
-                                <p class="text-sm inline ml-3">성명:</p>
-                                <input type="text" id="inputContractManagerName" name="가맹점 계약담당 성명" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
-                                <p class="text-sm inline ml-3">TEL:</p>
-                                <input type="text" id="inputContractManagerTEL" name="가맹점 계약담당 TEL" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
-                                <p class="text-sm inline ml-3">HP:</p>
-                                <input type="text" id="inputContractManagerHP" name="가맹점 계약담당 HP" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
-                                <p class="text-sm inline ml-3">EMail:</p>
-                                <input type="text" id="inputContractManagerEmail" name="가맹점 계약담당" class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <div class="text-sm inline ml-3">성명:</div>
+                                <input type="text" id="inputContractManagerName" name="가맹점 계약담당 성명" class="mb-1 w-40 h-7 text-sm pl-1 ml-2 border-2 border-gray-400 outline-none" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-1 inline" id="errorFranchiseContractManagerName"></p>
+                                <br>
+                                <div class="text-sm inline ml-3">TEL:</div>
+                                <input type="text" id="inputContractManagerTEL" name="가맹점 계약담당 TEL" class="mb-1 w-40 h-7 text-sm pl-1 ml-3.5 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-1 inline" id="errorFranchiseContractManagerTel"></p>
+                                <br>
+                                <div class="text-sm inline ml-3">HP:</div>
+                                <input type="text" id="inputContractManagerHP" name="가맹점 계약담당 HP" class="mb-1 w-40 h-7 text-sm pl-1 ml-4 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-1 inline" id="errorFranchiseContractManagerHp"></p>
+                                <br>
+                                <div class="text-sm inline ml-3">EMail:</div>
+                                <input type="text" id="inputContractManagerEmail" name="가맹점 계약담당 Email" class="mb-1 w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-1 inline" id="errorFranchiseContractManagerEmail"></p>
                             </td>
                         </tr>
 
@@ -202,8 +212,9 @@
                                 <div>
                                     <label for="inputFeeSettlementDate" class="text-sm font-bold ml-3">적용시작일자:</label>
                                     <input type="text" id="inputFeeSettlementDate" name="적용시작일자" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
-                                    <p class="text-sm inline">부터</p>
+                                    <div class="text-sm inline">부터</div>
                                 </div>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFeeSettlementDate"></p>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">정산 입금통장인자 표기방식</td>
                             <td class="border-2 py-1">
@@ -240,6 +251,7 @@
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>세금계산서 E-Mail</td>
                             <td class="border-2 py-1">
                                 <input type="text" id="inputTaxInvoiceEmail" name="세금계산서 E-mail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorTaxInvoiceEmail"></p>
                             </td>
                         </tr>
                         <tr class="table-row">
@@ -271,7 +283,7 @@
                         </tr>
                         <tr class="table-row bg-blue-100">
                             <td colspan="6">
-                                <p class="text-center text-black text-base py-1">신용카드-인증</p>
+                                <div class="text-center text-black text-base py-1">신용카드-인증</div>
                             </td>
                         </tr>
                     </thead>
@@ -307,7 +319,8 @@
                                 </select>
                                 <label for="inputEffectiveDate" class="text-sm font-bold ml-3">적용시작일자:</label>
                                 <input type="text" id="inputEffectiveDate" class="w-[5.5rem] h-7 text-sm mt-2 pl-1 border-2 border-gray-400 outline-none">
-                                <p class="text-sm inline">부터</p>
+                                <div class="text-sm inline">부터</div>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorSettlementCycleEffectiveDate"></p>
                             </td>
                         </tr>
                         <tr class="table-row">
@@ -334,7 +347,7 @@
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
-                                <p class="font-bold text-sm text-red-500 inline">*매입방법이 [반자동]일 경우만 설정.</p>
+                                <div class="font-bold text-sm text-red-500 inline">*매입방법이 [반자동]일 경우만 설정.</div>
                             </td>
                         </tr>
                         <tr class="table-row">
@@ -361,7 +374,7 @@
                                     <option value="11개월">11개월</option>
                                     <option value="12개월">12개월</option>
                                 </select>
-                                <p class="text-sm ml-3">(선택한 할부개월까지 거래 가능.)</p>
+                                <div class="text-sm ml-3">(선택한 할부개월까지 거래 가능.)</div>
                             </td>
                         </tr>
                         <tr class="table-row">
@@ -525,6 +538,11 @@
                                 <textarea id="memoContent" rows="5" cols="158" class="border-2 outline-none"></textarea>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="border-2 py-1" colspan="6">
+                                <p class="error-message text-red-500 text-sm text-center" id="errorContent"></p>
+                            </td>
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
@@ -560,7 +578,6 @@
             //일반정보 등록 버튼 클릭 시
             $("#registerBasicInfoBtn").click(function (event){
                 event.preventDefault();
-                console.log(getContractData());
                 makeAjaxCall('/api/contracts', 'PUT', getContractData(), function(data){
                     alert('계약 정보가 성공적으로 저장되었습니다.');
                 });
@@ -688,14 +705,28 @@
                     if(errorCallback){
                         errorCallback();
                     }
-                    else if(error.responseJSON.message){
-                        alert(error.responseJSON.message);
+                    else if(error.responseJSON){
+                        const errors = error.responseJSON;
+                        //모든 필드의 오류 메시지 초기화
+                        $('.error-message').text('');
+
+                        //오류 메시지를 각 필드에 맞게 표시
+                        for (const field in errors) {
+                            $("#error" + extractFieldName(field)).text(errors[field]);
+                        }
                     }
                     else if(!error.responseJSON.message){
                         alert("데이터를 가져오는 데 실패했습니다. 다시 시도해 주세요.");
                     }
                 }
             });
+        }
+
+        //검증 실패한 필드 이름 추출
+        function extractFieldName(field) {
+            var parts = field.split('.');
+            parts = parts.length > 1 ? parts[1] : field; //두 번째 부분 반환
+            return parts.charAt(0).toUpperCase() + parts.slice(1);
         }
 
         //일반정보(계약) 등록

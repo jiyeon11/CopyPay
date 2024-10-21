@@ -1,7 +1,6 @@
 package com.copypay.dto.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter

@@ -27,7 +27,7 @@ public class ContractRequest {
     private String ceoName;  //대표자명
 
     @NotBlank(message = "대표 TEL을 입력해주세요.")
-    @Size(min = 11, max = 11, message = "전화번호는 11자리여야 합니다.")
+    @Size(min = 11, max = 11, message = "TEL은 11자리여야 합니다.")
     private String ceoTel;  //대표 TEL
 
     @NotBlank(message = "대표 E-Mail을 입력해주세요")
@@ -47,11 +47,11 @@ public class ContractRequest {
     private String franchiseContractManagerName;  //가맹점 계약담당 성명
 
     @NotBlank(message = "가맹점 계약담당 TEL을 입력해주세요.")
-    @Size(min = 11, max = 11, message = "전화번호는 11자리여야 합니다.")
+    @Size(min = 11, max = 11, message = "TEL은 11자리여야 합니다.")
     private String franchiseContractManagerTel;//가맹점 계약담당 TEL
 
     @NotBlank(message = "가맹점 계약담당 HP를 입력해주세요.")
-    @Size(min = 11, max = 11, message = "전화번호는 11자리여야 합니다.")
+    @Size(min = 11, max = 11, message = "HP는 11자리여야 합니다.")
     private String franchiseContractManagerHp;//가맹점 계약담당 HP
 
     @NotBlank(message = "가맹점 계약담당 이메일을 입력해주세요.")
