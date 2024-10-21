@@ -66,13 +66,14 @@
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업자번호</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputBusinessRegNumber" class="w-28 h-7 text-sm pl-1 ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
+                                <input type="text" id="inputBusinessRegNumber" name="사업자번호" class="w-28 h-7 text-sm pl-1 ml-3 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)" required>
                                 <button type="button" id="getBasicInfoBtn" class="text-white text-xs bg-green-700 w-16 h-7">가져오기</button>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessRegNumber" name="errorBusinessRegNumber"></p>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>MID</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputMID2" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
-                                <button id="checkDuplicateBtn" class="text-white text-xs bg-green-700 w-16 h-7">중복확인</button>
+                                <input type="text" id="inputMID2" name="MID" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorMid" name="errorMid"></p>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">상호</td>
                             <td class="border-2 py-1">
@@ -106,14 +107,16 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-600">*</span>대표 TEL</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="ceoTEL" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <input type="text" id="ceoTEL" name="대표 TEL" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoTel" name="errorCeoTel"></p>
                             </td>
                         </tr>
                 
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 E-Mail</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="ceoEmail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="ceoEmail" name="대표 E-Mail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoEmail" name="errorCeoEmail"></p>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자 FAX</td>
                             <td class="border-2 py-1" colspan="3">
@@ -137,14 +140,21 @@
                         <tr class="table-row">
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>가맹점 계약담당</td>
                             <td class="border-2 py-1" colspan="5">
-                                <p class="text-sm inline ml-3">성명:</p>
-                                <input type="text" id="inputContractManagerName" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
-                                <p class="text-sm inline ml-3">TEL:</p>
-                                <input type="text" id="inputContractManagerTEL" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
-                                <p class="text-sm inline ml-3">HP:</p>
-                                <input type="text" id="inputContractManagerHP" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
-                                <p class="text-sm inline ml-3">EMail:</p>
-                                <input type="text" id="inputContractManagerEmail" class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <div class="text-sm inline ml-3">성명:</div>
+                                <input type="text" id="inputContractManagerName" name="가맹점 계약담당 성명" class="mb-1 w-40 h-7 text-sm pl-1 ml-2 border-2 border-gray-400 outline-none" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-1 inline" id="errorFranchiseContractManagerName" name="errorFranchiseContractManagerName"></p>
+                                <br>
+                                <div class="text-sm inline ml-3">TEL:</div>
+                                <input type="text" id="inputContractManagerTEL" name="가맹점 계약담당 TEL" class="mb-1 w-40 h-7 text-sm pl-1 ml-3.5 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-1 inline" id="errorFranchiseContractManagerTel" name="errorFranchiseContractManagerTel"></p>
+                                <br>
+                                <div class="text-sm inline ml-3">HP:</div>
+                                <input type="text" id="inputContractManagerHP" name="가맹점 계약담당 HP" class="mb-1 w-40 h-7 text-sm pl-1 ml-4 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-1 inline" id="errorFranchiseContractManagerHp" name="errorFranchiseContractManagerHp"></p>
+                                <br>
+                                <div class="text-sm inline ml-3">EMail:</div>
+                                <input type="text" id="inputContractManagerEmail" name="가맹점 계약담당 Email" class="mb-1 w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-1 inline" id="errorFranchiseContractManagerEmail" name="errorFranchiseContractManagerEmail"></p>
                             </td>
                         </tr>
 
@@ -195,15 +205,16 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>수수료 지급방법</td>
                             <td class="border-2 py-1">
-                                <select id="selectFeePaymentMethod" class="w-22 ml-3 border-2 border-gray-400 outline-none text-sm">
+                                <select id="selectFeePaymentMethod" name="수수료 지급방법" class="w-22 ml-3 border-2 border-gray-400 outline-none text-sm" required>
                                     <option value="선정산">선정산</option>
                                     <option value="후취정산">후취정산</option>
                                 </select>
                                 <div>
                                     <label for="inputFeeSettlementDate" class="text-sm font-bold ml-3">적용시작일자:</label>
-                                    <input type="text" id="inputFeeSettlementDate" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
-                                    <p class="text-sm inline">부터</p>
+                                    <input type="text" id="inputFeeSettlementDate" name="적용시작일자" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                    <div class="text-sm inline">부터</div>
                                 </div>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFeeSettlementDate" name="errorFeeSettlementDate"></p>
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">정산 입금통장인자 표기방식</td>
                             <td class="border-2 py-1">
@@ -239,7 +250,8 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>세금계산서 E-Mail</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputTaxInvoiceEmail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <input type="text" id="inputTaxInvoiceEmail" name="세금계산서 E-mail" class="w-40 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorTaxInvoiceEmail"  name="errorTaxInvoiceEmail"></p>
                             </td>
                         </tr>
                         <tr class="table-row">
@@ -271,7 +283,7 @@
                         </tr>
                         <tr class="table-row bg-blue-100">
                             <td colspan="6">
-                                <p class="text-center text-black text-base py-1">신용카드-인증</p>
+                                <div class="text-center text-black text-base py-1">신용카드-인증</div>
                             </td>
                         </tr>
                     </thead>
@@ -307,7 +319,8 @@
                                 </select>
                                 <label for="inputEffectiveDate" class="text-sm font-bold ml-3">적용시작일자:</label>
                                 <input type="text" id="inputEffectiveDate" class="w-[5.5rem] h-7 text-sm mt-2 pl-1 border-2 border-gray-400 outline-none">
-                                <p class="text-sm inline">부터</p>
+                                <div class="text-sm inline">부터</div>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorSettlementCycleEffectiveDate" name="errorSettlementCycleEffectiveDate"></p>
                             </td>
                         </tr>
                         <tr class="table-row">
@@ -334,7 +347,7 @@
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
-                                <p class="font-bold text-sm text-red-500 inline">*매입방법이 [반자동]일 경우만 설정.</p>
+                                <div class="font-bold text-sm text-red-500 inline">*매입방법이 [반자동]일 경우만 설정.</div>
                             </td>
                         </tr>
                         <tr class="table-row">
@@ -361,7 +374,7 @@
                                     <option value="11개월">11개월</option>
                                     <option value="12개월">12개월</option>
                                 </select>
-                                <p class="text-sm ml-3">(선택한 할부개월까지 거래 가능.)</p>
+                                <div class="text-sm ml-3">(선택한 할부개월까지 거래 가능.)</div>
                             </td>
                         </tr>
                         <tr class="table-row">
@@ -525,6 +538,11 @@
                                 <textarea id="memoContent" rows="5" cols="158" class="border-2 outline-none"></textarea>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="border-2 py-1" colspan="6">
+                                <p class="error-message text-red-500 text-sm text-center" id="errorContent1" name="errorContent"></p>
+                            </td>
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
@@ -541,20 +559,112 @@
             <button id="closeModalBtn" class="text-white text-xs bg-slate-500 w-16 h-7 float-right rounded-md mr-2">닫기</button>
             <button id="allRegisterBtn" class="text-white text-xs bg-green-700 w-24 h-7 float-right rounded-md mr-2">전체 등록</button>
         </div>
+        
+        <!-- 저장 버튼 눌렀을 때 나오는 메모 입력 모달-->
+        <div id="memoModal" class="fixed inset-0 flex items-center justify-center hidden">
+            <div class="bg-white rounded-lg p-6 w-96 relative">
+                <button id="closeMemoModalBtn" type="button" class="absolute top-2 right-3 cursor-pointer text-black text-3xl">x</button>
+                <h2 class="text-lg font-bold mb-4">메모 입력</h2>
+                <textarea id="memoContent2" rows="5" class="border-2 w-full p-2 outline-none" placeholder="메모 내용을 입력하세요." required></textarea>
+                <p class="error-message text-red-500 text-sm mt-1 text-center" id="errorContent" name="errorContent"></p>
+                <button id="saveMemoBtn" class="text-white text-xs bg-blue-600 mt-2 w-full h-8">저장</button>
+            </div>
         </div>
     </form>
 
     <script>
+        var no;
+        var currentSaveType = '';  //저장할 테이블이 뭔지 저장하는 변수
         $(document).ready(function () {
             //기본 정보 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
                 const midValue = $("#inputMid").val();
                 const url = midValue === "" ? '/api/basic-info/list' : '/api/basic-info/list/' + midValue;
-                makeAjaxCall(url, 'GET', function (data) {
+                makeAjaxCall(url, 'GET', null, function (data) {
                     populateTable(data);
                 }, showEmptyDataRow);
                 $("#basicInfoList").removeClass("hidden");
-             });
+            });
+
+            $("#registerBasicInfoBtn").click(handleFormSubmit("basic"));  //일반정보 등록 버튼 클릭 시
+            $("#settlementInfoBtn").click(handleFormSubmit("settlement"));  //정산정보 저장 버튼 클릭 시
+            $("#paymentMethodBtn").click(handleFormSubmit("payment"));  //결제수단 저장 버튼 클릭 시
+
+            //메모 등록 버튼 클릭 시
+            $("#memoBtn").click(function (event){
+                event.preventDefault();
+                makeAjaxCall('/api/memos', 'POST', getMemoData(), function(data){
+                    alert('메모가 성공적으로 저장되었습니다.');
+                    $('#memoContent').val('');
+                    //mid로 메모 데이터 가져오기
+                    makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
+                        populateMemo(data);
+                    });
+                });
+            });
+
+            //메모 입력 모달 저장 버튼 클릭 시
+            $("#saveMemoBtn").click(function (event){
+                event.preventDefault();
+                var apiUrl = '';
+                var dataToSend = {};
+
+                //타입에 따라 API URL과 데이터 설정
+                if (currentSaveType === "basic") {
+                    apiUrl = '/api/contracts';
+                    dataToSend = {
+                        contractRequest: getContractData(),
+                        memoRequest: getMemoData()
+                    }
+                } else if (currentSaveType === "settlement") {
+                    apiUrl = '/api/settlement-infos';
+                    dataToSend = {
+                        settlementInfoRequest: getSettlementInfoData(),
+                        memoRequest: getMemoData()
+                    }
+                } else if (currentSaveType === "payment") {
+                    apiUrl = '/api/payment-methods';
+                    dataToSend = {
+                        paymentMethodRequest: getPaymentMethodData(),
+                        memoRequest: getMemoData()
+                    }
+                }
+
+                makeAjaxCall(apiUrl, 'POST', dataToSend, function(data) {
+                    $('#memoContent2').val(''); // 메모 내용 초기화
+                    $("#memoModal").addClass("hidden"); // 모달 닫기
+                    
+                    makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
+                            populateMemo(data);
+                        });
+                    alert('성공적으로 저장되었습니다.');
+                });
+            });
+
+            //메모 입력 모달 x 버튼 클릭 시
+            $("#closeMemoModalBtn").click(function (event){
+                event.preventDefault();
+                $("#memoModal").addClass("hidden");
+            });
+
+            //전체 등록 버튼 클릭 시
+            $("#allRegisterBtn").click(function (event){
+                event.preventDefault();
+                var basicInfoData = {
+                    contractRequest: getContractData(),
+                    settlementInfoRequest: getSettlementInfoData(),
+                    paymentMethodRequest: getPaymentMethodData(),
+                    memoRequest: getMemoData()
+                };
+                makeAjaxCall('/api/basic-infos', 'POST', basicInfoData, function(data){
+                    alert('성공적으로 저장되었습니다.');
+                    $('#memoContent1').val('');
+                    //mid로 메모 데이터 가져오기
+                    makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
+                        populateMemo(data);
+                    });
+                });
+            });
 
             //신규 모달 열기
             $("#newModalBtn").click(function () {
@@ -564,7 +674,7 @@
                 $("#inputFeeSettlementDate").val(setTodayDate());
                 $("#inputEffectiveDate").val(setTodayDate());
 
-                makeAjaxCall('/api/managers', 'GET', function (data) {  //계약담당자, 영업담당자 셀렉트박스 추가
+                makeAjaxCall('/api/managers', 'GET', null, function (data) {  //계약담당자, 영업담당자 셀렉트박스 추가
                     getManagers(data);
                 });
             });
@@ -582,12 +692,15 @@
                     alert('사업자번호는 10자리가 유효합니다.')
                 } else {
                     clearModal();
-                    makeAjaxCall('/api/basic-info/' + regNumber, 'GET', function (data) {
+                    makeAjaxCall('/api/basic-info/' + regNumber, 'GET', null, function (data) {
                         setBasicInfoData(data);  //기본정보 가져오기
                         //mid로 메모 데이터 가져오기
-                        makeAjaxCall('api/memo/'+ data.contract.mid, 'GET', function(data){
+                        makeAjaxCall('api/memo/'+ data.contract.mid, 'GET', null, function(data){
                             populateMemo(data);
                         }, showEmptyMemoDataRow);
+                    });
+                    makeAjaxCall('/api/'+regNumber+'/no', 'GET', null, function(data) {   //사업자번호로 NO 가져오기
+                        no = data;
                     });
                 }
             });
@@ -598,41 +711,170 @@
                 { id: 'major-domestic-checkbox', childClass: 'major-domestic-card' }
             ];
             checkboxGroups.forEach(group => setupCheckboxGroup(group.id, group.childClass));
-            
         });
-
+        
+        function handleFormSubmit(saveType) {
+            return function(event) {
+                event.preventDefault();
+                $("#memoModal").removeClass("hidden");
+                currentSaveType = saveType;
+            }
+}
         /**
          * AJAX 요청을 처리하는 공통 함수
          * @param {string} url - 요청 URL
          * @param {string} method - HTTP 메서드
+         * @param {object} data - 전송할 데이터 (JSON 형식)
          * @param {function} successCallback - 성공 시 콜백 함수
          * @param {function} errorCallback - 에러 시 콜백 함수
          */
-        function makeAjaxCall(url, method, successCallback, errorCallback) {
+        function makeAjaxCall(url, method, data, successCallback, errorCallback) {
+            const token = $("meta[name='_csrf']").attr("content")
+            const header = $("meta[name='_csrf_header']").attr("content");
+
             $.ajax({
                 url: url,
                 method: method,
-                success: function (data) {
-                    successCallback(data);
+                data: method !== 'GET' ? JSON.stringify(data) : undefined,
+                contentType: method !== 'GET' ? 'application/json; charset=utf-8' : undefined,
+                beforeSend: function(xhr){  //CSRF 토큰 설정
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (responseData) {
+                    successCallback(responseData);
                 },
                 error: function (error) {
                     if(errorCallback){
                         errorCallback();
                     }
-                    else if(error.responseJSON.message){
-                        alert(error.responseJSON.message);
+                    else if(error.responseJSON){
+                        const errors = error.responseJSON;
+                        //모든 필드의 오류 메시지 초기화
+                        $('.error-message').text('');
+
+                        //오류 메시지를 각 필드에 맞게 표시
+                        for (const field in errors) {
+                            $("p[name=error" + extractFieldName(field)+"]").text(errors[field]);
+                        }
                     }
                     else if(!error.responseJSON.message){
-                        alert("데이터를 가져오는 데 실패했습니다. 다시 시도해 주세요.");
+                        alert("다시 시도해 주세요.");
                     }
                 }
             });
         }
 
+        //검증 실패한 필드 이름 추출
+        function extractFieldName(field) {
+            var parts = field.split('.');
+            parts = parts.length > 1 ? parts[1] : field; //두 번째 부분 반환
+            return parts.charAt(0).toUpperCase() + parts.slice(1);
+        }
+
+        //일반정보(계약) 등록
+        function getContractData() {
+            var contractData = {
+                businessRegNumber: $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, ''),
+                mid: $('#inputMID2').val(),
+                businessName: $('#inputBusinessName').val(),
+                contractDate: $('#inputContractDate').val().replace(/[-/]/g, ''),
+                ceoName: $('#inputCeoName').val(),
+                ceoBirth: $('#ceoBirth').text().replace(/[-/]/g, ''),
+                ceoHp: $('#ceoHP').text().replace(/[-/]/g, ''),
+                ceoTel: $('#ceoTEL').val().replace(/[-/]/g, ''),
+                ceoEmail: $('#ceoEmail').val(),
+                ceoFax: $('#ceoFAX').val(),
+                businessPostcode: $('#inputPostCode').val(),
+                businessAddressLine1: $('#inputAddress1').val(),
+                businessAddressLine2: $('#inputAddress2').val(),
+                businessType: $('#businessType').text(),
+                franchiseContractManagerName: $('#inputContractManagerName').val(),
+                franchiseContractManagerTel: $('#inputContractManagerTEL').val().replace(/[-/]/g, ''),
+                franchiseContractManagerHp: $('#inputContractManagerHP').val().replace(/[-/]/g, ''),
+                franchiseContractManagerEmail: $('#inputContractManagerEmail').val(),
+                contractManager: $('#selectContractManager').val(),
+                salesManager: $('#selectSalesManager').val()
+            };
+            return contractData;
+        }
+
+        //정산정보 저장
+        function getSettlementInfoData() {
+            var depositAccountFormat = $('input:radio[name="bordered-radio"]:checked').val();
+            var accountParameterName;
+
+            if (depositAccountFormat === '직접입력') {  //직접입력한걸로 설정
+                accountParameterName = $('#inputDepositAccountFormat').val();
+            } else if (depositAccountFormat === 'UDID') {  //UDID인 경우 UDID로 설정
+                accountParameterName = "UDID";
+            } else {
+                accountParameterName = $('#inputMID2').val(); //가맹점 MID인 경우 MID로 설정
+            }
+
+            var settlementInfoData = {
+                no: no,
+                paymentMethod: $('#selectPaymentMethod').val(),
+                feePaymentMethod: $('#selectFeePaymentMethod').val(),
+                feeSettlementDate: $('#inputFeeSettlementDate').val().replace(/[-/]/g, ''),
+                depositAccountFormat: depositAccountFormat,
+                accountParameterName: accountParameterName,
+                taxInvoiceCriteria: $('#selectTaxInvoiceCriteria').val(),
+                taxInvoiceVat: $('#selectTaxInvoiceVat').val(),
+                taxInvoiceEmail: $('#inputTaxInvoiceEmail').val(),
+                partialCancellationAllowed: $('#selectPartialCancellationAllowed').val()
+            };
+            return settlementInfoData;
+        }
+
+        //결제수단 저장
+        function getPaymentMethodData(){
+            var majorDomesticCardArray = [];
+            var minorDomesticCardArray = [];
+            var minorForeignCardArray = [];
+            $(".major-domestic-card:checked").each(function(){
+                majorDomesticCardArray.push($(this).val());
+            });
+            $(".minor-domestic-card:checked").each(function(){
+                minorDomesticCardArray.push($(this).val());
+            });
+            $(".minor-foreign-card:checked").each(function(){
+                minorForeignCardArray.push($(this).val());
+            });
+
+            var paymentMethodData = {
+                no: no,
+                isUsed: $('#selectIsUsed').val(),
+                authenticationType: $('#selectAuthenticationType').val(),
+                settlementCycle: $('#selectSettlementCycle').val(),
+                settlementCycleEffectiveDate: $('#inputEffectiveDate').val().replace(/[-/]/g, ''),
+                purchaseMethod: $('#selectPurchaseMethod').val(),
+                purchaseDate: $('#selectPurchaseDate').val(),
+                debitcardFeeManagement: $('#selectDebitcardFeeManagement').val(),
+                installmentMonths: $('#selectInstallmentMonths').val(),
+                isSmallMidUsed: $('#selectIsSmallMidUsed').val(),
+                smallMidBalanceSettlementReq: $('#selectSmallMidBalanceSettlementReq').val(),
+                differenceSettlementCycle: $('#selectDifferenceSettlementCycle').val(),
+                majorDomesticUnusableCard: majorDomesticCardArray.join(","),
+                minorDomesticUnusableCard: minorDomesticCardArray.join(","),
+                minorForeignUnusableCard: minorForeignCardArray.join(",")
+            };
+            return paymentMethodData;
+        }
+
+        //메모 등록
+        function getMemoData(){
+            var memoData = {
+                mid: $('#inputMID2').val(),
+                content: $('#memoContent1').val() || $('#memoContent2').val()
+            };
+            return memoData;
+        }
+        
         function clearModal(){  //입력 내용 초기화
             $("#basicInfoNewModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
             $("#basicInfoNewModal input[type='checkbox']").prop('checked', false); // 모든 체크박스 초기화
             $("#basicInfoNewModal input[type='radio']").prop('checked', false); // 모든 라디오 초기화
+            $("#basicInfoNewModal textarea").val(''); // 모든 textarea 입력 필드 초기화
             $("#basicInfoNewModal select").prop('selectedIndex', 0); // 모든 셀렉트 박스 초기화
             $("#basicInfoNewModal p").text(''); // 모든 p 태그 텍스트 초기화
             $("#memoList").empty(); // 메모 리스트 초기화
@@ -752,7 +994,7 @@
                             <tr class="even:bg-slate-200 odd:bg-white">
                                 <td class="table-cell px-2 py-1">${item.regDnt}</td>
                                 <td class="table-cell px-2 py-1">${item.id}</td>
-                                <td class="table-cell px-2 py-1" colspan="4">${item.content}</td>
+                                <td class="table-cell px-2 py-1 whitespace-nowrap overflow-hidden overflow-ellipsis" colspan="4">${item.content}</td>
                             </tr>
                         `;
                 tbody.append(row);
