@@ -47,13 +47,13 @@
                 $("#contractDoneCheckBtn").on('click', function () {
                     const searchOption = document.getElementById("searchOption").value;
                     const searchValue = $("#searchValue").val();
-                    const url = searchOption !== "NONE" && searchValue ? '/api/contract-done/list/' + searchOption + '/' + searchValue : '/api/contract-done/list';
+                    // searchOption을 선택하지 않았거나, searchValue를 입력하지 않았으면 전체 조회
+                    const url = searchOption === "NONE" || !searchValue ? '/api/contract-done/list' : '/api/contract-done/list/' + searchOption + '/' + searchValue;
                     makeAjaxCall(url, 'GET', function (data) {
                         populateTable(data);
                     }, showEmptyDataRow);
                     $("#contractDoneList").removeClass("hidden");
                 });
-
             });
 
             /**
