@@ -64,13 +64,17 @@ public class BasicInfoService {
         return memoList;
     }
 
-    public void saveContract(ContractRequest contractRequest) {
-        int rowsAffected = basicInfoRepository.saveContract(contractRequest);
-        if(rowsAffected == 0) {
-            log.error("사업자번호 : {} 계약 저장 실패",contractRequest.getBusinessRegNumber());
+    @Transactional
+    public void saveContract(BasicInfoRequest basicInfoRequest) {
+        int rowsAffected = basicInfoRepository.saveContract(basicInfoRequest.getContractRequest());
+        System.out.println("saveContract 정보저장:"+rowsAffected);
+        rowsAffected += basicInfoRepository.saveMemo(basicInfoRequest.getMemoRequest());
+        System.out.println("saveContract 메모저장:"+rowsAffected);
+        if(rowsAffected != 2) {
+            log.error("사업자번호 : {} 계약 저장 실패",basicInfoRequest.getContractRequest().getBusinessRegNumber());
             throw new SaveFailedException();
         }else{
-            log.info("사업자번호 : {} 계약 정보가 성공적으로 저장되었습니다.", contractRequest.getBusinessRegNumber());
+            log.info("사업자번호 : {} 계약 정보가 성공적으로 저장되었습니다.", basicInfoRequest.getContractRequest().getBusinessRegNumber());
         }
     }
 
@@ -78,23 +82,27 @@ public class BasicInfoService {
         return basicInfoRepository.getNoByBusinessRegNumber(businessRegNumber);
     }
 
-    public void saveSettlementInfo(SettlementInfoRequest settlementInfoRequest){
-        int rowsAffected = basicInfoRepository.saveSettlementInfo(settlementInfoRequest);
-        if(rowsAffected == 0){
-            log.error("NO : {} 정산정보 저장 실패", settlementInfoRequest.getNo());
+    @Transactional
+    public void saveSettlementInfo(BasicInfoRequest basicInfoRequest){
+        int rowsAffected = basicInfoRepository.saveSettlementInfo(basicInfoRequest.getSettlementInfoRequest());
+        rowsAffected += basicInfoRepository.saveMemo(basicInfoRequest.getMemoRequest());
+        if(rowsAffected <= 2){
+            log.error("NO : {} 정산정보 저장 실패", basicInfoRequest.getSettlementInfoRequest().getNo());
             throw new SaveFailedException();
         }else{
-            log.info("NO : {} 정산정보 정보가 성공적으로 저장되었습니다.", settlementInfoRequest.getNo());
+            log.info("NO : {} 정산정보 정보가 성공적으로 저장되었습니다.", basicInfoRequest.getSettlementInfoRequest().getNo());
         }
     }
 
-    public void savePaymentMethod(PaymentMethodRequest paymentMethodRequest){
-        int rowsAffected = basicInfoRepository.savePaymentMethod(paymentMethodRequest);
-        if(rowsAffected == 0){
-            log.error("NO : {} 결제수단 저장 실패", paymentMethodRequest.getNo());
+    @Transactional
+    public void savePaymentMethod(BasicInfoRequest basicInfoRequest){
+        int rowsAffected = basicInfoRepository.savePaymentMethod(basicInfoRequest.getPaymentMethodRequest());
+        rowsAffected += basicInfoRepository.saveMemo(basicInfoRequest.getMemoRequest());
+        if(rowsAffected <= 2){
+            log.error("NO : {} 결제수단 저장 실패", basicInfoRequest.getPaymentMethodRequest().getNo());
             throw new SaveFailedException();
         }else{
-            log.info("NO : {} 결제수단이 성공적으로 저장되었습니다.", paymentMethodRequest.getNo());
+            log.info("NO : {} 결제수단이 성공적으로 저장되었습니다.", basicInfoRequest.getPaymentMethodRequest().getNo());
         }
     }
 

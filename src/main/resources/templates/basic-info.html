@@ -574,6 +574,7 @@
 
     <script>
         var no;
+        var currentSaveType = '';  //저장할 테이블이 뭔지 저장하는 변수
         $(document).ready(function () {
             //기본 정보 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
@@ -588,26 +589,24 @@
             //일반정보 등록 버튼 클릭 시
             $("#registerBasicInfoBtn").click(function (event){
                 event.preventDefault();
-                makeAjaxCall('/api/contracts', 'PUT', getContractData(), function(data){
-                    alert('계약 정보가 성공적으로 저장되었습니다.');
-                });
+                $("#memoModal").removeClass("hidden");
+                currentSaveType = "basic";
             });
 
             //정산정보 저장 버튼 클릭 시
             $("#settlementInfoBtn").click(function (event){
                 event.preventDefault();
-                makeAjaxCall('/api/settlement-infos', 'POST', getSettlementInfoData(), function(data){
-                    alert('정산 정보가 성공적으로 저장되었습니다.');
-                });
+                $("#memoModal").removeClass("hidden");
+                currentSaveType = "settlement";
             });
 
             //결제수단 저장 버튼 클릭 시
             $("#paymentMethodBtn").click(function (event){
                 event.preventDefault();
-                makeAjaxCall('/api/payment-methods', 'POST', getPaymentMethodData(), function(data){
-                    alert('결제수단이 성공적으로 저장되었습니다.');
-                });
+                $("#memoModal").removeClass("hidden");
+                currentSaveType = "payment";
             });
+
 
             //메모 등록 버튼 클릭 시
             $("#memoBtn").click(function (event){
@@ -621,7 +620,51 @@
                     });
                 });
             });
-            
+
+            //메모 입력 모달 저장 버튼 클릭 시
+            $("#saveMemoBtn").click(function (event){
+                event.preventDefault();
+                var apiUrl = '';
+                var dataToSend = {};
+
+                //타입에 따라 API URL과 데이터 설정
+                if (currentSaveType === "basic") {
+                    apiUrl = '/api/contracts';
+                    dataToSend = {
+                        contractRequest: getContractData(),
+                        memoRequest: getMemoData()
+                    }
+                } else if (currentSaveType === "settlement") {
+                    apiUrl = '/api/settlement-infos';
+                    dataToSend = {
+                        settlementInfoRequest: getSettlementInfoData(),
+                        memoRequest: getMemoData()
+                    }
+                } else if (currentSaveType === "payment") {
+                    apiUrl = '/api/payment-methods';
+                    dataToSend = {
+                        paymentMethodRequest: getPaymentMethodData(),
+                        memoRequest: getMemoData()
+                    }
+                }
+
+                makeAjaxCall(apiUrl, 'POST', dataToSend, function(data) {
+                    $('#memoContent2').val(''); // 메모 내용 초기화
+                    $("#memoModal").addClass("hidden"); // 모달 닫기
+                    
+                    makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
+                            populateMemo(data);
+                        });
+                    alert('성공적으로 저장되었습니다.');
+                });
+            });
+
+            //메모 입력 모달 x 버튼 클릭 시
+            $("#closeMemoModalBtn").click(function (event){
+                event.preventDefault();
+                $("#memoModal").addClass("hidden");
+            });
+
             //전체 등록 버튼 클릭 시
             $("#allRegisterBtn").click(function (event){
                 event.preventDefault();
@@ -722,7 +765,7 @@
 
                         //오류 메시지를 각 필드에 맞게 표시
                         for (const field in errors) {
-                            $("#error" + extractFieldName(field)).text(errors[field]);
+                            $("p[name=error" + extractFieldName(field)+"]").text(errors[field]);
                         }
                     }
                     else if(!error.responseJSON.message){
@@ -833,7 +876,7 @@
         function getMemoData(){
             var memoData = {
                 mid: $('#inputMID2').val(),
-                content: $('#memoContent').val()
+                content: $('#memoContent1').val() || $('#memoContent2').val()
             };
             return memoData;
         }

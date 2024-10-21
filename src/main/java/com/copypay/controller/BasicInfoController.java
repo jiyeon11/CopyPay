@@ -68,10 +68,11 @@ public class BasicInfoController {
         return ResponseEntity.ok(basicInfoService.getMemoList(inputMid));
     }
 
-    @PutMapping("/api/contracts")
+    @PostMapping("/api/contracts")
     @ResponseBody
-    public ResponseEntity<?> saveContract(@Valid @RequestBody ContractRequest contractRequest){
-        basicInfoService.saveContract(contractRequest);
+    public ResponseEntity<?> saveContract(@Valid @RequestBody BasicInfoRequest basicInfoRequest, HttpServletRequest request){
+        basicInfoRequest.getMemoRequest().setId(getUsernameFromSession(request));
+        basicInfoService.saveContract(basicInfoRequest);
         return ResponseEntity.ok().build();
     }
 
@@ -83,15 +84,17 @@ public class BasicInfoController {
 
     @PostMapping("/api/settlement-infos")
     @ResponseBody
-    public ResponseEntity<?> saveSettlementInfo(@Valid @RequestBody SettlementInfoRequest settlementInfoRequest){
-        basicInfoService.saveSettlementInfo(settlementInfoRequest);
+    public ResponseEntity<?> saveSettlementInfo(@Valid @RequestBody BasicInfoRequest basicInfoRequest, HttpServletRequest request){
+        basicInfoRequest.getMemoRequest().setId(getUsernameFromSession(request));
+        basicInfoService.saveSettlementInfo(basicInfoRequest);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/api/payment-methods")
     @ResponseBody
-    public ResponseEntity<?> savePaymentMethod(@Valid @RequestBody PaymentMethodRequest paymentMethodRequest){
-        basicInfoService.savePaymentMethod(paymentMethodRequest);
+    public ResponseEntity<?> savePaymentMethod(@Valid @RequestBody BasicInfoRequest basicInfoRequest, HttpServletRequest request){
+        basicInfoRequest.getMemoRequest().setId(getUsernameFromSession(request));
+        basicInfoService.savePaymentMethod(basicInfoRequest);
         return ResponseEntity.ok().build();
     }
 
