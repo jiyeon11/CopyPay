@@ -20,10 +20,11 @@ public class ContractRegisterRequest {
     @NotBlank(message = "대표자명을 입력해주세요.")
     @Size(max = 10, message = "대표자명은 10자 이내여야 합니다.")
     private String ceoName; // 대표자명
-    
+
     @NotBlank(message = "대표자 생년월일을 입력해주세요.")
+    @Pattern(regexp = "\\d{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])", message = "생년월일 형식이 올바르지 않습니다.")
     private String ceoBirth; // 대표자 생년월일
-    
+
     @NotBlank(message = "대표자 HP를 입력해주세요.")
     @Size(min = 11, max = 11, message = "HP는 11자리여야 합니다.")
     private String ceoHp; // 대표자 HP
@@ -80,6 +81,5 @@ public class ContractRegisterRequest {
     @NotBlank(message = "계약일자를 입력해주세요.")
     @Pattern(regexp = "^(201[4-9]|202[0-9]|203[0-4])(0?[1-9]|1[0-2])(0?[1-9]|[12][0-9]|3[01])$",
             message = "날짜 형식이 올바르지 않습니다.") // 날짜 형식, 범위 지정
-
     private String contractDate; // 계약일자
 }
