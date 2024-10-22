@@ -78,6 +78,8 @@ public class ContractRegisterRequest {
     private String salesManager; // 영업담당자
 
     @NotBlank(message = "계약일자를 입력해주세요.")
-    private String contractDate; // 계약일자
+    @Pattern(regexp = "^(201[4-9]|202[0-9]|203[0-4])(0?[1-9]|1[0-2])(0?[1-9]|[12][0-9]|3[01])$",
+            message = "날짜 형식이 올바르지 않습니다.") // 날짜 형식, 범위 지정
 
+    private String contractDate; // 계약일자
 }
