@@ -9,14 +9,14 @@
     <button id="contractDoneCheckBtn" class="float-right items-center px-6 py-2 mr-2 bg-slate-800 text-md text-white rounded">조회</button>
     <!-- select 검색 조건 -->
     <div class="flex bg-white mt-16 ml-10 pl-40 rounded-lg w-[105rem]">
-        <td class="border-2 py-1">
-            <select id="searchOption" name="searchOption" class="flex-shrink-0 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 dark:border-gray-700 dark:text-white rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+        <div>
+            <select id="searchOption" name="searchOption" class="flex-shrink-0 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 dark:border-gray-700 dark:text-white rounded-s-lg hover:bg-gray-200 focus:outline-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                 <option value="NONE">선택하세요</option>
                 <option value="BUSINESS_NAME">상호</option>
                 <option value="BUSINESS_REG_NUMBER">사업자번호</option>
                 <option value="CEO_NAME">대표자명</option>
             </select>
-        </td>
+        </div>
         <div class="relative w-full">
             <input type="text" id="searchValue" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"/>
         </div>
