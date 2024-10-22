@@ -42,6 +42,7 @@ public class SalesManagementService {
 
     // 신규 계약 등록
     public void registerContract(ContractRegisterRequest contractRegisterRequest) {
+        log.info("신규 계약 등록 완료");
         salesManagementRepository.registerContract(contractRegisterRequest);
     }
 
