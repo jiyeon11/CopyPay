@@ -2,6 +2,7 @@ package com.copypay.controller;
 
 import com.copypay.dto.request.*;
 import com.copypay.dto.response.BasicInfoListResponse;
+import com.copypay.dto.response.BasicInfoViewListResponse;
 import com.copypay.dto.response.MemoResponse;
 import com.copypay.service.BasicInfoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -109,5 +110,25 @@ public class BasicInfoController {
         memoRequest.setId(getUsernameFromSession(request));
         basicInfoService.saveMemo(memoRequest);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/api/basic-info-view")
+    @ResponseBody
+    public ResponseEntity<List<BasicInfoViewListResponse>> getBasicInfoViewList(@RequestParam(required = false) String mid,
+                                                                                @RequestParam(required = false) String businessType,
+                                                                                @RequestParam(required = false) String isUsed,
+                                                                                @RequestParam(required = false) Boolean dateOption,
+                                                                                @RequestParam(required = false) String startDate,
+                                                                                @RequestParam(required = false) String endDate,
+                                                                                @RequestParam(required = false) String isSmallMidUsed){
+        BasicInfoViewRequest basicInfoViewRequest = new BasicInfoViewRequest();
+        basicInfoViewRequest.setMid(mid);
+        basicInfoViewRequest.setBusinessType(businessType);
+        basicInfoViewRequest.setIsUsed(isUsed);
+        basicInfoViewRequest.setDateOption(dateOption);
+        basicInfoViewRequest.setStartDate(startDate);
+        basicInfoViewRequest.setEndDate(endDate);
+        basicInfoViewRequest.setIsSmallMidUsed(isSmallMidUsed);
+        return ResponseEntity.ok().body(basicInfoService.getBasicInfoViewList(basicInfoViewRequest));
     }
 }

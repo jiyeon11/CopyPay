@@ -25,7 +25,7 @@ public class BasicInfoService {
         }else{
             log.info("총 {}개의 기본 정보 항목을 성공적으로 가져왔습니다", basicInfoList.size());
         }
-        return basicInfoRepository.getBasicInfoList(inputMid);
+        return basicInfoList;
     }
 
     public List<String> getManagerId(){
@@ -127,5 +127,16 @@ public class BasicInfoService {
         }else{
             log.info("사업자번호 : {} 기본정보가 성공적으로 저장되었습니다.", basicInfoRequest.getContractRequest().getBusinessRegNumber());
         }
+    }
+
+    public List<BasicInfoViewListResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest){
+        List<BasicInfoViewListResponse> list = basicInfoRepository.getBasicInfoViewList(basicInfoViewRequest);
+        if(list.isEmpty()) {
+            log.error("조건에 맞는 기본정보가 없습니다.");
+            throw new DataNotFoundException();
+        }else{
+            log.info("총 {}개의 기본정보 리스트를 성공적으로 조회했습니다.", list.size());
+        }
+        return list;
     }
 }

@@ -1,9 +1,6 @@
 package com.copypay.repository;
 
-import com.copypay.dto.request.ContractRequest;
-import com.copypay.dto.request.MemoRequest;
-import com.copypay.dto.request.PaymentMethodRequest;
-import com.copypay.dto.request.SettlementInfoRequest;
+import com.copypay.dto.request.*;
 import com.copypay.dto.response.*;
 import com.copypay.repository.mapper.BasicInfoMapper;
 import lombok.RequiredArgsConstructor;
@@ -74,5 +71,10 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     @Override
     public int saveMemo(MemoRequest memoRequest) {
         return basicInfoMapper.saveMemo(memoRequest);
+    }
+
+    @Override
+    public List<BasicInfoViewListResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest) {
+        return basicInfoMapper.getBasicInfoViewList(basicInfoViewRequest);
     }
 }
