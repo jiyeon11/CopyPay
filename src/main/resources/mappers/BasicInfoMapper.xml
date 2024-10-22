@@ -189,7 +189,7 @@
 				(#{dateOption} = false OR CONTRACT_DATE BETWEEN #{startDate} AND #{endDate})
 			)
 			AND (
-				(#{isSmallMidUsed} = '모두' OR IS_SMALL_MID_USED = #{isSmallM idUsed})
+				(#{isSmallMidUsed} = '모두' OR IS_SMALL_MID_USED = #{isSmallMidUsed})
 			)
 		]]>
 	</select>
