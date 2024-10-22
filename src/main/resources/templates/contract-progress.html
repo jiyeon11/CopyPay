@@ -338,6 +338,8 @@
             error: function (error) {
                 if (error.responseJSON) {
                     const errors = error.responseJSON;
+                    // 모든 필드의 에러 메시지 초기화
+                    $('.error-message').text('');
                     // 에러 메시지를 필드 아래에 표시
                     for (const field in errors) {
                         $(`p[name=error${extractFieldName(field)}]`).text(errors[field]);
