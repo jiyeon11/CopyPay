@@ -18,7 +18,7 @@ public class ContractProgressController {
     private final SalesManagementService salesManagementService;
 
     @GetMapping("/contract-progress")
-    public String contract_progress() {
+    public String contractProgress() {
         return "contract-progress";
     }
 
@@ -30,7 +30,7 @@ public class ContractProgressController {
 
     @PostMapping("/api/contract-progress/register")
     @ResponseBody
-    public ResponseEntity<?> contract_progress_register(@Valid @RequestBody ContractRegisterRequest contractRegisterRequest) {
+    public ResponseEntity<?> contractProgressRegister(@Valid @RequestBody ContractRegisterRequest contractRegisterRequest) {
         salesManagementService.registerContract(contractRegisterRequest);
         return ResponseEntity.ok().build();
     }

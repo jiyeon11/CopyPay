@@ -17,7 +17,7 @@ public class ContractDoneController {
     private final SalesManagementService salesManagementService;
 
     @GetMapping("/contract-done")
-    public String contract_done() {
+    public String contractDone() {
         return "contract-done";
     }
 
