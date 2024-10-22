@@ -6,247 +6,336 @@
     <title></title>
 </head>
 <body>
-    <button id="newModalBtn" class="float-right items-center px-6 py-2 mr-5 bg-green-700 text-md text-white rounded">신규등록</button>
-    <button id="contractProgressCheckBtn" class="float-right items-center px-6 py-2 mr-2 bg-slate-800 text-md text-white rounded">조회</button>
-    <!-- 날짜 검색 조건 -->
-    <div class="flex bg-white mt-16 ml-10 pl-40 rounded-lg w-[103rem] items-center space-x-2">
-        <div class="inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 dark:border-gray-700 dark:text-white rounded-lg focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:focus:ring-gray-800">
-            접수일자
-            <input id="dateOption" type="checkbox" class="ml-2">
-            <input type="date" id="startDate" min="2013-01-01" max="2032-12-31" class="ml-4 p-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"/>
-            <span class="px-2 text-sm">~</span>
-            <input type="date" id="endDate" min="2013-01-01" max="2032-12-31" class="p-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"/>
-        </div>
+<button id="newModalBtn" class="float-right items-center px-6 py-2 mr-5 bg-green-700 text-md text-white rounded">신규등록
+</button>
+<button id="contractProgressCheckBtn"
+        class="float-right items-center px-6 py-2 mr-2 bg-slate-800 text-md text-white rounded">조회
+</button>
+<!-- 날짜 검색 조건 -->
+<div class="flex bg-white mt-16 ml-10 pl-40 rounded-lg w-[103rem] items-center space-x-2">
+    <div class="inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 dark:border-gray-700 dark:text-white rounded-lg focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:focus:ring-gray-800">
+        접수일자
+        <input id="dateOption" type="checkbox" class="ml-2">
+        <input type="date" id="startDate" min="2013-01-01" max="2032-12-31"
+               class="ml-4 p-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"/>
+        <span class="px-2 text-sm">~</span>
+        <input type="date" id="endDate" min="2013-01-01" max="2032-12-31"
+               class="p-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"/>
     </div>
+</div>
 
-    <div id="contractProgressList" class="fixed mt-5 ml-10 pl-40 items-center hidden">
-        <!-- 조회한 계약 진행현황 -->
-        <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[44rem] overflow-y-auto">
-            <table class="w-full">
-                <thead class="bg-blue-200 sticky top-0 z-10">
-                  <tr>
-                    <th class="text-center border-r border-blue-400 py-1">계약일자</th>
-                    <th class="text-center border-r border-blue-400 py-1">사업자번호</th>
-                    <th class="text-center border-r border-blue-400 py-1">상호</th>
-                    <th class="text-center border-r border-blue-400 py-1">계약담당자</th>
-                    <th class="text-center border-r border-blue-400 py-1">영업담당자</th>
-                  </tr>
+<div id="contractProgressList" class="fixed mt-5 ml-10 pl-40 items-center hidden">
+    <!-- 조회한 계약 진행현황 -->
+    <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[44rem] overflow-y-auto">
+        <table class="w-full">
+            <thead class="bg-blue-200 sticky top-0 z-10">
+            <tr>
+                <th class="text-center border-r border-blue-400 py-1">계약일자</th>
+                <th class="text-center border-r border-blue-400 py-1">사업자번호</th>
+                <th class="text-center border-r border-blue-400 py-1">상호</th>
+                <th class="text-center border-r border-blue-400 py-1">계약담당자</th>
+                <th class="text-center border-r border-blue-400 py-1">영업담당자</th>
+            </tr>
+            </thead>
+            <tbody id="list" class="text-sm">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 신규등록 모달 -->
+<form id="contractProgressNewModal"
+      class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-[120rem] h-full flex justify-center items-center">
+    <div class="fixed bg-blue-500 w-5/6 py-2 z-10 top-14">
+        <h3 class="font-bold text-white text-lg ml-2">기본정보</h3>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 h-4/5 overflow-y-auto">
+        <div class="bg-white mt-2 rounded-lg shadow-2xl w-full h-fit">
+            <table class="table-fixed w-[90rem] border-collapse mx-auto">
+                <thead class="table-header-group">
+                <tr class="table-row bg-blue-300">
+                    <td colspan="6"><h3 class="font-bold text-white text-lg py-2 ml-3">| 신규계약 신규등록</h3></td>
+                </tr>
                 </thead>
-                <tbody id="list" class="text-sm">
+                <tbody class="table-row-group">
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1">접수일</td>  <!--DB에 없는 필드-->
+                    <td class="border-2 py-1">
+                        <p type="text" id="applicationDate"
+                           class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                    </td>
+                    <td class="text-center border-2 bg-stone-300 py-1">접수경로</td>
+                    <td class="border-2 py-1">
+                        <select id="applicationPath" name="applicationPath"
+                                class="ml-3 border-2 border-gray-400 outline-none text-sm">
+                            <option value="다이렉트">다이렉트</option>
+                        </select>
+                    </td>
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>상호</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="businessName" name="businessName"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessName" name="errorBusinessName"></p>
+                    </td>
+                </tr>
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1">사업체 구분</td>
+                    <td class="border-2 py-1">
+                        <select id="businessType" name="businessType" class="ml-3 border-2 border-gray-400 outline-none text-sm">
+                            <option value="개인사업자">개인사업자</option>
+                            <option value="법인사업자">법인사업자</option>
+                        </select>
+                    </td>
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업자 번호</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="businessRegNumber" name="businessRegNumber"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none"
+                               oninput="formatBusinessRegNumber(this)">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessRegNumber" name="errorBusinessRegNumber"></p>
+                    </td>
+                </tr>
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표자명</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="ceoName" name="ceoName"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoName" name="errorCeoName"></p>
+                    </td>
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표자 생년월일</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="ceoBirth" name="ceoBirth"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none"
+                               oninput="formatDate(this)">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoBirth" name="errorCeoBirth"></p>
+                    </td>
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표자 HP</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="ceoHp" name="ceoHp"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoHp" name="errorCeoHp"></p>
+                    </td>
+                </tr>
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 TEL</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="ceoTel" name="ceoTel"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none"
+                               oninput="formatPhone(this)">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoTel" name="errorCeoTel"></p>
+                    </td>
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 E-Mail</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="ceoEmail" name="ceoEmail"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoEmail" name="errorCeoEmail"></p>
+                    </td>
+                    <td class="text-center border-2 bg-stone-300 py-1">대표 FAX</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="ceoFax" name="ceoFax"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoFax" name="errorCeoFax"></p>
+                    </td>
+                </tr>
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업장 소재지</td>
+                    <td class="border-2 py-1" colspan="3">
+                        <input type="text" id="businessPostCode" name="businessPostCode"
+                               class="w-24 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessPostCode"
+                           name="errorBusinessPostCode"></p>
+                        <input type="text" id="businessAddressLine1" name="businessAddressLine1"
+                               class="w-52 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessAddressLine1"
+                           name="errorBusinessAddressLine1"></p>
+                        <input type="text" id="businessAddressLine2" name="businessAddressLine2"
+                               class="w-32 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessAddressLine2"
+                           name="errorBusinessAddressLine2"></p>
+                    </td>
+                </tr>
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>가맹점 계약담당</td>
+                    <td class="border-2 py-1" colspan="5">
+                        <div class="text-sm inline ml-3">성명:</div>
+                        <input type="text" id="franchiseContractManagerName" name="franchiseContractManagerName"
+                               class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerName"
+                           name="errorFranchiseContractManagerName"></p>
+                        <div class="text-sm inline ml-3">TEL:</div>
+                        <input type="text" id="franchiseContractManagerTel" name="franchiseContractManagerTel"
+                               class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none"
+                               oninput="formatPhone(this)">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerTel"
+                           name="errorFranchiseContractManagerTel"></p>
+                        <div class="text-sm inline ml-3">HP:</div>
+                        <input type="text" id="franchiseContractManagerHp" name="franchiseContractManagerHp"
+                               class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none"
+                               oninput="formatPhone(this)">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerHp"
+                           name="errorFranchiseContractManagerHp"></p>
+                        <div class="text-sm inline ml-3">EMail:</div>
+                        <input type="text" id="franchiseContractManagerEmail" name="franchiseContractManagerEmail"
+                               class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerEmail"
+                           name="errorFranchiseContractManagerEmail"></p>
+                    </td>
+                </tr>
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>세금계산서 E-Mail
+                    </td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="taxInvoiceEmail" name="taxInvoiceEmail"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none ">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorTaxInvoiceEmail"
+                           name="errorTaxInvoiceEmail"></p>
+                    </td>
+                </tr>
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1">계약담당자</td>
+                    <td class="border-2 py-1">
+                        <select id="contractManager" name="contractManager"
+                                class="ml-3 border-2 border-gray-400 outline-none text-sm">
+                            <option>선택하세요</option>
+                        </select>
+                    </td>
+                    <td class="text-center border-2 bg-stone-300 py-1">영업담당자</td>
+                    <td class="border-2 py-1">
+                        <select id="salesManager" name="salesManager"
+                                class="ml-3 border-2 border-gray-400 outline-none text-sm">
+                            <option>선택하세요</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>계약일자</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="contractDate" name="contractDate"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none ">
+                    </td>
+                </tr>
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td class="border-2 py-1" colspan="6">
+                        <button type="button" id="registerContractBtn"
+                                class="text-white text-xs bg-green-700 w-16 h-7 float-right">등록
+                        </button>
+                    </td>
+                </tr>
+                </tfoot>
             </table>
         </div>
     </div>
+    <div class="fixed bottom-14 w-5/6 bg-white py-2 text-center z-10">
+        <button type="button" id="closeModalBtn"
+                class="text-white text-xs bg-slate-500 w-16 h-7 float-right rounded-md mr-2">닫기
+        </button>
+    </div>
+</form>
 
+<script>
+    $(document).ready(function () {
+        var date = new Date();
+        date.setMonth(date.getMonth() - 1);
+        $('#startDate').val(date.toISOString().substring(0, 10)); // 오늘에서 한 달을 뺀 날짜
+        $('#endDate').val(new Date().toISOString().substring(0, 10));
+        $('#applicationDate').text(new Date().toISOString().substring(0, 10));
 
-    <!-- 신규등록 모달 -->
-    <form id="contractProgressNewModal" th:action="@{/api/contract-progress/register}" method="post"  class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-[120rem] h-full flex justify-center items-center">
-        <div class="fixed bg-blue-500 w-5/6 py-2 z-10 top-14">
-            <h3 class="font-bold text-white text-lg ml-2">기본정보</h3>
-        </div>
-        <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 h-4/5 overflow-y-auto">
-            <div class="bg-white mt-2 rounded-lg shadow-2xl w-full h-fit">
-                <table class="table-fixed w-[90rem] border-collapse mx-auto">
-                    <thead class="table-header-group">
-                    <tr class="table-row bg-blue-300">
-                        <td colspan="6"><h3 class="font-bold text-white text-lg py-2 ml-3">| 신규계약 신규등록</h3></td>
-                    </tr>
-                    </thead>
-                    <tbody class="table-row-group">
-                    <tr class="table-row">
-                        <td class="text-center border-2 bg-stone-300 py-1">접수일</td>  <!--DB에 없는 필드-->
-                        <td class="border-2 py-1">
-                            <p type="text" id="applicationDate" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        </td>
-                        <td class="text-center border-2 bg-stone-300 py-1">접수경로</td>
-                        <td class="border-2 py-1">
-                            <select id="applicationPath" name="applicationPath" class="ml-3 border-2 border-gray-400 outline-none text-sm">
-                                <option value="다이렉트">다이렉트</option>
-                            </select>
-                        </td>
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>상호</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="businessName" name="businessName" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        </td>
-                    </tr>
-                    <tr class="table-row">
-                        <td class="text-center border-2 bg-stone-300 py-1">사업체 구분</td>
-                        <td class="border-2 py-1">
-                            <select id="businessType" name="businessType" class="ml-3 border-2 border-gray-400 outline-none text-sm">
-                                <option value="개인사업자">개인사업자</option>
-                                <option value="법인사업자">법인사업자</option>
-                            </select>
-                        </td>
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업자 번호</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="businessRegNumber" name="businessRegNumber" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatBusinessRegNumber(this)">
-                        </td>
-                    </tr>
-                    <tr class="table-row">
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표자명</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="ceoName" name="ceoName" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        </td>
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표자 생년월일</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="ceoBirth" name="ceoBirth" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatDate(this)">
-                        </td>
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표자 HP</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="ceoHp" name="ceoHp" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        </td>
-                    </tr>
-                    <tr class="table-row">
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 TEL</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="ceoTel" name="ceoTel" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)">
-                        </td>
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 E-Mail</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="ceoEmail" name="ceoEmail" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        </td>
-                        <td class="text-center border-2 bg-stone-300 py-1">대표 FAX</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="ceoFax" name="ceoFax" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        </td>
-                    </tr>
-                    <tr class="table-row">
-                        <td class="text-center border-2 bg-stone-300 py-1">사업장 소재지</td>
-                        <td class="border-2 py-1" colspan="3">
-                            <input type="text" id="businessPostCode" name="businessPostCode" class="w-24 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                            <input type="text" id="businessAddressLine1" name="businessAddressLine1" class="w-52 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                            <input type="text" id="businessAddressLine2" name="businessAddressLine2" class="w-32 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        </td>
-                    </tr>
-                    <tr class="table-row">
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>가맹점 계약담당</td>
-                        <td class="border-2 py-1" colspan="5">
-                            <p class="text-sm inline ml-3">성명:</p>
-                            <input type="text" id="franchiseContractManagerName" name="franchiseContractManagerName" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" >
-                            <p class="text-sm inline ml-3">TEL:</p>
-                            <input type="text" id="franchiseContractManagerTel" name="franchiseContractManagerTel" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" >
-                            <p class="text-sm inline ml-3">HP:</p>
-                            <input type="text" id="franchiseContractManagerHp" name="franchiseContractManagerHp" class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)" >
-                            <p class="text-sm inline ml-3">EMail:</p>
-                            <input type="text" id="franchiseContractManagerEmail" name="franchiseContractManagerEmail" class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" >
-                        </td>
-                    </tr>
-                    <tr class="table-row">
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>세금계산서 E-Mail</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="taxInvoiceEmail" name="taxInvoiceEmail" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none ">
-                        </td>
-                    </tr>
-                    <tr class="table-row">
-                        <td class="text-center border-2 bg-stone-300 py-1">계약담당자</td>
-                        <td class="border-2 py-1">
-                            <select id="contractManager" name="contractManager" class="ml-3 border-2 border-gray-400 outline-none text-sm">
-                                <option>선택하세요</option>
-                            </select>
-                        </td>
-                        <td class="text-center border-2 bg-stone-300 py-1">영업담당자</td>
-                        <td class="border-2 py-1">
-                            <select id="salesManager" name="salesManager" class="ml-3 border-2 border-gray-400 outline-none text-sm">
-                                <option>선택하세요</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr class="table-row">
-                        <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>계약일자</td>
-                        <td class="border-2 py-1">
-                            <input type="text" id="contractDate" name="contractDate" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none ">
-                        </td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td class="border-2 py-1" colspan="6">
-                            <button type="submit" id="registerContractBtn" class="text-white text-xs bg-green-700 w-16 h-7 float-right">등록</button>
-                        </td>
-                    </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-        <div class="fixed bottom-14 w-5/6 bg-white py-2 text-center z-10">
-            <button type="button" id="closeModalBtn" class="text-white text-xs bg-slate-500 w-16 h-7 float-right rounded-md mr-2">닫기</button>
-        </div>
-    </form>
+        // 조회 버튼 클릭 시
+        $("#contractProgressCheckBtn").on('click', function () {
+            const startDate = $("#startDate").val();
+            const endDate = $("#endDate").val();
+            const checkedDate = $('input:checkbox[id="dateOption"]').is(":checked")
+            // 삼항연산자   접수일자 체크 여부를 확인
+            const url = checkedDate ? '/api/contract-progress/list/' + checkedDate + '/' + startDate + '/' + endDate : '/api/contract-progress/list';
+            makeAjaxCall(url, 'GET', null, function (data) {
+                populateTable(data);
+            }, showEmptyDataRow);
+            $("#contractProgressList").removeClass("hidden");
+        });
 
+        // 신규등록 모달 열기
+        $("#newModalBtn").click(function () {
+            $("#contractProgressNewModal").removeClass("hidden");
+            $("#contractProgressList").addClass("hidden");
 
-        <script>
-            $(document).ready(function () {
-                var date = new Date();
-                date.setMonth(date.getMonth() - 1);
-                $('#startDate').val(date.toISOString().substring(0, 10)); // 오늘에서 한 달을 뺀 날짜
-                $('#endDate').val(new Date().toISOString().substring(0,10));
-                $('#applicationDate').text(new Date().toISOString().substring(0,10));
-
-                // 조회 버튼 클릭 시
-                $("#contractProgressCheckBtn").on('click', function () {
-                    const startDate = $("#startDate").val();
-                    const endDate = $("#endDate").val();
-                    const checkedDate = $('input:checkbox[id="dateOption"]').is(":checked")
-                    // 삼항연산자   접수일자 체크 여부를 확인
-                    const url = checkedDate ? '/api/contract-progress/list/' + checkedDate + '/' + startDate  + '/' + endDate : '/api/contract-progress/list';
-                    makeAjaxCall(url, 'GET', function (data) {
-                        populateTable(data);
-                    }, showEmptyDataRow);
-                    $("#contractProgressList").removeClass("hidden");
-                });
-
-                // 신규등록 모달 열기
-                $("#newModalBtn").click(function () {
-                    $("#contractProgressNewModal").removeClass("hidden");
-                    $("#contractProgressList").addClass("hidden");
-
-                    makeAjaxCall('/api/managers', 'GET', function (data) {  // 계약담당자, 영업담당자 셀렉트박스 추가
-                        getManagers(data);
-                    });
-                });
-
-                // 신규등록 모달 닫기
-                $("#closeModalBtn").click(function () {
-                    // clearModal();
-                    $("#contractProgressNewModal").addClass("hidden");
-                });
-
+            makeAjaxCall('/api/managers', 'GET', null, function (data) {  // 계약담당자, 영업담당자 셀렉트박스 추가
+                getManagers(data);
             });
+        });
 
-            /**
-             * AJAX 요청을 처리하는 공통 함수
-             * @param {string} url - 요청 URL
-             * @param {string} method - HTTP 메서드
-             * @param {function} successCallback - 성공 시 콜백 함수
-             * @param {function} errorCallback - 에러 시 콜백 함수
-             */
-            function makeAjaxCall(url, method, successCallback, errorCallback) {
-                $.ajax({
-                    url: url,
-                    method: method,
-                    success: function (data) {
-                        successCallback(data);
-                    },
-                    error: function (error) {
-                        if(errorCallback){
-                            errorCallback();
-                        }
-                        else if(error.responseJSON.message){
-                            alert(error.responseJSON.message);
-                        }
-                        else if(!error.responseJSON.message){
-                            alert("데이터를 가져오는 데 실패했습니다. 다시 시도해 주세요.");
-                        }
+        // 신규등록 모달 닫기
+        $("#closeModalBtn").click(function () {
+            clearModal();
+            $("#contractProgressNewModal").addClass("hidden");
+        });
+
+        // 신규등록 입력 데이터 저장
+        $("#registerContractBtn").on("click", function (event) {
+            event.preventDefault();
+            var registerData = getRegisterData();  // 입력된 데이터를 가져옴
+            makeAjaxCall('/api/contract-progress/register', 'POST', registerData, function (data) {
+                alert("계약이 성공적으로 등록되었습니다.");
+                // 등록 후, 바로 조회 결과 보여줌
+                $("#contractProgressNewModal").addClass("hidden");
+                const url = '/api/contract-progress/list';
+                makeAjaxCall(url, 'GET', null, function (data) {
+                    populateTable(data);
+                }, showEmptyDataRow);
+                $("#contractProgressList").removeClass("hidden");
+            });
+        });
+
+    });
+
+    /**
+     * AJAX 요청을 처리하는 공통 함수
+     * @param {string} url - 요청 URL
+     * @param {string} method - HTTP 메서드
+     * @param {object} data - 전송할 데이터 (JSON 형식)
+     * @param {function} successCallback - 성공 시 콜백 함수
+     * @param {function} errorCallback - 에러 시 콜백 함수
+     */
+    function makeAjaxCall(url, method, data, successCallback, errorCallback) {
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+
+        $.ajax({
+            url: url,
+            method: method,
+            data: method !== 'GET' ? JSON.stringify(data) : undefined,
+            contentType: method !== 'GET' ? 'application/json; charset=utf-8' : undefined,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (responseData) {
+                successCallback(responseData);
+            },
+            error: function (error) {
+                if (error.responseJSON) {
+                    const errors = error.responseJSON;
+                    // 에러 메시지를 필드 아래에 표시
+                    for (const field in errors) {
+                        $(`p[name=error${extractFieldName(field)}]`).text(errors[field]);
                     }
-                });
+                } else {
+                    alert("다시 시도해 주세요.");
+                }
             }
+        });
+    }
 
-            function populateTable(data) {  // 받아온 데이터로 계약 진행현황 조회 테이블 행 추가
-                const tbody = $('#list');
-                tbody.empty();
-                if (data) {
-                    $.each(data, function(index, item){
-                        const row = `
+    // 필드명 추출 및 변환 (첫 글자를 대문자로 변경)
+    function extractFieldName(field) {
+        return field.charAt(0).toUpperCase() + field.slice(1);
+    }
+
+    function populateTable(data) {  // 받아온 데이터로 계약 진행현황 조회 테이블 행 추가
+        const tbody = $('#list');
+        tbody.empty();
+        if (data) {
+            $.each(data, function (index, item) {
+                const row = `
                             <tr class="even:bg-blue-300 odd:bg-white hover:bg-slate-400">
                                 <td class="table-cell px-2 py-1">${formatDate(item.contractDate)}</td>
                                 <td class="table-cell px-2 py-1">${formatBusinessRegNumber(item.businessRegNumber)}</td>
@@ -255,50 +344,89 @@
                                 <td class="table-cell px-2 py-1">${item.salesManager}</td>
                             </tr>
                         `;
-                        tbody.append(row);
-                    });
-                }
-            }
-            function showEmptyDataRow(){  // 계약 진행현황 조회 결과가 없을 때
-                const tbody = $('#list');
-                tbody.empty();
-                const noDataRow = `
+                tbody.append(row);
+            });
+        }
+    }
+
+    function showEmptyDataRow() {  // 계약 진행현황 조회 결과가 없을 때
+        const tbody = $('#list');
+        tbody.empty();
+        const noDataRow = `
                             <tr class="table-row">
                                 <td class="text-center pt-36" colspan="5">
                                     <p class="text-lg">조회 결과가 없습니다.</p>
                                 </td>
                             </tr>
                         `;
-                tbody.append(noDataRow);
-            }
+        tbody.append(noDataRow);
+    }
 
-            function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
-                let formatRegNumber = typeof regNumber === 'string' ? regNumber : $(reegNumber).val();
-                formatRegNumber = formatRegNumber
-                    .replace(/[^0-9]/g, '')
-                    .replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
-                $(regNumber).val(formatRegNumber);
-                return formatRegNumber;
-            }
-            function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
-                if (!/^\d{8}$/.test(dateString)) {
-                    console.error('잘못된 날짜 형식입니다:', dateString);
-                    return '';
-                }
-                const year = dateString.substring(0, 4);
-                const month = dateString.substring(4, 6);
-                const day = dateString.substring(6, 8);
-                return year+'/'+month+'/'+day;
-            }
-            function getManagers(data) {  //담당자 id 가져오기
-                $.each(data, function(index, item) {
-                    $('#contractManager, #salesManager').append(
-                        `<option value="${item}">${item}</option>`
-                    );
-                });
-            }
+    // 신규등록 입력 값 받기
+    function getRegisterData() {
+        return {
+            applicationPath: $('#applicationPath').val(),
+            businessName: $('#businessName').val(),
+            businessType: $('#businessType').val(),
+            businessRegNumber: $("#businessRegNumber").val(),
+            ceoName: $("#ceoName").val(),
+            ceoBirth: $('#ceoBirth').val(),
+            ceoHp: $('#ceoHp').val(),
+            ceoTel: $('#ceoTel').val(),
+            ceoEmail: $('#ceoEmail').val(),
+            ceoFax: $('#ceoFax').val(),
+            businessPostCode: $('#businessPostCode').val(),
+            businessAddressLine1: $('#businessAddressLine1').val(),
+            businessAddressLine2: $('#businessAddressLine2').val(),
+            franchiseContractManagerName: $('#franchiseContractManagerName').val(),
+            franchiseContractManagerTel: $('#franchiseContractManagerTel').val(),
+            franchiseContractManagerHp: $('#franchiseContractManagerHp').val(),
+            franchiseContractManagerEmail: $('#franchiseContractManagerEmail').val(),
+            taxInvoiceEmail: $('#taxInvoiceEmail').val(),
+            contractManager: $('#contractManager').val(),
+            salesManager: $('#salesManager').val(),
+            contractDate: $('#contractDate').val(),
+        };
+    }
 
-        </script>
+    function clearModal() {  //입력 내용 초기화
+        $("#contractProgressNewModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
+        $("#contractProgressNewModal input[type='checkbox']").prop('checked', false); // 모든 체크박스 초기화
+        $("#contractProgressNewModal select").prop('selectedIndex', 0); // 모든 셀렉트 박스 초기화
+        $("#contractProgressNewModal p").text(''); // 모든 p 태그 텍스트, 에러 메시지 초기화
+        $("#contractManagerManager").empty(); // 불러온 계약 담당자 초기화
+        $("#salesManager").empty(); // 불러온 영업 담당자 초기화
+    }
+
+    function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
+        let formatRegNumber = typeof regNumber === 'string' ? regNumber : $(regNumber).val();
+        formatRegNumber = formatRegNumber
+            .replace(/[^0-9]/g, '')
+            .replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
+        $(regNumber).val(formatRegNumber);
+        return formatRegNumber;
+    }
+
+    function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
+        if (!/^\d{8}$/.test(dateString)) {
+            console.error('잘못된 날짜 형식입니다:', dateString);
+            return '';
+        }
+        const year = dateString.substring(0, 4);
+        const month = dateString.substring(4, 6);
+        const day = dateString.substring(6, 8);
+        return year + '/' + month + '/' + day;
+    }
+
+    function getManagers(data) {  //담당자 id 가져오기
+        $.each(data, function (index, item) {
+            $('#contractManager, #salesManager').append(
+                `<option value="${item}">${item}</option>`
+            );
+        });
+    }
+
+</script>
 </body>
 
 </html>
