@@ -105,22 +105,21 @@
                     <td class="border-2 py-1">
                         <input type="text" id="ceoBirth" name="ceoBirth"
                                class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none"
-                               oninput="formatDate(this)">
+                               oninput="formatInputDate(this)">
                         <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoBirth" name="errorCeoBirth"></p>
                     </td>
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표자 HP</td>
                     <td class="border-2 py-1">
                         <input type="text" id="ceoHp" name="ceoHp"
-                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)">
                         <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoHp" name="errorCeoHp"></p>
                     </td>
                 </tr>
                 <tr class="table-row">
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 TEL</td>
                     <td class="border-2 py-1">
-                        <input type="text" id="ceoTel" name="ceoTel"
-                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none"
-                               oninput="formatPhone(this)">
+                        <input type="text" id="ceoTel" name="ceoTel" oninput="formatPhone(this)"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                         <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoTel" name="errorCeoTel"></p>
                     </td>
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표 E-Mail</td>
@@ -148,8 +147,7 @@
                             </div>
                             <div>
                                 <input type="text" id="businessAddressLine1" name="businessAddressLine1"
-                                       class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none"
-                                       oninput="formatPhone(this)">
+                                       class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
                                 <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessAddressLine1"
                                    name="errorBusinessAddressLine1"></p>
                             </div>
@@ -177,8 +175,7 @@
                             <div>
                                 <div class="text-sm">TEL:
                                 <input type="text" id="franchiseContractManagerTel" name="franchiseContractManagerTel"
-                                       class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none"
-                                       oninput="formatPhone(this)">
+                                       class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatPhone(this)">
                                 </div>
                                 <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerTel"
                                    name="errorFranchiseContractManagerTel"></p>
@@ -219,22 +216,22 @@
                     <td class="border-2 py-1">
                         <select id="contractManager" name="contractManager"
                                 class="ml-3 border-2 border-gray-400 outline-none text-sm">
-                            <option>선택하세요</option>
                         </select>
                     </td>
                     <td class="text-center border-2 bg-stone-300 py-1">영업담당자</td>
                     <td class="border-2 py-1">
                         <select id="salesManager" name="salesManager"
                                 class="ml-3 border-2 border-gray-400 outline-none text-sm">
-                            <option>선택하세요</option>
                         </select>
                     </td>
                 </tr>
                 <tr class="table-row">
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>계약일자</td>
                     <td class="border-2 py-1">
-                        <input type="text" id="contractDate" name="contractDate"
-                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none ">
+                        <input type="text" id="contractDate" name="contractDate" oninput="formatInputDate(this)"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorContractDate"
+                           name="errorContractDate"></p>
                     </td>
                 </tr>
                 </tbody>
@@ -260,10 +257,9 @@
 <script>
     $(document).ready(function () {
         var date = new Date();
+        $('#endDate').val(date.toISOString().substring(0, 10));
         date.setMonth(date.getMonth() - 1);
         $('#startDate').val(date.toISOString().substring(0, 10)); // 오늘에서 한 달을 뺀 날짜
-        $('#endDate').val(new Date().toISOString().substring(0, 10));
-        $('#applicationDate').text(new Date().toISOString().substring(0, 10));
 
         // 조회 버튼 클릭 시
         $("#contractProgressCheckBtn").on('click', function () {
@@ -280,6 +276,7 @@
 
         // 신규등록 모달 열기
         $("#newModalBtn").click(function () {
+            $('#applicationDate').text(new Date().toISOString().substring(0, 10));
             $("#contractProgressNewModal").removeClass("hidden");
             $("#contractProgressList").addClass("hidden");
 
@@ -297,11 +294,12 @@
         // 신규등록 입력 데이터 저장
         $("#registerContractBtn").on("click", function (event) {
             event.preventDefault();
-            var registerData = getRegisterData();  // 입력된 데이터를 가져옴
+            var registerData = mapInputToDto();  // 입력된 데이터를 가져옴
             makeAjaxCall('/api/contract-progress/register', 'POST', registerData, function (data) {
                 alert("계약이 성공적으로 등록되었습니다.");
                 // 등록 후, 바로 조회 결과 보여줌
                 $("#contractProgressNewModal").addClass("hidden");
+                clearModal();
                 const url = '/api/contract-progress/list';
                 makeAjaxCall(url, 'GET', null, function (data) {
                     populateTable(data);
@@ -309,7 +307,6 @@
                 $("#contractProgressList").removeClass("hidden");
             });
         });
-
     });
 
     /**
@@ -327,7 +324,7 @@
         $.ajax({
             url: url,
             method: method,
-            data: method !== 'GET' ? JSON.stringify(data) : undefined,
+            data: method !== 'GET' ? JSON.stringify(data) : $.param(data),
             contentType: method !== 'GET' ? 'application/json; charset=utf-8' : undefined,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
@@ -388,7 +385,20 @@
         tbody.append(noDataRow);
     }
 
-    // 신규등록 입력 값 받기
+    // 입력값 저장
+    function mapInputToDto() {
+        const data = getRegisterData();
+        ['businessRegNumber', 'ceoBirth', 'ceoHp', 'ceoTel', 'franchiseContractManagerTel', 'franchiseContractManagerHp', 'contractDate']
+            .forEach(key => data[key] = removeSymbol(data[key]));
+        return data;
+    }
+
+    // 입력값에서 하이픈, 슬래시 제거
+    function removeSymbol(value) {
+        return value?.replace(/[-/]/g, '') || value;
+    }
+
+    // 신규등록 입력값 받기
     function getRegisterData() {
         return {
             applicationPath: $('#applicationPath').val(),
@@ -415,12 +425,12 @@
         };
     }
 
-    function clearModal() {  //입력 내용 초기화
+    function clearModal() {  // 입력 내용 초기화
         $("#contractProgressNewModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
         $("#contractProgressNewModal input[type='checkbox']").prop('checked', false); // 모든 체크박스 초기화
         $("#contractProgressNewModal select").prop('selectedIndex', 0); // 모든 셀렉트 박스 초기화
         $("#contractProgressNewModal p").text(''); // 모든 p 태그 텍스트, 에러 메시지 초기화
-        $("#contractManagerManager").empty(); // 불러온 계약 담당자 초기화
+        $("#contractManager").empty(); // 불러온 계약 담당자 초기화
         $("#salesManager").empty(); // 불러온 영업 담당자 초기화
     }
 
@@ -433,7 +443,16 @@
         return formatRegNumber;
     }
 
-    function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
+    function formatPhone(phone) {  //전화번호 형식으로 바꾸기
+        let phoneNumber = typeof phone === 'string' ? phone : $(phone).val();
+        phoneNumber = phoneNumber
+            .replace(/[^0-9]/g, '')
+            .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
+        $(phone).val(phoneNumber);
+        return phoneNumber;
+    }
+
+    function formatDate(dateString) {  // 출력 날짜 YYYY/MM/DD 형식으로 바꾸기
         if (!/^\d{8}$/.test(dateString)) {
             console.error('잘못된 날짜 형식입니다:', dateString);
             return '';
@@ -442,6 +461,16 @@
         const month = dateString.substring(4, 6);
         const day = dateString.substring(6, 8);
         return year + '/' + month + '/' + day;
+    }
+    function formatInputDate(date) {  // 입력 날짜 YYYY/MM/DD 형식으로 바꾸기
+        let dateString = date.value.replace(/[^0-9]/g, ''); // 숫자만 입력받음
+        if (dateString.length > 8)  // 8자리 이상 입력 불가능
+            dateString = dateString.substring(0, 8);
+        if (dateString.length >= 4)
+            dateString = dateString.substring(0, 4) + '/' + dateString.substring(4);
+        if (dateString.length >= 7)
+            dateString = dateString.substring(0, 7) + '/' + dateString.substring(7);
+        date.value = dateString;
     }
 
     function getManagers(data) {  //담당자 id 가져오기
