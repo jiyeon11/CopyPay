@@ -138,48 +138,72 @@
                 </tr>
                 <tr class="table-row">
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업장 소재지</td>
-                    <td class="border-2 py-1" colspan="3">
-                        <input type="text" id="businessPostCode" name="businessPostCode"
-                               class="w-24 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessPostCode"
-                           name="errorBusinessPostCode"></p>
-                        <input type="text" id="businessAddressLine1" name="businessAddressLine1"
-                               class="w-52 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessAddressLine1"
-                           name="errorBusinessAddressLine1"></p>
-                        <input type="text" id="businessAddressLine2" name="businessAddressLine2"
-                               class="w-32 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessAddressLine2"
-                           name="errorBusinessAddressLine2"></p>
+                    <td class="border-2 py-1" colspan="5">
+                        <div class="grid grid-cols-4 gap-4 ml-3">
+                            <div>
+                                <input type="text" id="businessPostCode" name="businessPostCode"
+                                       class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessPostCode"
+                                   name="errorBusinessPostCode"></p>
+                            </div>
+                            <div>
+                                <input type="text" id="businessAddressLine1" name="businessAddressLine1"
+                                       class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none"
+                                       oninput="formatPhone(this)">
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessAddressLine1"
+                                   name="errorBusinessAddressLine1"></p>
+                            </div>
+                            <div>
+                                <input type="text" id="businessAddressLine2" name="businessAddressLine2"
+                                       class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessAddressLine2"
+                                   name="errorBusinessAddressLine2"></p>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="table-row">
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>가맹점 계약담당</td>
                     <td class="border-2 py-1" colspan="5">
-                        <div class="text-sm inline ml-3">성명:</div>
-                        <input type="text" id="franchiseContractManagerName" name="franchiseContractManagerName"
-                               class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerName"
-                           name="errorFranchiseContractManagerName"></p>
-                        <div class="text-sm inline ml-3">TEL:</div>
-                        <input type="text" id="franchiseContractManagerTel" name="franchiseContractManagerTel"
-                               class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none"
-                               oninput="formatPhone(this)">
-                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerTel"
-                           name="errorFranchiseContractManagerTel"></p>
-                        <div class="text-sm inline ml-3">HP:</div>
-                        <input type="text" id="franchiseContractManagerHp" name="franchiseContractManagerHp"
-                               class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none"
-                               oninput="formatPhone(this)">
-                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerHp"
-                           name="errorFranchiseContractManagerHp"></p>
-                        <div class="text-sm inline ml-3">EMail:</div>
-                        <input type="text" id="franchiseContractManagerEmail" name="franchiseContractManagerEmail"
-                               class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
-                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerEmail"
-                           name="errorFranchiseContractManagerEmail"></p>
+                        <div class="grid grid-cols-4 gap-4 ml-3">
+                            <div>
+                                <div class="text-sm">성명:
+                                <input type="text" id="franchiseContractManagerName" name="franchiseContractManagerName"
+                                       class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                </div>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerName"
+                                   name="errorFranchiseContractManagerName"></p>
+                            </div>
+                            <div>
+                                <div class="text-sm">TEL:
+                                <input type="text" id="franchiseContractManagerTel" name="franchiseContractManagerTel"
+                                       class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none"
+                                       oninput="formatPhone(this)">
+                                </div>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerTel"
+                                   name="errorFranchiseContractManagerTel"></p>
+                            </div>
+                            <div>
+                                <div class="text-sm">HP:
+                                <input type="text" id="franchiseContractManagerHp" name="franchiseContractManagerHp"
+                                       class="w-32 h-7 text-sm pl-1 border-2 border-gray-400 outline-none"
+                                       oninput="formatPhone(this)">
+                                </div>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerHp"
+                                   name="errorFranchiseContractManagerHp"></p>
+                            </div>
+                            <div>
+                                <div class="text-sm">E-Mail:
+                                <input type="text" id="franchiseContractManagerEmail" name="franchiseContractManagerEmail"
+                                       class="w-40 h-7 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                </div>
+                                <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFranchiseContractManagerEmail"
+                                   name="errorFranchiseContractManagerEmail"></p>
+                            </div>
+                        </div>
                     </td>
                 </tr>
+
                 <tr class="table-row">
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>세금계산서 E-Mail
                     </td>
