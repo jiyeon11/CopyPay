@@ -1,19 +1,16 @@
 package com.copypay.dto.response;
 
+import com.copypay.dto.Pagination;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
-@NoArgsConstructor
+import java.util.List;
+
 @AllArgsConstructor
-@Builder
+@Getter
+@Setter
 public class BasicInfoViewListResponse {
-    private String businessRegNumber;  //사업자번호
-    private String businessName;  //상호
-    private String mid;  //MID
-    private String isUsed;  //사용여부
-    private String isSmallMidUsed; //영중소 사용여부
-    private String contractDate;  //등록일
+    private List<BasicInfoViewResponse> list;
+    private Pagination pagination;
 }

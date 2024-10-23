@@ -129,8 +129,8 @@ public class BasicInfoService {
         }
     }
 
-    public List<BasicInfoViewListResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest){
-        List<BasicInfoViewListResponse> list = basicInfoRepository.getBasicInfoViewList(basicInfoViewRequest);
+    public List<BasicInfoViewResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest){
+        List<BasicInfoViewResponse> list = basicInfoRepository.getBasicInfoViewList(basicInfoViewRequest);
         if(list.isEmpty()) {
             log.error("조건에 맞는 기본정보가 없습니다.");
             throw new DataNotFoundException();
