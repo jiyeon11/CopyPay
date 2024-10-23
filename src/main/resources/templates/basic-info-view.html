@@ -147,7 +147,7 @@
             return parts.charAt(0).toUpperCase() + parts.slice(1);
         }
 
-        function goPage(pageIndex){  //해당 페이지에 대한 데이터 조회
+        function goPage(pageIndex){
             var request = {
                     mid: $('#inputMid').val(),
                     businessType: $('#selectBusinessType').val(),
@@ -157,20 +157,17 @@
                     endDate: $('#endDate').val().replace(/[-/]/g, ''),
                     isSmallMidUsed: $('#selectIsSmallMidUsed').val(),
                     currentPage: pageIndex
-            }
+                }
             makeAjaxCall('/api/basic-info-view', 'GET', request, function (data) {
                 populateTable(data);
             }, showEmptyDataRow());
             $("#basicInfoViewList").removeClass("hidden");
         }
 
-        function populateTable(data) {  //받아온 데이터로 기본 정보 조회 테이블 행 추가 & 페이징
+        function populateTable(data) {  //받아온 데이터로 기본 정보 조회 테이블 행 추가
             const tbody = $('#list');
-            const page = $('#pagination');
             tbody.empty();
-            page.empty();
-            pageIndex = data.pagination.currentPageNo;  //현재 페이지로 변경
-
+            
             $.each(data.list, function (index, item) {
                 const row = `
                             <tr class="even:bg-blue-300 odd:bg-white hover:bg-slate-400">
@@ -184,27 +181,33 @@
                         `;
                 tbody.append(row);
             });
+            renderPagination(data.pagination);
+        }
 
+        function renderPagination(data) {  //페이징
+            pageIndex = data.currentPageNo;  //현재 페이지로 변경
+            const page = $('#pagination');
+            page.empty();
+            
             var pagination = `<ol class="inline-flex space-x-2 whitespace-nowrap" id="pagination">`;
             
-            if(data.pagination.prev){  //이전버튼
+            if(data.prev){  // 이전 버튼
                 pagination += `<li><a href="javascript:void(0);" onclick="goPage(1); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;&lt;</a></li>`;    
-                pagination += `<li><a href="javascript:void(0);" onclick="goPage(${pageIndex-1}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;</a></li>`;
+                pagination += `<li><a href="javascript:void(0);" onclick="goPage(${data.currentPageNo - 1}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;</a></li>`;
             }
             
-            for(var i = data.pagination.firstPageNoOnPageList; i <= data.pagination.lastPageNoOnPageList; i++) {  //숫자들
+            for(var i = data.firstPageNoOnPageList; i <= data.lastPageNoOnPageList; i++) {  // 숫자들
                 pagination += `<li><a href="javascript:void(0);" onclick="goPage(${i}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" id="${i}">${i}</a></li>`;
             }
             
-            if(data.pagination.next){  //다음버튼
-                pagination += `<li class="next"><a href="javascript:void(0);"  onclick="goPage(${pageIndex+1}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;</a></li>`  
-                pagination += `<li><a href="javascript:void(0);" onclick="goPage(${data.pagination.realEnd}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;&gt;</a></li>`
+            if(data.next){  // 다음 버튼
+                pagination += `<li class="next"><a href="javascript:void(0);" onclick="goPage(${data.currentPageNo + 1}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;</a></li>`;  
+                pagination += `<li><a href="javascript:void(0);" onclick="goPage(${data.realEnd}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;&gt;</a></li>`;
             }
             
             pagination += `</ol>`;
             page.append(pagination);
-            $(`#${pageIndex}`).addClass("text-white bg-blue-500");
-
+            $(`#${data.currentPageNo}`).addClass("text-white bg-blue-500");
         }
 
         function showEmptyDataRow() {  //기본 정보 조회 테이블의 조회 결과가 없을 때
