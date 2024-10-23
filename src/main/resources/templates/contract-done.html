@@ -48,7 +48,7 @@
                     const searchOption = document.getElementById("searchOption").value;
                     const searchValue = $("#searchValue").val();
                     // searchOption을 선택하지 않았거나, searchValue를 입력하지 않았으면 전체 조회
-                    const url = searchOption === "NONE" || !searchValue ? '/api/contract-done/list' : '/api/contract-done/list/' + searchOption + '/' + searchValue;
+                    const url = '/api/contract-done/list' + (searchOption === "NONE" || !searchValue ? '' : `?searchOption=${searchOption}&searchValue=${searchValue}`);
                     makeAjaxCall(url, 'GET', function (data) {
                         populateTable(data);
                     }, showEmptyDataRow);
