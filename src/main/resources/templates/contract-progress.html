@@ -105,7 +105,7 @@
                     <td class="border-2 py-1">
                         <input type="text" id="ceoBirth" name="ceoBirth"
                                class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none"
-                               oninput="formatInputDate(this)">
+                               oninput="formatDate(this)">
                         <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorCeoBirth" name="errorCeoBirth"></p>
                     </td>
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>대표자 HP</td>
@@ -228,7 +228,7 @@
                 <tr class="table-row">
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>계약일자</td>
                     <td class="border-2 py-1">
-                        <input type="text" id="contractDate" name="contractDate" oninput="formatInputDate(this)"
+                        <input type="text" id="contractDate" name="contractDate" oninput="formatDate(this)"
                                class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                         <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorContractDate"
                            name="errorContractDate"></p>
@@ -434,43 +434,45 @@
         $("#salesManager").empty(); // 불러온 영업 담당자 초기화
     }
 
-    function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
+    function formatBusinessRegNumber(regNumber) {  // 사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
         let formatRegNumber = typeof regNumber === 'string' ? regNumber : $(regNumber).val();
-        formatRegNumber = formatRegNumber
-            .replace(/[^0-9]/g, '')
-            .replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
+        if (formatRegNumber.length === 10) {
+            formatRegNumber = formatRegNumber.substring(0, 3) + '-' + formatRegNumber.substring(3, 5) + '-' + formatRegNumber.substring(5);
+        }
         $(regNumber).val(formatRegNumber);
         return formatRegNumber;
     }
 
-    function formatPhone(phone) {  //전화번호 형식으로 바꾸기
+    function formatPhone(phone) {  // 전화번호 형식으로 바꾸기
         let phoneNumber = typeof phone === 'string' ? phone : $(phone).val();
-        phoneNumber = phoneNumber
-            .replace(/[^0-9]/g, '')
-            .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
+        if (phoneNumber.length === 11) {
+            let first = phoneNumber.substring(0, 3);
+            let second = phoneNumber.substring(3, 7);
+            let third = phoneNumber.substring(7);
+            phoneNumber = first + '-' + second + '-' + third;
+        }
         $(phone).val(phoneNumber);
-        return phoneNumber;
     }
 
-    function formatDate(dateString) {  // 출력 날짜 YYYY/MM/DD 형식으로 바꾸기
-        if (!/^\d{8}$/.test(dateString)) {
-            console.error('잘못된 날짜 형식입니다:', dateString);
-            return '';
+    function formatDate(date) {  // 출력, 입력 날짜 YYYY/MM/DD 형식으로 바꾸기
+        let dateString = '';
+        if(typeof date !== 'string'){  // 날짜를 입력받는 경우
+            for (let i = 0; i < date.value.length; i++) {
+                if (!isNaN(date.value[i]) && date.value[i] !== ' ') {  // 숫자만 입력받음
+                    dateString += date.value[i];
+                }
+            }
+        }else{  // 조회에서 날짜를 출력하는 경우
+            dateString = date;
         }
-        const year = dateString.substring(0, 4);
-        const month = dateString.substring(4, 6);
-        const day = dateString.substring(6, 8);
-        return year + '/' + month + '/' + day;
-    }
-    function formatInputDate(date) {  // 입력 날짜 YYYY/MM/DD 형식으로 바꾸기
-        let dateString = date.value.replace(/[^0-9]/g, ''); // 숫자만 입력받음
-        if (dateString.length > 8)  // 8자리 이상 입력 불가능
+        if (dateString.length > 8)  // 8자리까지만 입력 가능
             dateString = dateString.substring(0, 8);
         if (dateString.length >= 4)
             dateString = dateString.substring(0, 4) + '/' + dateString.substring(4);
         if (dateString.length >= 7)
             dateString = dateString.substring(0, 7) + '/' + dateString.substring(7);
-        date.value = dateString;
+        $(date).val(dateString);
+        return dateString;
     }
 
     function getManagers(data) {  //담당자 id 가져오기
