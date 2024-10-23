@@ -6,6 +6,7 @@ import com.copypay.exception.*;
 import com.copypay.repository.BasicInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,15 +18,16 @@ import java.util.List;
 public class BasicInfoService {
     private final BasicInfoRepository basicInfoRepository;
 
+    @Autowired
+    SalesManagementService salesManagementService;
+
     public List<BasicInfoListResponse> getBasicInfoList(String inputMid) {
         List<BasicInfoListResponse> basicInfoList = basicInfoRepository.getBasicInfoList(inputMid);
-        if(basicInfoList.isEmpty()) {
-            log.error("MID {}에 대한 기본 정보가 없습니다.", inputMid);
-            throw new DataNotFoundException();
-        }else{
-            log.info("총 {}개의 기본 정보 항목을 성공적으로 가져왔습니다", basicInfoList.size());
-        }
-        return basicInfoRepository.getBasicInfoList(inputMid);
+        return salesManagementService.validateListNotEmpty(
+                basicInfoList,
+                String.format("총 %d개의 기본 정보 항목을 성공적으로 가져왔습니다", basicInfoList.size()),
+                String.format("MID %s에 대한 기본 정보가 없습니다.", inputMid)
+        );
     }
 
     public List<String> getManagerId(){
