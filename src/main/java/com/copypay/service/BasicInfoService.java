@@ -6,7 +6,6 @@ import com.copypay.exception.*;
 import com.copypay.repository.BasicInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BasicInfoService {
     private final BasicInfoRepository basicInfoRepository;
-
-    @Autowired
-    SalesManagementService salesManagementService;
+    private final SalesManagementService salesManagementService;
 
     public List<BasicInfoListResponse> getBasicInfoList(String inputMid) {
         List<BasicInfoListResponse> basicInfoList = basicInfoRepository.getBasicInfoList(inputMid);
