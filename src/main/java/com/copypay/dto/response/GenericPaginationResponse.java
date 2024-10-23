@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BasicInfoViewListResponse {
-    private List<BasicInfoViewResponse> list;
+public class GenericPaginationResponse<T> {
+    private List<T> list;  //조회한 데이터 리스트
     private Pagination pagination;
 }

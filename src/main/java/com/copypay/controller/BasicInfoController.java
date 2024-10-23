@@ -3,7 +3,7 @@ package com.copypay.controller;
 import com.copypay.dto.Pagination;
 import com.copypay.dto.request.*;
 import com.copypay.dto.response.BasicInfoListResponse;
-import com.copypay.dto.response.BasicInfoViewListResponse;
+import com.copypay.dto.response.GenericPaginationResponse;
 import com.copypay.dto.response.BasicInfoViewResponse;
 import com.copypay.dto.response.MemoResponse;
 import com.copypay.service.BasicInfoService;
@@ -116,14 +116,14 @@ public class BasicInfoController {
 
     @GetMapping("/api/basic-info-view")
     @ResponseBody
-    public ResponseEntity<BasicInfoViewListResponse> getBasicInfoViewList(@RequestParam(required = false) String mid,
-                                                                            @RequestParam(required = false) String businessType,
-                                                                            @RequestParam(required = false) String isUsed,
-                                                                            @RequestParam(required = false) Boolean dateOption,
-                                                                            @RequestParam(required = false) String startDate,
-                                                                            @RequestParam(required = false) String endDate,
-                                                                            @RequestParam(required = false) String isSmallMidUsed,
-                                                                            @RequestParam(required = false) int currentPage){
+    public ResponseEntity<GenericPaginationResponse<BasicInfoViewResponse>> getBasicInfoViewList(@RequestParam(required = false) String mid,
+                                                                          @RequestParam(required = false) String businessType,
+                                                                          @RequestParam(required = false) String isUsed,
+                                                                          @RequestParam(required = false) Boolean dateOption,
+                                                                          @RequestParam(required = false) String startDate,
+                                                                          @RequestParam(required = false) String endDate,
+                                                                          @RequestParam(required = false) String isSmallMidUsed,
+                                                                          @RequestParam(required = false) int currentPage){
         BasicInfoViewRequest basicInfoViewRequest = new BasicInfoViewRequest();
         basicInfoViewRequest.setMid(mid);
         basicInfoViewRequest.setBusinessType(businessType);
@@ -141,7 +141,7 @@ public class BasicInfoController {
         basicInfoViewRequest.setPageSize(pagination.getPageSize());
 
         List<BasicInfoViewResponse> basicInfoViewResponse = basicInfoService.getBasicInfoViewList(basicInfoViewRequest);
-        BasicInfoViewListResponse response = new BasicInfoViewListResponse(basicInfoViewResponse, pagination);
+        GenericPaginationResponse<BasicInfoViewResponse> response = new GenericPaginationResponse<>(basicInfoViewResponse, pagination);
 
         return ResponseEntity.ok().body(response);
     }
