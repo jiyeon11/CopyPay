@@ -169,7 +169,7 @@
 		]]>
 	</select>
 
-	<select id="getBasicInfoViewList" parameterType="com.copypay.dto.request.BasicInfoViewRequest" resultType="com.copypay.dto.response.BasicInfoViewListResponse">
+	<select id="getBasicInfoViewList" parameterType="com.copypay.dto.request.BasicInfoViewRequest" resultType="com.copypay.dto.response.BasicInfoViewResponse">
 		<![CDATA[
 			SELECT 	c.BUSINESS_REG_NUMBER AS businessRegNumber,
 		 		   	c.MID AS mid,
@@ -191,9 +191,28 @@
 			AND (
 				(#{isSmallMidUsed} = '모두' OR IS_SMALL_MID_USED = #{isSmallMidUsed})
 			)
+			LIMIT #{pageSize} OFFSET #{firstIndex}
 		]]>
 	</select>
-
+	<select id="countBasicInfoViewList" parameterType="com.copypay.dto.request.BasicInfoViewRequest" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM CONTRACT c JOIN PAYMENT_METHOD p ON c.NO = p.NO
+			WHERE MID LIKE CONCAT('%', #{mid}, '%')
+			AND (
+			    (#{businessType} = '모두' OR BUSINESS_TYPE = #{businessType})
+			)
+			AND (
+			    (#{isUsed} = '모두' OR IS_USED = #{isUsed})
+			)
+			AND (
+				(#{dateOption} = false OR CONTRACT_DATE BETWEEN #{startDate} AND #{endDate})
+			)
+			AND (
+				(#{isSmallMidUsed} = '모두' OR IS_SMALL_MID_USED = #{isSmallMidUsed})
+			)
+		]]>
+	</select>
 	<update id="saveContract" parameterType="com.copypay.dto.request.ContractRequest">
 		<![CDATA[
 			UPDATE CONTRACT SET

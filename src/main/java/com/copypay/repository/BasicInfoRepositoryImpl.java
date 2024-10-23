@@ -74,7 +74,12 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     }
 
     @Override
-    public List<BasicInfoViewListResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest) {
+    public List<BasicInfoViewResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest) {
         return basicInfoMapper.getBasicInfoViewList(basicInfoViewRequest);
+    }
+
+    @Override
+    public int countBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest) {
+        return basicInfoMapper.countBasicInfoViewList(basicInfoViewRequest);
     }
 }

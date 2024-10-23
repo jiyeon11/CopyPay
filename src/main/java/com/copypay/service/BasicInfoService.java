@@ -139,4 +139,8 @@ public class BasicInfoService {
         }
         return list;
     }
+
+    public int getTotalCount(BasicInfoViewRequest basicInfoViewRequest){
+        return basicInfoRepository.countBasicInfoViewList(basicInfoViewRequest);
+    }
 }

@@ -20,5 +20,6 @@ public interface BasicInfoMapper {
     int saveSettlementInfo(SettlementInfoRequest settlementInfoRequest);
     int savePaymentMethod(PaymentMethodRequest paymentMethodRequest);
     int saveMemo(MemoRequest memoRequest);
-    List<BasicInfoViewListResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
+    List<BasicInfoViewResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
+    int countBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
 }
