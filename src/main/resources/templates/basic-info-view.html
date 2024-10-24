@@ -97,50 +97,6 @@
             });
         });
 
-        /**
-         * AJAX 요청을 처리하는 공통 함수
-         * @param {string} url - 요청 URL
-         * @param {string} method - HTTP 메서드
-         * @param {object} data - 전송할 데이터 (JSON 형식)
-         * @param {function} successCallback - 성공 시 콜백 함수
-         * @param {function} errorCallback - 에러 시 콜백 함수
-         */
-        function makeAjaxCall(url, method, data, successCallback, errorCallback) {
-            const token = $("meta[name='_csrf']").attr("content")
-            const header = $("meta[name='_csrf_header']").attr("content");
-
-            $.ajax({
-                url: url,
-                method: method,
-                data: method !== 'GET' ? JSON.stringify(data) : $.param(data),
-                contentType: method !== 'GET' ? 'application/json; charset=utf-8' : undefined,
-                beforeSend: function(xhr){  //CSRF 토큰 설정
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (responseData) {
-                    successCallback(responseData);
-                },
-                error: function (error) {
-                    if(errorCallback){
-                        errorCallback();
-                    }
-                    else if(error.responseJSON){
-                        const errors = error.responseJSON;
-                        //모든 필드의 오류 메시지 초기화
-                        $('.error-message').text('');
-
-                        //오류 메시지를 각 필드에 맞게 표시
-                        for (const field in errors) {
-                            $("p[name=error" + extractFieldName(field)+"]").text(errors[field]);
-                        }
-                    }
-                    else if(!error.responseJSON.message){
-                        alert("다시 시도해 주세요.");
-                    }
-                }
-            });
-        }
-        
         function extractFieldName(field) {  //검증 실패한 필드 이름 추출
             var parts = field.split('.');
             parts = parts.length > 1 ? parts[1] : field; //두 번째 부분 반환
@@ -157,7 +113,7 @@
                     endDate: $('#endDate').val().replace(/[-/]/g, ''),
                     isSmallMidUsed: $('#selectIsSmallMidUsed').val(),
                     currentPage: pageIndex
-                }
+                };
             makeAjaxCall('/api/basic-info-view', 'GET', request, function (data) {
                 populateTable(data);
             }, showEmptyDataRow());
