@@ -16,20 +16,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BasicInfoService {
     private final BasicInfoRepository basicInfoRepository;
+    private final SalesManagementService salesManagementService;
 
     public List<BasicInfoListResponse> getBasicInfoList(String inputMid) {
         List<BasicInfoListResponse> basicInfoList = basicInfoRepository.getBasicInfoList(inputMid);
-        if(basicInfoList.isEmpty()) {
-            log.error("MID {}에 대한 기본 정보가 없습니다.", inputMid);
-            throw new DataNotFoundException();
-        }else{
-            log.info("총 {}개의 기본 정보 항목을 성공적으로 가져왔습니다", basicInfoList.size());
-        }
-        return basicInfoList;
+        return salesManagementService.validateListNotEmpty(
+                basicInfoList,
+                String.format("총 %d개의 기본 정보 항목을 성공적으로 가져왔습니다", basicInfoList.size()),
+                String.format("MID %s에 대한 기본 정보가 없습니다.", inputMid)
+        );
     }
 
     public List<String> getManagerId(){
         List<String> managerIds = basicInfoRepository.getManagerId();
+        if(managerIds.isEmpty()){
+            log.error("매니저 ID 불러오기에 실패했습니다.");
+            throw new LoadFailedException();
+        }
         log.info("총 {}개의 매니저 ID를 성공적으로 가져왔습니다.", managerIds.size());
         return managerIds;
     }

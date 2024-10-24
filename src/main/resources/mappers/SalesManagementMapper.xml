@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.copypay.repository.mapper.SalesManagementMapper">
+
+	<!-- 계약 진행현황 조회 -->
+    <select id="getContractProgressList" parameterType="string" resultType="com.copypay.dto.response.ContractProgressListResponse">
+	<![CDATA[
+		SELECT
+		    CONTRACT_DATE AS contractDate,
+			BUSINESS_REG_NUMBER AS businessRegNumber,
+			BUSINESS_NAME AS businessName,
+			CONTRACT_MANAGER AS contractManager,
+			SALES_MANAGER AS salesManager
+		FROM CONTRACT
+		WHERE #{checkedDate} IS NULL OR CONTRACT_DATE BETWEEN DATE_FORMAT(#{startDate}, '%Y%m%d') AND DATE_FORMAT(#{endDate}, '%Y%m%d')
+		ORDER BY CONTRACT_DATE DESC
+		]]>
+	</select>
+
+	<!-- 계약 완료현황 조회 -->
+	<select id="getContractDoneList" parameterType="map" resultType="com.copypay.dto.response.ContractDoneListResponse">
+	<![CDATA[
+		SELECT
+			CONTRACT_DATE AS contractDate,
+			BUSINESS_REG_NUMBER AS businessRegNumber,
+			BUSINESS_NAME AS businessName,
+			CONTRACT_MANAGER AS contractManager,
+			SALES_MANAGER AS salesManager
+		FROM CONTRACT
+		WHERE 1=1
+    ]]>
+		<if test="searchOption != null">
+			AND ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
+		</if>
+	<![CDATA[
+    	ORDER BY CONTRACT_DATE DESC
+    ]]>
+	</select>
+
+	<!-- 신규 계약 등록 -->
+	<insert id="registerContract" parameterType="com.copypay.dto.request.ContractRegisterRequest">
+		INSERT INTO CONTRACT (APPLICATION_PATH, BUSINESS_NAME, BUSINESS_TYPE, BUSINESS_REG_NUMBER,
+		                      CEO_NAME, CEO_BIRTH, CEO_HP, CEO_TEL, CEO_EMAIL, CEO_FAX,
+		                      BUSINESS_POSTCODE, BUSINESS_ADDRESS_LINE1, BUSINESS_ADDRESS_LINE2,
+		                      FRANCHISE_CONTRACT_MANAGER_NAME, FRANCHISE_CONTRACT_MANAGER_TEL, FRANCHISE_CONTRACT_MANAGER_HP, FRANCHISE_CONTRACT_MANAGER_EMAIL,
+		                      TAX_INVOICE_EMAIL, CONTRACT_MANAGER, SALES_MANAGER, CONTRACT_DATE)
+				VALUES(#{applicationPath}, #{businessName}, #{businessType}, #{businessRegNumber},
+				      #{ceoName}, #{ceoBirth}, #{ceoHp}, #{ceoTel}, #{ceoEmail}, #{ceoFax},
+				      #{businessPostCode}, #{businessAddressLine1}, #{businessAddressLine2},
+				      #{franchiseContractManagerName}, #{franchiseContractManagerTel}, #{franchiseContractManagerHp}, #{franchiseContractManagerEmail},
+				      #{taxInvoiceEmail}, #{contractManager}, #{salesManager}, #{contractDate})
+	</insert>
+
+</mapper>
