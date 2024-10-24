@@ -143,7 +143,12 @@ public class BasicInfoService {
         return list;
     }
 
-    public int getTotalCount(BasicInfoViewRequest basicInfoViewRequest){
+    public int getBasicInfoViewListTotalCount(BasicInfoViewRequest basicInfoViewRequest){
         return basicInfoRepository.countBasicInfoViewList(basicInfoViewRequest);
     }
+
+    public int getBasicInfoListTotalCount(Map<String, Object> request){
+        return basicInfoRepository.countBasicInfoList(request);
+    }
+
 }

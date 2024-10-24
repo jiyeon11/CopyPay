@@ -22,4 +22,5 @@ public interface BasicInfoMapper {
     int saveMemo(MemoRequest memoRequest);
     List<BasicInfoViewResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
     int countBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
+    int countBasicInfoList(Map<String, Object> request);
 }

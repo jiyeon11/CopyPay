@@ -136,7 +136,7 @@ public class BasicInfoController {
         //페이징
         Pagination pagination = new Pagination();
         pagination.setCurrentPageNo(currentPage);
-        pagination.setTotalCount(basicInfoService.getTotalCount(basicInfoViewRequest));
+        pagination.setTotalCount(basicInfoService.getBasicInfoViewListTotalCount(basicInfoViewRequest));
         basicInfoViewRequest.setFirstIndex(pagination.getFirstRecordIndex());
         basicInfoViewRequest.setPageSize(pagination.getPageSize());
 

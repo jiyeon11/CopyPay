@@ -90,6 +90,16 @@
         ]]>
 	</select>
 
+	<select id="countBasicInfoList" parameterType="map" resultType="int">
+		<![CDATA[
+		SELECT
+			COUNT(*)
+		FROM CONTRACT
+		JOIN PAYMENT_METHOD ON CONTRACT.NO = PAYMENT_METHOD.NO
+		WHERE #{mid} IS NULL OR MID LIKE CONCAT('%', #{mid}, '%')
+        ]]>
+	</select>
+
     <select id="getManagerId" resultType="string">
 	<![CDATA[
 		SELECT ID FROM USER

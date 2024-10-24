@@ -82,4 +82,9 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     public int countBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest) {
         return basicInfoMapper.countBasicInfoViewList(basicInfoViewRequest);
     }
+
+    @Override
+    public int countBasicInfoList(Map<String, Object> map) {
+        return basicInfoMapper.countBasicInfoList(map);
+    }
 }
