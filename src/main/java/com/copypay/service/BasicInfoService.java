@@ -29,6 +29,10 @@ public class BasicInfoService {
 
     public List<String> getManagerId(){
         List<String> managerIds = basicInfoRepository.getManagerId();
+        if(managerIds.isEmpty()){
+            log.error("매니저 ID 불러오기에 실패했습니다.");
+            throw new LoadFailedException();
+        }
         log.info("총 {}개의 매니저 ID를 성공적으로 가져왔습니다.", managerIds.size());
         return managerIds;
     }
