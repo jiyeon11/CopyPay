@@ -17,6 +17,10 @@
         $(document).on('click', '#contractProgressBtn', function (e) {
             $("#content").load("/contract-progress", function () {});
         });
+        // 영업관리의 계약 완료현황 클릭 시
+        $(document).on('click', '#contractDoneBtn', function (e) {
+            $("#content").load("/contract-done", function () {});
+        });
 
     </script>
 </body>
