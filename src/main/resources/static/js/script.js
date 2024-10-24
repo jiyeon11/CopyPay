@@ -92,3 +92,29 @@ function makeAjaxCall(url, method, data, successCallback, errorCallback) {
         }
     });
 }
+
+function renderPagination(data) {  //페이징
+    pageIndex = data.currentPageNo;  //현재 페이지로 변경
+    const page = $('#pagination');
+    page.empty();
+
+    var pagination = `<ol class="inline-flex space-x-2 whitespace-nowrap" id="pagination">`;
+
+    if (data.prev) {  // 이전 버튼
+        pagination += `<li><a href="javascript:void(0);" onclick="goPage(1); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;&lt;</a></li>`;
+        pagination += `<li><a href="javascript:void(0);" onclick="goPage(${data.currentPageNo - 1}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;</a></li>`;
+    }
+
+    for (var i = data.firstPageNoOnPageList; i <= data.lastPageNoOnPageList; i++) {  // 숫자들
+        pagination += `<li><a href="javascript:void(0);" onclick="goPage(${i}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" id="${i}">${i}</a></li>`;
+    }
+
+    if (data.next) {  // 다음 버튼
+        pagination += `<li class="next"><a href="javascript:void(0);" onclick="goPage(${data.currentPageNo + 1}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;</a></li>`;
+        pagination += `<li><a href="javascript:void(0);" onclick="goPage(${data.realEnd}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;&gt;</a></li>`;
+    }
+
+    pagination += `</ol>`;
+    page.append(pagination);
+    $(`#${data.currentPageNo}`).addClass("text-white bg-blue-500");
+}
