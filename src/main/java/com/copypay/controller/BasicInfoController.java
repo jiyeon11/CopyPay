@@ -16,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -44,10 +46,23 @@ public class BasicInfoController {
         return "basic-info-view";
     }
 
-    @GetMapping(value = {"/api/basic-info/list/{inputMid}", "/api/basic-info/list"})
+    @GetMapping("/api/basic-info/list")
     @ResponseBody
-    public ResponseEntity<List<BasicInfoListResponse>> getBasicInfoList(@PathVariable(required = false) String inputMid){
-        return ResponseEntity.ok(basicInfoService.getBasicInfoList(inputMid));
+    public ResponseEntity<GenericPaginationResponse<BasicInfoResponse>> getBasicInfoList(@RequestParam(required = false) String mid,
+                                                                                         @RequestParam(required = false) int currentPage){
+        Pagination pagination = new Pagination();
+        pagination.setCurrentPageNo(currentPage);
+        
+        Map<String, Object> map = new HashMap<>();
+        map.put("mid", mid);
+        map.put("firstIndex", pagination.getFirstRecordIndex());
+        map.put("pageSize", pagination.getPageSize());
+
+        pagination.setTotalCount(basicInfoService.getBasicInfoListTotalCount(map));
+
+        List<BasicInfoResponse> basicInfoResponse = basicInfoService.getBasicInfoList(map);
+        GenericPaginationResponse<BasicInfoResponse> response = new GenericPaginationResponse<>(basicInfoResponse, pagination);
+        return ResponseEntity.ok().body(response);
     }
     
     @GetMapping("/api/managers")

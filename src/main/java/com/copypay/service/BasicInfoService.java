@@ -1,5 +1,6 @@
 package com.copypay.service;
 
+import com.copypay.dto.Pagination;
 import com.copypay.dto.request.*;
 import com.copypay.dto.response.*;
 import com.copypay.exception.*;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -18,12 +20,12 @@ public class BasicInfoService {
     private final BasicInfoRepository basicInfoRepository;
     private final SalesManagementService salesManagementService;
 
-    public List<BasicInfoResponse> getBasicInfoList(String inputMid) {
-        List<BasicInfoResponse> basicInfoList = basicInfoRepository.getBasicInfoList(inputMid);
+    public List<BasicInfoResponse> getBasicInfoList(Map<String, Object> map) {
+        List<BasicInfoResponse> basicInfoList = basicInfoRepository.getBasicInfoList(map);
         return salesManagementService.validateListNotEmpty(
                 basicInfoList,
                 String.format("총 %d개의 기본 정보 항목을 성공적으로 가져왔습니다", basicInfoList.size()),
-                String.format("MID %s에 대한 기본 정보가 없습니다.", inputMid)
+                String.format("MID %s에 대한 기본 정보가 없습니다.", map.get("mid"))
         );
     }
 

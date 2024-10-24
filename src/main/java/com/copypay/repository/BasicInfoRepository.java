@@ -4,9 +4,10 @@ import com.copypay.dto.request.*;
 import com.copypay.dto.response.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BasicInfoRepository {
-    List<BasicInfoResponse> getBasicInfoList(String inputMid);
+    List<BasicInfoResponse> getBasicInfoList(Map<String, Object> map);
     List<String> getManagerId();
     BasicInfosResponse getBasicInfo(String inputBusinessRegNumber);
     List<MemoResponse> getMemoList(String inputMid);

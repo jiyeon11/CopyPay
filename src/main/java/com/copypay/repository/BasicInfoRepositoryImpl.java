@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -14,8 +15,8 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     private final BasicInfoMapper basicInfoMapper;
 
     @Override
-    public List<BasicInfoResponse> getBasicInfoList(String inputMid) {
-        return basicInfoMapper.getBasicInfoList(inputMid);
+    public List<BasicInfoResponse> getBasicInfoList(Map<String, Object> map) {
+        return basicInfoMapper.getBasicInfoList(map);
     }
 
     @Override

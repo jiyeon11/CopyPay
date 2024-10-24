@@ -75,7 +75,7 @@
 		]]>
 	</select>
 
-	<select id="getBasicInfoList" parameterType="string" resultType="com.copypay.dto.response.BasicInfoResponse">
+	<select id="getBasicInfoList" parameterType="map" resultType="com.copypay.dto.response.BasicInfoResponse">
 		<![CDATA[
 		SELECT
 			BUSINESS_REG_NUMBER AS businessRegNumber,
@@ -86,7 +86,8 @@
 			IS_SMALL_MID_USED AS isSmallMidUsed
 		FROM CONTRACT
 		JOIN PAYMENT_METHOD ON CONTRACT.NO = PAYMENT_METHOD.NO
-		WHERE #{inputMid} IS NULL OR MID LIKE CONCAT('%', #{inputMid}, '%')
+		WHERE #{mid} IS NULL OR MID LIKE CONCAT('%', #{mid}, '%')
+		LIMIT #{pageSize} OFFSET #{firstIndex}
         ]]>
 	</select>
 
