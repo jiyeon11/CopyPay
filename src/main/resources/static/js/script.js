@@ -14,15 +14,25 @@ function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx �
     return formatRegNumber;
 }
 
-function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
-    if (!eightDigitCheckRegex.test(dateString)) {
-        console.error('잘못된 날짜 형식입니다:', dateString);
-        return '';
+function formatDate(date) {  // 출력, 입력 날짜 YYYY/MM/DD 형식으로 바꾸기
+    let dateString = '';
+    if(typeof date !== 'string'){  // 날짜를 입력받는 경우
+        for (let i = 0; i < date.value.length; i++) {
+            if (!isNaN(date.value[i]) && date.value[i] !== ' ') {  // 숫자만 입력받음
+                dateString += date.value[i];
+            }
+        }
+    }else{  // 조회에서 날짜를 출력하는 경우
+        dateString = date;
     }
-    const year = dateString.substring(0, 4);
-    const month = dateString.substring(4, 6);
-    const day = dateString.substring(6, 8);
-    return year + '/' + month + '/' + day;
+    if (dateString.length > 8)  // 8자리까지만 입력 가능
+        dateString = dateString.substring(0, 8);
+    if (dateString.length >= 4)
+        dateString = dateString.substring(0, 4) + '/' + dateString.substring(4);
+    if (dateString.length >= 7)
+        dateString = dateString.substring(0, 7) + '/' + dateString.substring(7);
+    $(date).val(dateString);
+    return dateString;
 }
 
 function formatPhone(phone) {  //전화번호 형식으로 바꾸기
