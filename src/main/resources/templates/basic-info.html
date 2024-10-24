@@ -721,14 +721,7 @@
                 currentSaveType = saveType;
             }
         }
-
-        //검증 실패한 필드 이름 추출
-        function extractFieldName(field) {
-            var parts = field.split('.');
-            parts = parts.length > 1 ? parts[1] : field; //두 번째 부분 반환
-            return parts.charAt(0).toUpperCase() + parts.slice(1);
-        }
-
+        
         //일반정보(계약) 등록
         function getContractData() {
             var contractData = {

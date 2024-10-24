@@ -97,20 +97,14 @@
             });
         });
 
-        function extractFieldName(field) {  //검증 실패한 필드 이름 추출
-            var parts = field.split('.');
-            parts = parts.length > 1 ? parts[1] : field; //두 번째 부분 반환
-            return parts.charAt(0).toUpperCase() + parts.slice(1);
-        }
-
         function goPage(pageIndex){
             var request = {
                     mid: $('#inputMid').val(),
                     businessType: $('#selectBusinessType').val(),
                     isUsed: $('#selectIsUsed').val(),
                     dateOption: $('input:checkbox[id="dateOption"]').is(":checked"),
-                    startDate: $('#startDate').val().replace(/[-/]/g, ''),
-                    endDate: $('#endDate').val().replace(/[-/]/g, ''),
+                    startDate: $('#startDate').val().replace(removeDateSymbolsRegex, ''),
+                    endDate: $('#endDate').val().replace(removeDateSymbolsRegex, ''),
                     isSmallMidUsed: $('#selectIsSmallMidUsed').val(),
                     currentPage: pageIndex
                 };
@@ -179,23 +173,6 @@
                         `;
             tbody.append(noDataRow);
         }
-
-        function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
-            let formatRegNumber = typeof regNumber === 'string' ? regNumber : $(regNumber).val();
-            formatRegNumber = formatRegNumber
-                .replace(/[^0-9]/g, '')
-                .replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
-            $(regNumber).val(formatRegNumber);
-            return formatRegNumber;
-        }
-
-        function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
-            let year = dateString.substring(0, 4);
-            let month = dateString.substring(4, 6);
-            let day = dateString.substring(6, 8);
-            return year + '/' + month + '/' + day;
-        }
-
     </script>
 </body>
 

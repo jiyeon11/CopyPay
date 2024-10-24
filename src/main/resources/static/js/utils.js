@@ -43,6 +43,12 @@ function setTodayDate() {  //오늘 날짜로 설정
     return formattedDate;
 }
 
+function extractFieldName(field) {  //검증 실패한 필드 이름 추출
+    var parts = field.split('.');
+    parts = parts.length > 1 ? parts[1] : field; //두 번째 부분 반환
+    return parts.charAt(0).toUpperCase() + parts.slice(1);
+}
+
 /**
  * AJAX 요청을 처리하는 공통 함수
  * @param {string} url - 요청 URL
