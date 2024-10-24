@@ -575,6 +575,13 @@
     <script>
         var no;
         var currentSaveType = '';  //저장할 테이블이 뭔지 저장하는 변수
+        const onlyNumbersRegex = /[^0-9]/g;  //숫자만 남기고 제거하는 정규식
+        const removeDateSymbolsRegex = /[-/]/g;  //날짜 형식에서 기호 제거하는 정규식
+        const businessRegNumberRegex = /(\d{3})(\d{2})(\d{5})/;  //사업자번호 형식으로 변환하는 정규식
+        const phoneNumberFormatRegex = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/;  //전화번호 형식으로 변환하는 정규식
+        const eightDigitCheckRegex = /^\d{8}$/;  //8자리 숫자 체크하는 정규식
+        const numberFormatReplacement = "$1-$2-$3";  //자릿수에 맞춰 '-' 추가하는 정규식
+
         $(document).ready(function () {
             //기본 정보 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
@@ -687,7 +694,7 @@
 
             //사업자 번호로 일반정보 데이터 가져오기
             $("#getBasicInfoBtn").click(function () {
-                const regNumber = $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, '');
+                const regNumber = $("#inputBusinessRegNumber").val().replace(onlyNumbersRegex, '');
                 if (!/^\d{10}$/.test(regNumber)) {
                     alert('사업자번호는 10자리가 유효합니다.')
                 } else {
@@ -719,7 +726,7 @@
                 $("#memoModal").removeClass("hidden");
                 currentSaveType = saveType;
             }
-}
+        }
         /**
          * AJAX 요청을 처리하는 공통 함수
          * @param {string} url - 요청 URL
@@ -774,14 +781,14 @@
         //일반정보(계약) 등록
         function getContractData() {
             var contractData = {
-                businessRegNumber: $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, ''),
+                businessRegNumber: $("#inputBusinessRegNumber").val().replace(onlyNumbersRegex, ''),
                 mid: $('#inputMID2').val(),
                 businessName: $('#inputBusinessName').val(),
-                contractDate: $('#inputContractDate').val().replace(/[-/]/g, ''),
+                contractDate: $('#inputContractDate').val().replace(onlyNumbersRegex, ''),
                 ceoName: $('#inputCeoName').val(),
-                ceoBirth: $('#ceoBirth').text().replace(/[-/]/g, ''),
-                ceoHp: $('#ceoHP').text().replace(/[-/]/g, ''),
-                ceoTel: $('#ceoTEL').val().replace(/[-/]/g, ''),
+                ceoBirth: $('#ceoBirth').text().replace(onlyNumbersRegex, ''),
+                ceoHp: $('#ceoHP').text().replace(onlyNumbersRegex, ''),
+                ceoTel: $('#ceoTEL').val().replace(onlyNumbersRegex, ''),
                 ceoEmail: $('#ceoEmail').val(),
                 ceoFax: $('#ceoFAX').val(),
                 businessPostcode: $('#inputPostCode').val(),
@@ -789,8 +796,8 @@
                 businessAddressLine2: $('#inputAddress2').val(),
                 businessType: $('#businessType').text(),
                 franchiseContractManagerName: $('#inputContractManagerName').val(),
-                franchiseContractManagerTel: $('#inputContractManagerTEL').val().replace(/[-/]/g, ''),
-                franchiseContractManagerHp: $('#inputContractManagerHP').val().replace(/[-/]/g, ''),
+                franchiseContractManagerTel: $('#inputContractManagerTEL').val().replace(onlyNumbersRegex, ''),
+                franchiseContractManagerHp: $('#inputContractManagerHP').val().replace(onlyNumbersRegex, ''),
                 franchiseContractManagerEmail: $('#inputContractManagerEmail').val(),
                 contractManager: $('#selectContractManager').val(),
                 salesManager: $('#selectSalesManager').val()
@@ -815,7 +822,7 @@
                 no: no,
                 paymentMethod: $('#selectPaymentMethod').val(),
                 feePaymentMethod: $('#selectFeePaymentMethod').val(),
-                feeSettlementDate: $('#inputFeeSettlementDate').val().replace(/[-/]/g, ''),
+                feeSettlementDate: $('#inputFeeSettlementDate').val().replace(onlyNumbersRegex, ''),
                 depositAccountFormat: depositAccountFormat,
                 accountParameterName: accountParameterName,
                 taxInvoiceCriteria: $('#selectTaxInvoiceCriteria').val(),
@@ -823,6 +830,7 @@
                 taxInvoiceEmail: $('#inputTaxInvoiceEmail').val(),
                 partialCancellationAllowed: $('#selectPartialCancellationAllowed').val()
             };
+            console.log(setBasicInfoData);
             return settlementInfoData;
         }
 
@@ -846,7 +854,7 @@
                 isUsed: $('#selectIsUsed').val(),
                 authenticationType: $('#selectAuthenticationType').val(),
                 settlementCycle: $('#selectSettlementCycle').val(),
-                settlementCycleEffectiveDate: $('#inputEffectiveDate').val().replace(/[-/]/g, ''),
+                settlementCycleEffectiveDate: $('#inputEffectiveDate').val().replace(onlyNumbersRegex, ''),
                 purchaseMethod: $('#selectPurchaseMethod').val(),
                 purchaseDate: $('#selectPurchaseDate').val(),
                 debitcardFeeManagement: $('#selectDebitcardFeeManagement').val(),
@@ -1017,14 +1025,14 @@
         function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
             let formatRegNumber = typeof regNumber === 'string' ? regNumber : $(regNumber).val();
             formatRegNumber = formatRegNumber
-                .replace(/[^0-9]/g, '')
-                .replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
+                .replace(onlyNumbersRegex, '')
+                .replace(businessRegNumberRegex, numberFormatReplacement);
             $(regNumber).val(formatRegNumber);
             return formatRegNumber;
         }
 
         function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
-            if (!/^\d{8}$/.test(dateString)) {
+            if (!eightDigitCheckRegex.test(dateString)) {
                 console.error('잘못된 날짜 형식입니다:', dateString);
                 return '';
             }
@@ -1037,8 +1045,8 @@
         function formatPhone(phone) {  //전화번호 형식으로 바꾸기
             let phoneNumber = typeof phone === 'string' ? phone : $(phone).val();
             phoneNumber = phoneNumber
-                .replace(/[^0-9]/g, '')
-                .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
+                .replace(onlyNumbersRegex, '')
+                .replace(phoneNumberFormatRegex, numberFormatReplacement);
             $(phone).val(phoneNumber);
             return phoneNumber;
         }
