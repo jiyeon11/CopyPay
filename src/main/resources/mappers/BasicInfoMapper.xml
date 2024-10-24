@@ -75,7 +75,7 @@
 		]]>
 	</select>
 
-	<select id="getBasicInfoList" parameterType="string" resultType="com.copypay.dto.response.BasicInfoListResponse">
+	<select id="getBasicInfoList" parameterType="string" resultType="com.copypay.dto.response.BasicInfoResponse">
 		<![CDATA[
 		SELECT
 			BUSINESS_REG_NUMBER AS businessRegNumber,
@@ -107,7 +107,7 @@
 		]]>
 	</select>
 
-	<select id="getBasicInfo" parameterType="string" resultType="com.copypay.dto.response.BasicInfoResponse">
+	<select id="getBasicInfo" parameterType="string" resultType="com.copypay.dto.response.BasicInfosResponse">
 	<![CDATA[
 		SELECT
 			BUSINESS_REG_NUMBER AS businessRegNumber,

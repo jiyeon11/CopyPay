@@ -8,9 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface BasicInfoMapper {
-    List<BasicInfoListResponse> getBasicInfoList(String inputMid);
+    List<BasicInfoResponse> getBasicInfoList(String inputMid);
     List<String> getManagerId();
-    BasicInfoResponse getBasicInfo(String inputBusinessRegNumber);
+    BasicInfosResponse getBasicInfo(String inputBusinessRegNumber);
     List<MemoResponse> getMemoList(String inputMid);
     ContractResponse getContractByBusinessRegNumber(String inputBusinessRegNumber);
     PaymentMethodResponse getPaymentMethodByNo(int no);

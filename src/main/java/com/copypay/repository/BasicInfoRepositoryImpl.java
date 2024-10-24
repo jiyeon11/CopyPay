@@ -14,7 +14,7 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     private final BasicInfoMapper basicInfoMapper;
 
     @Override
-    public List<BasicInfoListResponse> getBasicInfoList(String inputMid) {
+    public List<BasicInfoResponse> getBasicInfoList(String inputMid) {
         return basicInfoMapper.getBasicInfoList(inputMid);
     }
 
@@ -24,7 +24,7 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     }
 
     @Override
-    public BasicInfoResponse getBasicInfo(String inputBusinessRegNumber) {
+    public BasicInfosResponse getBasicInfo(String inputBusinessRegNumber) {
         return basicInfoMapper.getBasicInfo(inputBusinessRegNumber);
     }
 

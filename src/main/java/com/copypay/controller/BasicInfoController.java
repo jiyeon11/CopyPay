@@ -2,7 +2,7 @@ package com.copypay.controller;
 
 import com.copypay.dto.Pagination;
 import com.copypay.dto.request.*;
-import com.copypay.dto.response.BasicInfoListResponse;
+import com.copypay.dto.response.BasicInfoResponse;
 import com.copypay.dto.response.GenericPaginationResponse;
 import com.copypay.dto.response.BasicInfoViewResponse;
 import com.copypay.dto.response.MemoResponse;
@@ -64,9 +64,9 @@ public class BasicInfoController {
 
     @PostMapping("/api/basic-infos")
     @ResponseBody
-    public ResponseEntity<?> saveBasicInfo(@Valid @RequestBody BasicInfoRequest basicInfoRequest, HttpServletRequest request){
-        basicInfoRequest.getMemoRequest().setId(getUsernameFromSession(request));
-        basicInfoService.saveBasicInfo(basicInfoRequest);
+    public ResponseEntity<?> saveBasicInfo(@Valid @RequestBody BasicInfosRequest basicInfosRequest, HttpServletRequest request){
+        basicInfosRequest.getMemoRequest().setId(getUsernameFromSession(request));
+        basicInfoService.saveBasicInfo(basicInfosRequest);
         return ResponseEntity.ok().build();
     }
 
@@ -78,9 +78,9 @@ public class BasicInfoController {
 
     @PostMapping("/api/contracts")
     @ResponseBody
-    public ResponseEntity<?> saveContract(@Valid @RequestBody BasicInfoRequest basicInfoRequest, HttpServletRequest request){
-        basicInfoRequest.getMemoRequest().setId(getUsernameFromSession(request));
-        basicInfoService.saveContract(basicInfoRequest);
+    public ResponseEntity<?> saveContract(@Valid @RequestBody BasicInfosRequest basicInfosRequest, HttpServletRequest request){
+        basicInfosRequest.getMemoRequest().setId(getUsernameFromSession(request));
+        basicInfoService.saveContract(basicInfosRequest);
         return ResponseEntity.ok().build();
     }
 
@@ -92,17 +92,17 @@ public class BasicInfoController {
 
     @PostMapping("/api/settlement-infos")
     @ResponseBody
-    public ResponseEntity<?> saveSettlementInfo(@Valid @RequestBody BasicInfoRequest basicInfoRequest, HttpServletRequest request){
-        basicInfoRequest.getMemoRequest().setId(getUsernameFromSession(request));
-        basicInfoService.saveSettlementInfo(basicInfoRequest);
+    public ResponseEntity<?> saveSettlementInfo(@Valid @RequestBody BasicInfosRequest basicInfosRequest, HttpServletRequest request){
+        basicInfosRequest.getMemoRequest().setId(getUsernameFromSession(request));
+        basicInfoService.saveSettlementInfo(basicInfosRequest);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/api/payment-methods")
     @ResponseBody
-    public ResponseEntity<?> savePaymentMethod(@Valid @RequestBody BasicInfoRequest basicInfoRequest, HttpServletRequest request){
-        basicInfoRequest.getMemoRequest().setId(getUsernameFromSession(request));
-        basicInfoService.savePaymentMethod(basicInfoRequest);
+    public ResponseEntity<?> savePaymentMethod(@Valid @RequestBody BasicInfosRequest basicInfosRequest, HttpServletRequest request){
+        basicInfosRequest.getMemoRequest().setId(getUsernameFromSession(request));
+        basicInfoService.savePaymentMethod(basicInfosRequest);
         return ResponseEntity.ok().build();
     }
 

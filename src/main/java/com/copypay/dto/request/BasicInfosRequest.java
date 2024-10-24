@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BasicInfoRequest {
+public class BasicInfosRequest {
     @Valid
     private ContractRequest contractRequest;
     @Valid

@@ -6,9 +6,9 @@ import com.copypay.dto.response.*;
 import java.util.List;
 
 public interface BasicInfoRepository {
-    List<BasicInfoListResponse> getBasicInfoList(String inputMid);
+    List<BasicInfoResponse> getBasicInfoList(String inputMid);
     List<String> getManagerId();
-    BasicInfoResponse getBasicInfo(String inputBusinessRegNumber);
+    BasicInfosResponse getBasicInfo(String inputBusinessRegNumber);
     List<MemoResponse> getMemoList(String inputMid);
     ContractResponse getContractByBusinessRegNumber(String inputBusinessRegNumber);
     PaymentMethodResponse getPaymentMethodByNo(int no);
