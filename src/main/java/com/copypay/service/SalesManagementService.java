@@ -52,8 +52,13 @@ public class SalesManagementService {
     // 신규 계약 등록
     @Transactional
     public void registerContract(ContractRegisterRequest contractRegisterRequest) {
-        salesManagementRepository.registerContract(contractRegisterRequest);
-        log.info("신규 계약 등록 완료");
+        try {
+            salesManagementRepository.registerContract(contractRegisterRequest);
+            log.info("신규 계약 등록 완료. 사업자 번호 : {}", contractRegisterRequest.getBusinessRegNumber());
+        } catch (Exception e) {
+            log.error("신규 계약 등록 실패 : {}", e.getMessage());
+            throw new RuntimeException("계약 등록에 실패했습니다", e);
+        }
     }
 
 }
