@@ -103,8 +103,8 @@
                     businessType: $('#selectBusinessType').val(),
                     isUsed: $('#selectIsUsed').val(),
                     dateOption: $('input:checkbox[id="dateOption"]').is(":checked"),
-                    startDate: $('#startDate').val().replace(removeDateSymbolsRegex, ''),
-                    endDate: $('#endDate').val().replace(removeDateSymbolsRegex, ''),
+                    startDate: removeDateSymbols($('#startDate').val()),
+                    endDate: removeDateSymbols($('#endDate').val()),
                     isSmallMidUsed: $('#selectIsSmallMidUsed').val(),
                     currentPage: pageIndex
                 };

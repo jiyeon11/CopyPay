@@ -1,15 +1,19 @@
-const onlyNumbersRegex = /[^0-9]/g;  //숫자만 남기고 제거하는 정규식
-const removeDateSymbolsRegex = /[-/]/g;  //날짜 형식에서 기호 제거하는 정규식
-const businessRegNumberRegex = /(\d{3})(\d{2})(\d{5})/;  //사업자번호 형식으로 변환하는 정규식
-const phoneNumberFormatRegex = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/;  //전화번호 형식으로 변환하는 정규식
-const eightDigitCheckRegex = /^\d{8}$/;  //8자리 숫자 체크하는 정규식
-const numberFormatReplacement = "$1-$2-$3";  //자릿수에 맞춰 '-' 추가하는 정규식
+function removeNonNumbers(input) {  //숫자만 남기고 제거하는 함수
+    return input.replace(/[^0-9]/g, '');
+}
+
+function removeDateSymbols(input) {  //날짜 형식에서 기호 제거하는 함수
+    return input.replace(/[-/]/g, '');
+}
+
+function isEightDigitNumber(input) {  //8자리 숫자 체크 함수
+    return /^\d{8}$/.test(input);
+}
 
 function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
     let formatRegNumber = typeof regNumber === 'string' ? regNumber : $(regNumber).val();
-    formatRegNumber = formatRegNumber
-        .replace(onlyNumbersRegex, '')
-        .replace(businessRegNumberRegex, numberFormatReplacement);
+    formatRegNumber = removeNonNumbers(formatRegNumber)
+        .replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
     $(regNumber).val(formatRegNumber);
     return formatRegNumber;
 }
@@ -37,9 +41,8 @@ function formatDate(date) {  // 출력, 입력 날짜 YYYY/MM/DD 형식으로 �
 
 function formatPhone(phone) {  //전화번호 형식으로 바꾸기
     let phoneNumber = typeof phone === 'string' ? phone : $(phone).val();
-    phoneNumber = phoneNumber
-        .replace(onlyNumbersRegex, '')
-        .replace(phoneNumberFormatRegex, numberFormatReplacement);
+    phoneNumber = removeNonNumbers(phoneNumber)
+        .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/, "$1-$2-$3");
     $(phone).val(phoneNumber);
     return phoneNumber;
 }

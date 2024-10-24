@@ -629,7 +629,7 @@
                         memoRequest: getMemoData()
                     }
                 }
-
+                
                 makeAjaxCall(apiUrl, 'POST', dataToSend, function(data) {
                     $('#memoContent2').val(''); // 메모 내용 초기화
                     $("#memoModal").addClass("hidden"); // 모달 닫기
@@ -687,7 +687,7 @@
 
             //사업자 번호로 일반정보 데이터 가져오기
             $("#getBasicInfoBtn").click(function () {
-                const regNumber = $("#inputBusinessRegNumber").val().replace(onlyNumbersRegex, '');
+                const regNumber = removeNonNumbers($("#inputBusinessRegNumber").val());
                 if (!/^\d{10}$/.test(regNumber)) {
                     alert('사업자번호는 10자리가 유효합니다.')
                 } else {
@@ -735,14 +735,14 @@
         //일반정보(계약) 등록
         function getContractData() {
             var contractData = {
-                businessRegNumber: $("#inputBusinessRegNumber").val().replace(onlyNumbersRegex, ''),
+                businessRegNumber: removeNonNumbers($("#inputBusinessRegNumber").val()),
                 mid: $('#inputMID2').val(),
                 businessName: $('#inputBusinessName').val(),
-                contractDate: $('#inputContractDate').val().replace(onlyNumbersRegex, ''),
+                contractDate: removeNonNumbers($("#inputContractDate").val()),
                 ceoName: $('#inputCeoName').val(),
-                ceoBirth: $('#ceoBirth').text().replace(onlyNumbersRegex, ''),
-                ceoHp: $('#ceoHP').text().replace(onlyNumbersRegex, ''),
-                ceoTel: $('#ceoTEL').val().replace(onlyNumbersRegex, ''),
+                ceoBirth: removeNonNumbers($('#ceoBirth').text()),
+                ceoHp: removeNonNumbers($('#ceoHP').text()),
+                ceoTel: removeNonNumbers($("#ceoTEL").val()),
                 ceoEmail: $('#ceoEmail').val(),
                 ceoFax: $('#ceoFAX').val(),
                 businessPostcode: $('#inputPostCode').val(),
@@ -750,8 +750,8 @@
                 businessAddressLine2: $('#inputAddress2').val(),
                 businessType: $('#businessType').text(),
                 franchiseContractManagerName: $('#inputContractManagerName').val(),
-                franchiseContractManagerTel: $('#inputContractManagerTEL').val().replace(onlyNumbersRegex, ''),
-                franchiseContractManagerHp: $('#inputContractManagerHP').val().replace(onlyNumbersRegex, ''),
+                franchiseContractManagerTel: removeNonNumbers($("#inputContractManagerTEL").val()),
+                franchiseContractManagerHp: removeNonNumbers($("#inputContractManagerHP").val()),
                 franchiseContractManagerEmail: $('#inputContractManagerEmail').val(),
                 contractManager: $('#selectContractManager').val(),
                 salesManager: $('#selectSalesManager').val()
@@ -776,7 +776,7 @@
                 no: no,
                 paymentMethod: $('#selectPaymentMethod').val(),
                 feePaymentMethod: $('#selectFeePaymentMethod').val(),
-                feeSettlementDate: $('#inputFeeSettlementDate').val().replace(onlyNumbersRegex, ''),
+                feeSettlementDate: removeNonNumbers($("#inputFeeSettlementDate").val()),
                 depositAccountFormat: depositAccountFormat,
                 accountParameterName: accountParameterName,
                 taxInvoiceCriteria: $('#selectTaxInvoiceCriteria').val(),
@@ -808,7 +808,7 @@
                 isUsed: $('#selectIsUsed').val(),
                 authenticationType: $('#selectAuthenticationType').val(),
                 settlementCycle: $('#selectSettlementCycle').val(),
-                settlementCycleEffectiveDate: $('#inputEffectiveDate').val().replace(onlyNumbersRegex, ''),
+                settlementCycleEffectiveDate: removeNonNumbers($("#inputEffectiveDate").val()),
                 purchaseMethod: $('#selectPurchaseMethod').val(),
                 purchaseDate: $('#selectPurchaseDate').val(),
                 debitcardFeeManagement: $('#selectDebitcardFeeManagement').val(),
