@@ -277,11 +277,14 @@
         // 신규등록 모달 열기
         $("#newModalBtn").click(function () {
             $('#applicationDate').text(new Date().toISOString().substring(0, 10));
-            $("#contractProgressNewModal").removeClass("hidden");
-            $("#contractProgressList").addClass("hidden");
 
             makeAjaxCall('/api/managers', 'GET', null, function (data) {  // 계약담당자, 영업담당자 셀렉트박스 추가
+                $("#contractProgressList").addClass("hidden");
+                $("#contractProgressNewModal").removeClass("hidden");
                 getManagers(data);
+            }, function (){
+                alert("다시 시도해주세요."); // 담당자 불러오기 실패
+                $("#contractProgressNewModal").addClass("hidden");
             });
         });
 
@@ -333,6 +336,9 @@
                 successCallback(responseData);
             },
             error: function (error) {
+                if(errorCallback){
+                    errorCallback();
+                }
                 if (error.responseJSON) {
                     const errors = error.responseJSON;
                     // 모든 필드의 에러 메시지 초기화
