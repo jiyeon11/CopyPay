@@ -29,7 +29,7 @@
 </div>
 
 <div id="contractDoneList" class="fixed mt-5 ml-10 pl-40 items-center hidden">
-    <!-- 조회 목록 -->
+    <!-- 조회한 가맹점 (MID를 발급받은 가맹점) -->
     <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[44rem] overflow-y-auto">
         <table class="w-full">
             <thead class="bg-blue-200 sticky top-0 z-10">
@@ -46,6 +46,92 @@
     </div>
 </div>
 
+<!-- 가맹점 발급 모달 -->
+<form id="issueModal"
+      class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-full h-full flex justify-center items-center">
+    <div class="fixed bg-blue-500 w-3/6 py-2 z-10 top-72">
+        <h3 class="font-bold text-white text-lg ml-2">가맹점 발급</h3>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6 w-3/6 h-2/6 overflow-y-auto relative">
+        <div class="bg-white  rounded-lg shadow-2xl w-full h-fit">
+            <table class="table-fixed w-full border-collapse mx-auto">
+                <tbody class="table-row-group">
+                <tr class="table-row">
+                    <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업자번호</td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="businessRegNumber" name="businessRegNumber"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                    </td>
+                    <td class="text-center border-2 bg-stone-300 py-1">ID 구분</td>
+                    <td class="border-2 py-1">
+                        <p type="text" id="idOption" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">MID</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center border-2 bg-stone-300 py-1">MID</td>
+                    <td class="border-2 py-1">
+                        <p type="text" id="inputMid" name="inputMid"
+                           class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-end mt-4">
+            <button type="button" id="issueMidBtn"
+                    class="text-white text-xs bg-green-700 w-16 h-7 mr-2">발급
+            </button>
+            <button type="button" id="closeIssueModalBtn"
+                    class="text-white text-xs bg-green-700 w-16 h-7">닫기
+            </button>
+        </div>
+    </div>
+</form>
+
+<!-- MID 조회 모달 -->
+<form id="checkMidModal"
+      class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-full h-full flex justify-center items-center">
+    <div class="fixed bg-blue-500 w-3/6 py-2 z-10 top-72">
+        <h3 class="font-bold text-white text-lg ml-2">MID 조회</h3>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6 w-3/6 h-2/6 overflow-y-auto relative">
+        <div class="bg-white mt-0 rounded-lg shadow-2xl w-full h-fit">
+            <table class="table-fixed w-full border-collapse mx-auto">
+                <tbody class="table-row-group">
+                <tr>
+                    <td class="border-2 py-1">
+                        <select id="selectOption" name="selectOption"
+                                class="ml-3 border-2 border-gray-400 outline-none text-sm">
+                            <option value="MID">MID</option>
+                        </select>
+                    </td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="inputCheckMid" name="inputCheckMid"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                    </td>
+                    <td class="table-cell px-2 py-1">
+                        <button type="button" id="useMidBtn" class="invisible text-white text-xs bg-green-700 w-16 h-7 float-right">발급
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" id="checkMidBtn"
+                                class="text-white text-xs bg-slate-500 w-16 h-7 float-right rounded-md mr-2">조회
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody id="checkMidResult" class="text-sm">
+                </tbody>
+            </table>
+        </div>
+        <div class="absolute bottom-4 right-4">
+            <button type="button" id="closeCheckMidModalBtn"
+                    class="text-white text-xs bg-slate-500 w-16 h-7 rounded-md">닫기
+            </button>
+        </div>
+    </div>
+</form>
+
 <script>
     $(document).ready(function () {
         // 조회 버튼 클릭 시
@@ -59,6 +145,44 @@
             }, showEmptyDataRow);
             $("#contractDoneList").removeClass("hidden");
         });
+
+        // MID 조회 버튼 클릭 시
+        $('#checkMidBtn').on('click', function () {
+            const inputMid = $("#inputCheckMid").val();
+            const url = 'api/manage-id/check-mid' + (`?mid=${inputMid}`);
+            makeAjaxCall(url, 'GET', null, function (data) {
+                checkMidResult(data);
+            }, function (){})
+        });
+
+        // 발급 모달 열기
+        $("#issueModalBtn").click(function () {
+            $("#issueModal").removeClass("hidden");
+            $('#idOption').text("MID");
+        });
+
+        // 발급 모달 닫기
+        $("#closeIssueModalBtn").click(function () {
+            clearIssueModal();
+        });
+
+        // MID 조회 모달 열기
+        $("#inputMid").on('click', function () {  // MID 필드 클릭시
+            $("#checkMidModal").removeClass("hidden");
+        });
+
+        // MID 조회 모달 닫기
+        $("#closeCheckMidModalBtn").click(function () {
+            clearCheckMidModal();
+        });
+
+        // 조회한 MID 사용
+        $("#useMidBtn").click(function (){
+            $('#inputMid').text($("#inputCheckMid").val());
+            clearCheckMidModal();
+            $("#issueModal").removeClass("hidden");
+        });
+
     });
 
     /**
@@ -132,6 +256,40 @@
                             </tr>
                         `;
         tbody.append(noDataRow);
+    }
+
+    function checkMidResult(data) {  // 조회한 MID의 사용 가능 여부를 띄움
+        const tbody = $('#checkMidResult');
+        const inputMid = $("#inputCheckMid").val();
+        $("#checkMidResult").find('tr').remove(); // 출력 값 초기화
+        if (data) {
+            const row = `
+                <tr>
+                    <td class="px-2 py-1">${inputMid}</td>
+                    <td id="dataField" class="px-2 py-1 whitespace-nowrap">${data}</td>
+                </tr>
+        `;
+            tbody.append(row);
+            if (data === "사용 가능한 MID입니다.")
+                $("#useMidBtn").removeClass("invisible");  // 발급 버튼을 화면에 표시
+            else {
+                $("#useMidBtn").addClass("invisible");  // 발급 버튼을 숨김
+                $("#dataField").addClass("text-red-500");
+            }
+        }
+    }
+
+    function clearIssueModal() {  // 발급 모달 입력 내용 초기화
+        $("#issueModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
+        $("#issueModal p").text(''); // 모든 p 태그 텍스트, 에러 메시지 초기화
+        $("#issueModal").addClass("hidden"); // 모달 숨김
+    }
+
+    function clearCheckMidModal() {  // MID 조회 모달 입력 내용 초기화
+        $("#checkMidModal input[type='text']").val(''); // 입력 값 초기화
+        $("#checkMidResult").find('tr').remove(); // 출력 값 초기화
+        $('#useMidBtn').addClass("invisible"); // 발급 버튼 숨기기
+        $("#checkMidModal").addClass("hidden"); // 모달 숨김
     }
 
     function formatBusinessRegNumber(regNumber) {  // 사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
