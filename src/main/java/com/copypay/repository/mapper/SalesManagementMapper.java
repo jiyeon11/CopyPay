@@ -12,5 +12,6 @@ public interface SalesManagementMapper {
     List<ContractProgressListResponse> getContractProgressList(String checkedDate, String startDate, String endDate);
     List<ContractDoneListResponse> getContractDoneList(String searchOption, String searchValue);
     List<ManageIdListResponse> getManageIdList(String searchOption, String searchValue);
+    String getMid(String mid);
     void registerContract(ContractRegisterRequest contractRegisterRequest);
 }

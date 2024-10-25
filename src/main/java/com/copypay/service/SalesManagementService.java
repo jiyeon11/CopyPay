@@ -1,7 +1,6 @@
 package com.copypay.service;
 
 import com.copypay.dto.request.ContractRegisterRequest;
-import com.copypay.dto.request.MidIssueRequest;
 import com.copypay.dto.response.ContractDoneListResponse;
 import com.copypay.dto.response.ContractProgressListResponse;
 import com.copypay.dto.response.ManageIdListResponse;
@@ -60,6 +59,20 @@ public class SalesManagementService {
                 String.format("총 %d개의 계약 정보 항목을 성공적으로 가져왔습니다", manageIdList.size()),
                 String.format("검색 조건 %s에 일치하는 정보가 없습니다. 검색어 : %s", searchOption, searchValue)
         );
+    }
+
+    // MID 조회
+    public String getMid(String mid){
+        if(Objects.equals(mid, ""))
+            return "MID값을 입력해주세요.";
+        else if(!mid.endsWith("m"))
+            return "MID의 마지막 글자는 m으로 끝나야 합니다.";
+        else if(mid.length() > 21)
+            return "MID는 최대 21자리입니다.";
+        String midResult = salesManagementRepository.getMid(mid);
+        if(midResult == null)
+            return "사용 가능한 MID입니다.";
+        else return "사용 불가능한 MID입니다.";
     }
 
     // 신규 계약 등록

@@ -58,6 +58,13 @@
     ]]>
 	</select>
 
+	<!-- MID 조회-->
+	<select id="getMid" parameterType="string" resultType="string">
+		SELECT MID
+		FROM CONTRACT
+		WHERE MID LIKE #{mid}
+	</select>
+
 	<!-- 신규 계약 등록 -->
 	<insert id="registerContract" parameterType="com.copypay.dto.request.ContractRegisterRequest">
 		INSERT INTO CONTRACT (APPLICATION_PATH, BUSINESS_NAME, BUSINESS_TYPE, BUSINESS_REG_NUMBER,

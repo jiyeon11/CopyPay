@@ -32,6 +32,12 @@ public class SalesManagementRepositoryImpl implements SalesManagementRepository 
         return salesManagementMapper.getManageIdList(searchOption, searchValue);
     }
 
+    // MID 조회
+    @Override
+    public String getMid(String mid){
+        return salesManagementMapper.getMid(mid);
+    }
+
     // 신규 계약 등록
     @Override
     public void registerContract(ContractRegisterRequest contractRegisterRequest) {
