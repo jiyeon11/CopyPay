@@ -578,11 +578,12 @@
     <script>
         var no;
         var currentSaveType = '';  //저장할 테이블이 뭔지 저장하는 변수
-        var pageIndex = 1;  //현재 페이지
+        var pageIndex;  //현재 페이지
 
         $(document).ready(function () {
             //기본 정보 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
+                pageIndex = 1;
                 fetchAndDisplayPage(pageIndex);  //조회, 페이징
             });
 
