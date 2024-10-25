@@ -49,8 +49,11 @@ public class BasicInfoController {
     @GetMapping("/api/basic-info/list")
     @ResponseBody
     public ResponseEntity<GenericPaginationResponse<BasicInfoResponse>> getBasicInfoList(@RequestParam(required = false) String mid,
-                                                                                         @RequestParam(required = false) int currentPage){
+                                                                                     @RequestParam(required = false) Integer currentPage){
         Pagination pagination = new Pagination();
+        if (currentPage == null) {
+            currentPage = 1; // 기본 페이지 번호 설정
+        }
         pagination.setCurrentPageNo(currentPage);
         
         Map<String, Object> map = new HashMap<>();
