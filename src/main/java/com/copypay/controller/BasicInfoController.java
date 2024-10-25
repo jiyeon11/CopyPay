@@ -49,11 +49,8 @@ public class BasicInfoController {
     @GetMapping("/api/basic-info/list")
     @ResponseBody
     public ResponseEntity<GenericPaginationResponse<BasicInfoResponse>> getBasicInfoList(@RequestParam(required = false) String mid,
-                                                                                     @RequestParam(required = false) Integer currentPage){
+                                                                                     @RequestParam(required = false, defaultValue = "1") Integer currentPage){
         Pagination pagination = new Pagination();
-        if (currentPage == null) {
-            currentPage = 1; // 기본 페이지 번호 설정
-        }
         pagination.setCurrentPageNo(currentPage);
         
         Map<String, Object> map = new HashMap<>();
@@ -141,13 +138,10 @@ public class BasicInfoController {
                                                                           @RequestParam(required = false) String startDate,
                                                                           @RequestParam(required = false) String endDate,
                                                                           @RequestParam(required = false) String isSmallMidUsed,
-                                                                          @RequestParam(required = false) Integer currentPage){
+                                                                          @RequestParam(required = false, defaultValue = "1") Integer currentPage){
         BasicInfoViewRequest basicInfoViewRequest = new BasicInfoViewRequest(mid, businessType, isUsed, dateOption, startDate, endDate, isSmallMidUsed);
         //페이징
         Pagination pagination = new Pagination();
-        if (currentPage == null) {
-            currentPage = 1; // 기본 페이지 번호 설정
-        }
         pagination.setCurrentPageNo(currentPage);
         pagination.setTotalCount(basicInfoService.getBasicInfoViewListTotalCount(basicInfoViewRequest));
         basicInfoViewRequest.setFirstIndex(pagination.getFirstRecordIndex());
