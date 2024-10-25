@@ -34,18 +34,15 @@ public class Pagination {
     }
 
     public int getFirstRecordIndex() {
-        firstRecordIndex = (getCurrentPageNo() - 1) * getPageSize();
-        return firstRecordIndex;
+        return (currentPageNo - 1) * pageSize;
     }
 
     public boolean getPrev() {
-        prev= getFirstPageNoOnPageList() > 1;
-        return prev;
+        return getFirstPageNoOnPageList() > 1;
     }
 
     public boolean getNext() {
-        next = getLastPageNoOnPageList() < getRealEnd();
-        return next;
+        return getLastPageNoOnPageList() < getRealEnd();
     }
     public int getRealEnd() {
         realEnd = (int)(Math.ceil((getTotalCount() * 1.0) / getPageSize()));
