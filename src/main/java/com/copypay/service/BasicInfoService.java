@@ -132,16 +132,30 @@ public class BasicInfoService {
     @Transactional
     public void saveBasicInfo(BasicInfosRequest basicInfosRequest){
         int rowsAffected = basicInfoRepository.saveContract(basicInfosRequest.getContractRequest());
-        rowsAffected += basicInfoRepository.saveSettlementInfo(basicInfosRequest.getSettlementInfoRequest());
-        rowsAffected += basicInfoRepository.savePaymentMethod(basicInfosRequest.getPaymentMethodRequest());
-        rowsAffected += basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
-
-        if(rowsAffected != 4){
-            log.error("사업자번호 : {} 기본정보 저장 실패", basicInfosRequest.getContractRequest().getBusinessRegNumber());
+        if(rowsAffected != 1){
+            log.error("사업자번호 : {} 계약 저장 실패", basicInfosRequest.getContractRequest().getBusinessRegNumber());
             throw new SaveFailedException();
-        }else{
-            log.info("사업자번호 : {} 기본정보가 성공적으로 저장되었습니다.", basicInfosRequest.getContractRequest().getBusinessRegNumber());
         }
+
+        rowsAffected = basicInfoRepository.saveSettlementInfo(basicInfosRequest.getSettlementInfoRequest());
+        if(rowsAffected != 1){
+            log.error("NO : {} 정산정보 저장 실패", basicInfosRequest.getSettlementInfoRequest().getNo());
+            throw new SaveFailedException();
+        }
+
+        rowsAffected = basicInfoRepository.savePaymentMethod(basicInfosRequest.getPaymentMethodRequest());
+        if(rowsAffected != 1){
+            log.error("NO : {} 결제수단 저장 실패", basicInfosRequest.getPaymentMethodRequest().getNo());
+            throw new SaveFailedException();
+        }
+
+        rowsAffected = basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
+        if(rowsAffected != 1){
+            log.error("MID : {} 메모 저장 실패", basicInfosRequest.getMemoRequest().getMid());
+            throw new SaveFailedException();
+        }
+
+        log.info("사업자번호 : {} 기본정보가 성공적으로 저장되었습니다.", basicInfosRequest.getContractRequest().getBusinessRegNumber());
     }
 
     //기본정보 조회의 조회
