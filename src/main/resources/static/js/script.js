@@ -62,6 +62,18 @@ function extractFieldName(field) {  //검증 실패한 필드 이름 추출
     return parts.charAt(0).toUpperCase() + parts.slice(1);
 }
 
+function validateInputDate() {  //기간 입력값 검증
+    const startDate = $('#startDate').val();
+    const endDate = $('#endDate').val();
+    
+    if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+        alert('시작일이 종료일보다 늦을 수 없습니다.');
+        return false;
+    }
+    return true;
+}
+
+
 /**
  * AJAX 요청을 처리하는 공통 함수
  * @param {string} url - 요청 URL

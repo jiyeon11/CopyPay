@@ -99,7 +99,8 @@
         });
 
         function fetchAndDisplayPage(pageIndex){  //지정된 페이지의 데이터 목록을 가져옴
-            var request = {
+            if(validateInputDate()){
+                var request = {
                     mid: $('#inputMid').val(),
                     businessType: $('#selectBusinessType').val(),
                     isUsed: $('#selectIsUsed').val(),
@@ -109,10 +110,11 @@
                     isSmallMidUsed: $('#selectIsSmallMidUsed').val(),
                     currentPage: pageIndex
                 };
-            makeAjaxCall('/api/basic-info-view', 'GET', request, function (data) {
-                populateTable(data);
-            }, showEmptyDataRow());
-            $("#basicInfoViewList").removeClass("hidden");
+                makeAjaxCall('/api/basic-info-view', 'GET', request, function (data) {
+                    populateTable(data);
+                }, showEmptyDataRow());
+                $("#basicInfoViewList").removeClass("hidden");
+            }
         }
 
         function populateTable(data) {  //받아온 데이터로 기본 정보 조회 테이블 행 추가
