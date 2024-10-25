@@ -12,8 +12,9 @@ function isEightDigitNumber(input) {  //8자리 숫자 체크 함수
 
 function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
     let formatRegNumber = typeof regNumber === 'string' ? regNumber : $(regNumber).val();
-    formatRegNumber = removeNonNumbers(formatRegNumber)
-        .replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
+    if (formatRegNumber.length === 10) {
+        formatRegNumber = formatRegNumber.substring(0, 3) + '-' + formatRegNumber.substring(3, 5) + '-' + formatRegNumber.substring(5);
+    }
     $(regNumber).val(formatRegNumber);
     return formatRegNumber;
 }
@@ -22,7 +23,7 @@ function formatDate(date) {  // 출력, 입력 날짜 YYYY/MM/DD 형식으로 �
     let dateString = '';
     if(typeof date !== 'string'){  // 날짜를 입력받는 경우
         for (let i = 0; i < date.value.length; i++) {
-            if (!Number.isNaN(date.value[i]) && date.value[i] !== ' ') {  // 숫자만 입력받음
+            if (!isNaN(date.value[i]) && date.value[i] !== ' ') {  // 숫자만 입력받음
                 dateString += date.value[i];
             }
         }
@@ -39,12 +40,15 @@ function formatDate(date) {  // 출력, 입력 날짜 YYYY/MM/DD 형식으로 �
     return dateString;
 }
 
-function formatPhone(phone) {  //전화번호 형식으로 바꾸기
+function formatPhone(phone) {  // 전화번호 형식으로 바꾸기
     let phoneNumber = typeof phone === 'string' ? phone : $(phone).val();
-    phoneNumber = removeNonNumbers(phoneNumber)
-        .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/, "$1-$2-$3");
+    if (phoneNumber.length === 11) {
+        let first = phoneNumber.substring(0, 3);
+        let second = phoneNumber.substring(3, 7);
+        let third = phoneNumber.substring(7);
+        phoneNumber = first + '-' + second + '-' + third;
+    }
     $(phone).val(phoneNumber);
-    return phoneNumber;
 }
 
 function setTodayDate() {  //오늘 날짜로 설정
@@ -56,7 +60,7 @@ function setTodayDate() {  //오늘 날짜로 설정
     return formattedDate;
 }
 
-function extractFieldName(field) {  //검증 실패한 필드 이름 추출
+function extractFieldName(field) {  //필드명 추출 및 변환 (첫 글자를 대문자로 변경)
     var parts = field.split('.');
     parts = parts.length > 1 ? parts[1] : field; //두 번째 부분 반환
     return parts.charAt(0).toUpperCase() + parts.slice(1);
