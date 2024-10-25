@@ -131,7 +131,7 @@ function renderPagination(data) {  //페이징
     }
 
     for (var i = data.firstPageNoOnPageList; i <= data.lastPageNoOnPageList; i++) {  // 숫자들
-        pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${i}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" id="${i}">${i}</a></li>`;
+        pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${i}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" id="page-${i}">${i}</a></li>`;
     }
 
     if (data.next) {  // 다음 버튼
@@ -141,5 +141,5 @@ function renderPagination(data) {  //페이징
 
     pagination += `</ol>`;
     page.append(pagination);
-    $(`#${data.currentPageNo}`).addClass("text-white bg-blue-500");
+    $(`#page-${data.currentPageNo}`).addClass("text-white bg-blue-500");
 }
