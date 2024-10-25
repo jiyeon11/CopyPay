@@ -721,7 +721,7 @@
                 };
             makeAjaxCall('/api/basic-info/list', 'GET', request, function (data) {
                 populateTable(data);
-            }, showEmptyDataRow());
+            }, showEmptyDataRow);
             $("#basicInfoList").removeClass("hidden");
         }
 
