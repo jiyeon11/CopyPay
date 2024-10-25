@@ -1,9 +1,11 @@
 package com.copypay.service;
 
 import com.copypay.dto.request.ContractRegisterRequest;
+import com.copypay.dto.request.MidIssueRequest;
 import com.copypay.dto.response.ContractDoneListResponse;
 import com.copypay.dto.response.ContractProgressListResponse;
 import com.copypay.dto.response.ManageIdListResponse;
+import com.copypay.exception.BusinessRegNumberNotFoundException;
 import com.copypay.exception.DataNotFoundException;
 import com.copypay.repository.SalesManagementRepository;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +75,17 @@ public class SalesManagementService {
         if(midResult == null)
             return "사용 가능한 MID입니다.";
         else return "사용 불가능한 MID입니다.";
+    }
+
+    // MID 발급
+    @Transactional
+    public void issueMid(MidIssueRequest midIssueRequest){
+        try{
+            salesManagementRepository.issueMid(midIssueRequest);
+        } catch (BusinessRegNumberNotFoundException e) {
+            log.error("존재하지 않는 사업자번호입니다.");
+            throw new BusinessRegNumberNotFoundException();
+        }
     }
 
     // 신규 계약 등록

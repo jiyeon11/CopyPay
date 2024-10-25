@@ -49,7 +49,7 @@
 <!-- 가맹점 발급 모달 -->
 <form id="issueModal"
       class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-full h-full flex justify-center items-center">
-    <div class="fixed bg-blue-500 w-3/6 py-2 z-10 top-72">
+    <div class="fixed bg-blue-500 w-3/6 py-2 z-10 top-72px">
         <h3 class="font-bold text-white text-lg ml-2">가맹점 발급</h3>
     </div>
     <div class="bg-white rounded-lg shadow-lg p-6 w-3/6 h-2/6 overflow-y-auto relative">
@@ -61,6 +61,8 @@
                     <td class="border-2 py-1">
                         <input type="text" id="businessRegNumber" name="businessRegNumber"
                                class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessRegNumber"
+                           name="errorBusinessRegNumber"></p>
                     </td>
                     <td class="text-center border-2 bg-stone-300 py-1">ID 구분</td>
                     <td class="border-2 py-1">
@@ -70,7 +72,7 @@
                 <tr>
                     <td class="text-center border-2 bg-stone-300 py-1">MID</td>
                     <td class="border-2 py-1">
-                        <p type="text" id="inputMid" name="inputMid"
+                        <p id="inputMid" name="inputMid"
                            class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                     </td>
                 </tr>
@@ -79,10 +81,10 @@
         </div>
         <div class="flex justify-end mt-4">
             <button type="button" id="issueMidBtn"
-                    class="text-white text-xs bg-green-700 w-16 h-7 mr-2">발급
+                    class="text-white text-xs bg-green-700 w-16 h-7 mr-2 rounded-md">발급
             </button>
             <button type="button" id="closeIssueModalBtn"
-                    class="text-white text-xs bg-green-700 w-16 h-7">닫기
+                    class="text-white text-xs bg-slate-500 w-16 h-7 rounded-md">닫기
             </button>
         </div>
     </div>
@@ -110,12 +112,12 @@
                                class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                     </td>
                     <td class="table-cell px-2 py-1">
-                        <button type="button" id="useMidBtn" class="invisible text-white text-xs bg-green-700 w-16 h-7 float-right">발급
+                        <button type="button" id="useMidBtn" class="invisible text-white text-xs bg-green-700 w-16 h-7 float-right rounded-md">발급
                         </button>
                     </td>
                     <td>
                         <button type="button" id="checkMidBtn"
-                                class="text-white text-xs bg-slate-500 w-16 h-7 float-right rounded-md mr-2">조회
+                                class="text-white text-xs bg-slate-800 w-16 h-7 float-right rounded-md mr-2">조회
                         </button>
                     </td>
                 </tr>
@@ -144,6 +146,24 @@
                 populateTable(data);
             }, showEmptyDataRow);
             $("#contractDoneList").removeClass("hidden");
+        });
+
+        // 발급
+        $("#issueMidBtn").on("click", function (event) {
+            event.preventDefault();
+            const data =  {
+                mid: $('#inputMid').text(),
+                businessRegNumber: $('#businessRegNumber').val(),
+            };
+            var url = '/api/manage-id/issue-mid';
+            makeAjaxCall(url, 'POST', data, function(data){
+                $("#issueModal").addClass("hidden");
+                url = '/api/manage-id/list';
+                makeAjaxCall(url, 'GET', null, function (data) {
+                    populateTable(data);
+                }, showEmptyDataRow);
+                $("#contractDoneList").removeClass("hidden");
+            }, function(){})
         });
 
         // MID 조회 버튼 클릭 시
@@ -277,6 +297,10 @@
                 $("#dataField").addClass("text-red-500");
             }
         }
+    }
+
+    function extractFieldName(field) {
+        return field.charAt(0).toUpperCase() + field.slice(1);
     }
 
     function clearIssueModal() {  // 발급 모달 입력 내용 초기화
