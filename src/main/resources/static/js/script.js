@@ -111,7 +111,7 @@ function makeAjaxCall(url, method, data, successCallback, errorCallback) {
                     $("p[name=error" + extractFieldName(field) + "]").text(errors[field]);
                 }
             }
-            else if (!error.responseJSON.message) {
+            else if (!error.responseJSON || !error.responseJSON.message) {
                 alert("다시 시도해 주세요.");
             }
         }

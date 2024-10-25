@@ -18,14 +18,19 @@ public class Pagination {
     private boolean prev;		        //이전 버튼
     private boolean next;		        //다음 버튼
 
+    private static final int PAGE_GROUP_SIZE = 10;
+    
+    private int calculateLastPageNoOnPageList() {
+        return (int)(Math.ceil(currentPageNo/(double)PAGE_GROUP_SIZE)) * PAGE_GROUP_SIZE;
+    }
+
     public int getFirstPageNoOnPageList() {
-        lastPageNoOnPageList = (int)(Math.ceil(currentPageNo/10.0)) * 10;
-        firstPageNoOnPageList = lastPageNoOnPageList - 9;
+        firstPageNoOnPageList = calculateLastPageNoOnPageList() - (PAGE_GROUP_SIZE - 1);
         return firstPageNoOnPageList;
     }
 
     public int getLastPageNoOnPageList() {
-        lastPageNoOnPageList = (int)(Math.ceil(currentPageNo/10.0)) * 10;
+        lastPageNoOnPageList = calculateLastPageNoOnPageList();
         int realEnd = (int)(Math.ceil((getTotalCount() * 1.0) / getPageSize()));
         if(realEnd < lastPageNoOnPageList) {
             lastPageNoOnPageList = realEnd;
@@ -34,21 +39,18 @@ public class Pagination {
     }
 
     public int getFirstRecordIndex() {
-        firstRecordIndex = (getCurrentPageNo() - 1) * getPageSize();
-        return firstRecordIndex;
+        return (currentPageNo - 1) * pageSize;
     }
 
     public boolean getPrev() {
-        prev= getFirstPageNoOnPageList() > 1;
-        return prev;
+        return getFirstPageNoOnPageList() > 1;
     }
 
     public boolean getNext() {
-        next = getLastPageNoOnPageList() < getRealEnd();
-        return next;
+        return getLastPageNoOnPageList() < getRealEnd();
     }
     public int getRealEnd() {
-        realEnd = (int)(Math.ceil((getTotalCount() * 1.0) / getPageSize()));
+        realEnd = (int) Math.ceil((double) totalCount / pageSize);
         return realEnd;
     }
 }
