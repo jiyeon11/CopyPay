@@ -1,14 +1,14 @@
 package com.copypay.controller;
 
+import com.copypay.dto.request.MidIssueRequest;
 import com.copypay.dto.response.ManageIdListResponse;
 import com.copypay.service.SalesManagementService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @Slf4j
@@ -32,6 +32,13 @@ public class ManageIdController {
     @ResponseBody
     public String checkMid(@RequestParam String mid){
         return salesManagementService.getMid(mid);
+    }
+
+    @PostMapping("/api/manage-id/issue-mid")
+    @ResponseBody
+    public ResponseEntity<?>  issueMid(@Valid @RequestBody MidIssueRequest midIssueRequest){
+        salesManagementService.issueMid(midIssueRequest);
+        return ResponseEntity.ok().build();
     }
 
 }
