@@ -28,4 +28,10 @@ public class ManageIdController {
         return ResponseEntity.ok(salesManagementService.getManageIdList(searchOption, searchValue));
     }
 
+    @GetMapping("/api/manage-id/check-mid")
+    @ResponseBody
+    public String checkMid(@RequestParam String mid){
+        return salesManagementService.getMid(mid);
+    }
+
 }
