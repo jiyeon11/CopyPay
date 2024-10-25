@@ -583,7 +583,7 @@
         $(document).ready(function () {
             //기본 정보 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
-                goPage(pageIndex);
+                fetchAndDisplayPage(pageIndex);  //조회, 페이징
             });
 
             $("#registerBasicInfoBtn").click(handleFormSubmit("basic"));  //일반정보 등록 버튼 클릭 시
@@ -629,7 +629,7 @@
                         memoRequest: getMemoData()
                     }
                 }
-                
+
                 makeAjaxCall(apiUrl, 'POST', dataToSend, function(data) {
                     $('#memoContent2').val(''); // 메모 내용 초기화
                     $("#memoModal").addClass("hidden"); // 모달 닫기
@@ -713,7 +713,7 @@
             checkboxGroups.forEach(group => setupCheckboxGroup(group.id, group.childClass));
         });
 
-        function goPage(pageIndex){
+        function fetchAndDisplayPage(pageIndex){  //지정된 페이지의 데이터 목록을 가져옴
             var request = {
                     mid: $('#inputMid').val(),
                     currentPage: pageIndex
@@ -724,11 +724,11 @@
             $("#basicInfoList").removeClass("hidden");
         }
 
-        function handleFormSubmit(saveType) {
+        function handleFormSubmit(saveType) {  //저장/등록 버튼을 눌렀을 때 메모 모달이 보이도록 함
             return function(event) {
                 event.preventDefault();
                 $("#memoModal").removeClass("hidden");
-                currentSaveType = saveType;
+                currentSaveType = saveType;  //저장 유형 설정 (일반정보인지 정산정보인지 결제수단인지 구분)
             }
         }
 
@@ -784,7 +784,6 @@
                 taxInvoiceEmail: $('#inputTaxInvoiceEmail').val(),
                 partialCancellationAllowed: $('#selectPartialCancellationAllowed').val()
             };
-            console.log(setBasicInfoData);
             return settlementInfoData;
         }
 
@@ -933,7 +932,7 @@
                         `;
                 tbody.append(row);
             });
-            renderPagination(data.pagination);
+            renderPagination(data.pagination);  //페이징
         }
 
         function showEmptyDataRow(){  //기본 정보 조회 테이블의 조회 결과가 없을 때

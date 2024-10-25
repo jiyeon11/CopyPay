@@ -93,11 +93,11 @@
 
             //조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
-                goPage(pageIndex);
+                fetchAndDisplayPage(pageIndex);
             });
         });
 
-        function goPage(pageIndex){
+        function fetchAndDisplayPage(pageIndex){  //지정된 페이지의 데이터 목록을 가져옴
             var request = {
                     mid: $('#inputMid').val(),
                     businessType: $('#selectBusinessType').val(),
@@ -131,7 +131,7 @@
                         `;
                 tbody.append(row);
             });
-            renderPagination(data.pagination);
+            renderPagination(data.pagination);  //페이징
         }
 
         function showEmptyDataRow() {  //기본 정보 조회 테이블의 조회 결과가 없을 때

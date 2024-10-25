@@ -139,15 +139,7 @@ public class BasicInfoController {
                                                                           @RequestParam(required = false) String endDate,
                                                                           @RequestParam(required = false) String isSmallMidUsed,
                                                                           @RequestParam(required = false) int currentPage){
-        BasicInfoViewRequest basicInfoViewRequest = new BasicInfoViewRequest();
-        basicInfoViewRequest.setMid(mid);
-        basicInfoViewRequest.setBusinessType(businessType);
-        basicInfoViewRequest.setIsUsed(isUsed);
-        basicInfoViewRequest.setDateOption(dateOption);
-        basicInfoViewRequest.setStartDate(startDate);
-        basicInfoViewRequest.setEndDate(endDate);
-        basicInfoViewRequest.setIsSmallMidUsed(isSmallMidUsed);
-
+        BasicInfoViewRequest basicInfoViewRequest = new BasicInfoViewRequest(mid, businessType, isUsed, dateOption, startDate, endDate, isSmallMidUsed);
         //페이징
         Pagination pagination = new Pagination();
         pagination.setCurrentPageNo(currentPage);
