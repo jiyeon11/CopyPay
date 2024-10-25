@@ -99,6 +99,7 @@ function makeAjaxCall(url, method, data, successCallback, errorCallback) {
             xhr.setRequestHeader(header, token);
         },
         success: function (responseData) {
+            $('.error-message').text('');//모든 필드의 오류 메시지 초기화
             successCallback(responseData);
         },
         error: function (error) {
@@ -107,12 +108,16 @@ function makeAjaxCall(url, method, data, successCallback, errorCallback) {
             }
             else if (error.responseJSON) {
                 const errors = error.responseJSON;
-                //모든 필드의 오류 메시지 초기화
-                $('.error-message').text('');
-
-                //오류 메시지를 각 필드에 맞게 표시
-                for (const field in errors) {
-                    $("p[name=error" + extractFieldName(field) + "]").text(errors[field]);
+                if (errors.status) {  //상태코드가 있으면 alert 띄움
+                    alert(errors.message);
+                } else {
+                    $("#memoModal").addClass("hidden");  //메모 모달 창 숨김
+                    //모든 필드의 오류 메시지 초기화
+                    $('.error-message').text('');
+                    //오류 메시지를 각 필드에 맞게 표시
+                    for (const field in errors) {
+                        $("p[name=error" + extractFieldName(field) + "]").text(errors[field]);
+                    }
                 }
             }
             else if (!error.responseJSON || !error.responseJSON.message) {
