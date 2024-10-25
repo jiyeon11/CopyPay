@@ -207,7 +207,7 @@
 	</select>
 	<select id="countBasicInfoViewList" parameterType="com.copypay.dto.request.BasicInfoViewRequest" resultType="int">
 		<![CDATA[
-			SELECT COUNT(*)
+			SELECT COUNT(c.NO)
 			FROM CONTRACT c JOIN PAYMENT_METHOD p ON c.NO = p.NO
 			WHERE MID LIKE CONCAT('%', #{mid}, '%')
 			AND (
