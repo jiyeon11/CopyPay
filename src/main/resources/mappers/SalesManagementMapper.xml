@@ -48,7 +48,7 @@
 			CEO_NAME AS ceoName,
 			MID AS mid
 		FROM CONTRACT
-		WHERE 1=1
+		WHERE 1=1 AND MID IS NOT NULL
     ]]>
 		<if test="searchOption != null">
 			AND ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
