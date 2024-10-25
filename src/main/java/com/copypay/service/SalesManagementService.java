@@ -1,8 +1,10 @@
 package com.copypay.service;
 
 import com.copypay.dto.request.ContractRegisterRequest;
+import com.copypay.dto.request.MidIssueRequest;
 import com.copypay.dto.response.ContractDoneListResponse;
 import com.copypay.dto.response.ContractProgressListResponse;
+import com.copypay.dto.response.ManageIdListResponse;
 import com.copypay.exception.DataNotFoundException;
 import com.copypay.repository.SalesManagementRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -45,6 +48,16 @@ public class SalesManagementService {
         return validateListNotEmpty(
                 contractDoneList,
                 String.format("총 %d개의 계약 완료현황 항목을 성공적으로 가져왔습니다", contractDoneList.size()),
+                String.format("검색 조건 %s에 일치하는 정보가 없습니다. 검색어 : %s", searchOption, searchValue)
+        );
+    }
+
+    // 가맹점 ID 관리 조회
+    public List<ManageIdListResponse> getManageIdList(String searchOption, String searchValue) {
+        List<ManageIdListResponse> manageIdList = salesManagementRepository.getManageIdList(searchOption, searchValue);
+        return validateListNotEmpty(
+                manageIdList,
+                String.format("총 %d개의 계약 정보 항목을 성공적으로 가져왔습니다", manageIdList.size()),
                 String.format("검색 조건 %s에 일치하는 정보가 없습니다. 검색어 : %s", searchOption, searchValue)
         );
     }
