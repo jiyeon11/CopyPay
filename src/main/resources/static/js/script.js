@@ -22,7 +22,7 @@ function formatDate(date) {  // 출력, 입력 날짜 YYYY/MM/DD 형식으로 �
     let dateString = '';
     if(typeof date !== 'string'){  // 날짜를 입력받는 경우
         for (let i = 0; i < date.value.length; i++) {
-            if (!isNaN(date.value[i]) && date.value[i] !== ' ') {  // 숫자만 입력받음
+            if (!Number.isNaN(date.value[i]) && date.value[i] !== ' ') {  // 숫자만 입력받음
                 dateString += date.value[i];
             }
         }

@@ -197,7 +197,8 @@
 			    (#{isUsed} = '모두' OR IS_USED = #{isUsed})
 			)
 			AND (
-				(#{dateOption} = false OR CONTRACT_DATE BETWEEN #{startDate} AND #{endDate})
+				#{dateOption} = false
+				OR (CONTRACT_DATE >= #{startDate} AND CONTRACT_DATE <= #{endDate})
 			)
 			AND (
 				(#{isSmallMidUsed} = '모두' OR IS_SMALL_MID_USED = #{isSmallMidUsed})
@@ -217,7 +218,8 @@
 			    (#{isUsed} = '모두' OR IS_USED = #{isUsed})
 			)
 			AND (
-				(#{dateOption} = false OR CONTRACT_DATE BETWEEN #{startDate} AND #{endDate})
+				#{dateOption} = false
+				OR (CONTRACT_DATE >= #{startDate} AND CONTRACT_DATE <= #{endDate})
 			)
 			AND (
 				(#{isSmallMidUsed} = '모두' OR IS_SMALL_MID_USED = #{isSmallMidUsed})
