@@ -52,11 +52,8 @@ public class BasicInfoController {
                                                                                      @RequestParam(required = false, defaultValue = "1") Integer currentPage){
 
         BasicInfoRequest basicInfoRequest = new BasicInfoRequest(mid);
-        Pagination pagination = new Pagination();
-        pagination.setCurrentPageNo(currentPage);
-        pagination.setTotalCount(basicInfoService.getBasicInfoListTotalCount(basicInfoRequest));
-        basicInfoRequest.setFirstIndex(pagination.getFirstRecordIndex());
-        basicInfoRequest.setPageSize(pagination.getPageSize());
+        int totalCount = basicInfoService.getBasicInfoListTotalCount(basicInfoRequest);  //리스트 총 개수 구함
+        Pagination pagination = basicInfoService.createPagination(basicInfoRequest, currentPage, totalCount);
         List<BasicInfoResponse> basicInfoResponse = basicInfoService.getBasicInfoList(basicInfoRequest);
         GenericPaginationResponse<BasicInfoResponse> response = new GenericPaginationResponse<>(basicInfoResponse, pagination);
         return ResponseEntity.ok().body(response);
@@ -137,13 +134,8 @@ public class BasicInfoController {
                                                                           @RequestParam(required = false) String isSmallMidUsed,
                                                                           @RequestParam(required = false, defaultValue = "1") Integer currentPage){
         BasicInfoViewRequest basicInfoViewRequest = new BasicInfoViewRequest(mid, businessType, isUsed, dateOption, startDate, endDate, isSmallMidUsed);
-        //페이징
-        Pagination pagination = new Pagination();
-        pagination.setCurrentPageNo(currentPage);
-        pagination.setTotalCount(basicInfoService.getBasicInfoViewListTotalCount(basicInfoViewRequest));
-        basicInfoViewRequest.setFirstIndex(pagination.getFirstRecordIndex());
-        basicInfoViewRequest.setPageSize(pagination.getPageSize());
-
+        int totalCount = basicInfoService.getBasicInfoViewListTotalCount(basicInfoViewRequest);  //리스트 총 개수 구함
+        Pagination pagination = basicInfoService.createPagination(basicInfoViewRequest, currentPage, totalCount);
         List<BasicInfoViewResponse> basicInfoViewResponse = basicInfoService.getBasicInfoViewList(basicInfoViewRequest);
         GenericPaginationResponse<BasicInfoViewResponse> response = new GenericPaginationResponse<>(basicInfoViewResponse, pagination);
 

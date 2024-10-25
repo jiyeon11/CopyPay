@@ -1,5 +1,6 @@
 package com.copypay.service;
 
+import com.copypay.dto.Pagination;
 import com.copypay.dto.request.*;
 import com.copypay.dto.response.*;
 import com.copypay.exception.*;
@@ -163,4 +164,18 @@ public class BasicInfoService {
         return basicInfoRepository.countBasicInfoList(basicInfoRequest);
     }
 
+    //페이징 설정
+    public <T>Pagination createPagination(T request, int currentPage, int totalCount){
+        Pagination pagination = new Pagination();
+        pagination.setCurrentPageNo(currentPage);
+        pagination.setTotalCount(totalCount);
+        if (request instanceof BasicInfoRequest) {
+            ((BasicInfoRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
+            ((BasicInfoRequest) request).setPageSize(pagination.getPageSize());
+        } else if (request instanceof BasicInfoViewRequest) {
+            ((BasicInfoViewRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
+            ((BasicInfoViewRequest) request).setPageSize(pagination.getPageSize());
+        }
+        return pagination;
+    }
 }
