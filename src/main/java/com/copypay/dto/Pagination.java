@@ -45,7 +45,7 @@ public class Pagination {
         return getLastPageNoOnPageList() < getRealEnd();
     }
     public int getRealEnd() {
-        realEnd = (int)(Math.ceil((getTotalCount() * 1.0) / getPageSize()));
+        realEnd = (int) Math.ceil((double) totalCount / pageSize);
         return realEnd;
     }
 }
