@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Mapper
 public interface BasicInfoMapper {
-    List<BasicInfoResponse> getBasicInfoList(Map<String, Object> request);
+    List<BasicInfoResponse> getBasicInfoList(BasicInfoRequest basicInfoRequest);
     List<String> getManagerId();
     BasicInfosResponse getBasicInfo(String inputBusinessRegNumber);
     List<MemoResponse> getMemoList(String inputMid);
@@ -24,5 +24,5 @@ public interface BasicInfoMapper {
     int saveMemo(MemoRequest memoRequest);
     List<BasicInfoViewResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
     int countBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
-    int countBasicInfoList(Map<String, Object> request);
+    int countBasicInfoList(BasicInfoRequest basicInfoRequest);
 }

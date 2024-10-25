@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface BasicInfoRepository {
-    List<BasicInfoResponse> getBasicInfoList(Map<String, Object> map);
+    List<BasicInfoResponse> getBasicInfoList(BasicInfoRequest basicInfoRequest);
     List<String> getManagerId();
     BasicInfosResponse getBasicInfo(String inputBusinessRegNumber);
     List<MemoResponse> getMemoList(String inputMid);
@@ -21,5 +21,5 @@ public interface BasicInfoRepository {
     int saveMemo(MemoRequest memoRequest);
     List<BasicInfoViewResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
     int countBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
-    int countBasicInfoList(Map<String, Object> map);
+    int countBasicInfoList(BasicInfoRequest basicInfoRequest);
 }

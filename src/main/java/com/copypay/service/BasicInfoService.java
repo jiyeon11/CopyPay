@@ -20,12 +20,12 @@ public class BasicInfoService {
     private final SalesManagementService salesManagementService;
 
     //기본정보 등록/변경의 조회
-    public List<BasicInfoResponse> getBasicInfoList(Map<String, Object> map) {
-        List<BasicInfoResponse> basicInfoList = basicInfoRepository.getBasicInfoList(map);
+    public List<BasicInfoResponse> getBasicInfoList(BasicInfoRequest basicInfoRequest) {
+        List<BasicInfoResponse> basicInfoList = basicInfoRepository.getBasicInfoList(basicInfoRequest);
         return salesManagementService.validateListNotEmpty(
                 basicInfoList,
                 String.format("총 %d개의 기본 정보 항목을 성공적으로 가져왔습니다", basicInfoList.size()),
-                String.format("MID %s에 대한 기본 정보가 없습니다.", map.get("mid"))
+                String.format("MID %s에 대한 기본 정보가 없습니다.", basicInfoRequest.getMid())
         );
     }
 
@@ -159,8 +159,8 @@ public class BasicInfoService {
     }
 
     //기본정보 조회의 조회에서 리스트 총 개수 가져오기
-    public int getBasicInfoListTotalCount(Map<String, Object> request){
-        return basicInfoRepository.countBasicInfoList(request);
+    public int getBasicInfoListTotalCount(BasicInfoRequest basicInfoRequest){
+        return basicInfoRepository.countBasicInfoList(basicInfoRequest);
     }
 
 }

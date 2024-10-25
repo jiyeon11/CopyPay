@@ -75,7 +75,7 @@
 		]]>
 	</select>
 
-	<select id="getBasicInfoList" parameterType="map" resultType="com.copypay.dto.response.BasicInfoResponse">
+	<select id="getBasicInfoList" parameterType="com.copypay.dto.request.BasicInfoRequest" resultType="com.copypay.dto.response.BasicInfoResponse">
 		<![CDATA[
 		SELECT
 			BUSINESS_REG_NUMBER AS businessRegNumber,
@@ -91,7 +91,7 @@
         ]]>
 	</select>
 
-	<select id="countBasicInfoList" parameterType="map" resultType="int">
+	<select id="countBasicInfoList" parameterType="com.copypay.dto.request.BasicInfoRequest" resultType="int">
 		<![CDATA[
 		SELECT
 			COUNT(CONTRACT.NO)

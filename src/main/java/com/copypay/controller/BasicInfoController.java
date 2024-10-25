@@ -50,17 +50,14 @@ public class BasicInfoController {
     @ResponseBody
     public ResponseEntity<GenericPaginationResponse<BasicInfoResponse>> getBasicInfoList(@RequestParam(required = false) String mid,
                                                                                      @RequestParam(required = false, defaultValue = "1") Integer currentPage){
+
+        BasicInfoRequest basicInfoRequest = new BasicInfoRequest(mid);
         Pagination pagination = new Pagination();
         pagination.setCurrentPageNo(currentPage);
-        
-        Map<String, Object> map = new HashMap<>();
-        map.put("mid", mid);
-        map.put("firstIndex", pagination.getFirstRecordIndex());
-        map.put("pageSize", pagination.getPageSize());
-
-        pagination.setTotalCount(basicInfoService.getBasicInfoListTotalCount(map));
-
-        List<BasicInfoResponse> basicInfoResponse = basicInfoService.getBasicInfoList(map);
+        pagination.setTotalCount(basicInfoService.getBasicInfoListTotalCount(basicInfoRequest));
+        basicInfoRequest.setFirstIndex(pagination.getFirstRecordIndex());
+        basicInfoRequest.setPageSize(pagination.getPageSize());
+        List<BasicInfoResponse> basicInfoResponse = basicInfoService.getBasicInfoList(basicInfoRequest);
         GenericPaginationResponse<BasicInfoResponse> response = new GenericPaginationResponse<>(basicInfoResponse, pagination);
         return ResponseEntity.ok().body(response);
     }

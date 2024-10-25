@@ -13,3 +13,4 @@ import java.util.List;
 public class GenericPaginationResponse<T> {
     private final List<T> list;  //조회한 데이터 리스트
     private final Pagination pagination;  //페이지네이션 정보
+}

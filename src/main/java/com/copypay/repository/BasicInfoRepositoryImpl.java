@@ -15,8 +15,8 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     private final BasicInfoMapper basicInfoMapper;
 
     @Override
-    public List<BasicInfoResponse> getBasicInfoList(Map<String, Object> map) {
-        return basicInfoMapper.getBasicInfoList(map);
+    public List<BasicInfoResponse> getBasicInfoList(BasicInfoRequest basicInfoRequest) {
+        return basicInfoMapper.getBasicInfoList(basicInfoRequest);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     }
 
     @Override
-    public int countBasicInfoList(Map<String, Object> map) {
-        return basicInfoMapper.countBasicInfoList(map);
+    public int countBasicInfoList(BasicInfoRequest basicInfoRequest) {
+        return basicInfoMapper.countBasicInfoList(basicInfoRequest);
     }
 }
