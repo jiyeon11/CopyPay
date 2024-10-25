@@ -18,14 +18,19 @@ public class Pagination {
     private boolean prev;		        //이전 버튼
     private boolean next;		        //다음 버튼
 
+    private static final int PAGE_GROUP_SIZE = 10;
+    
+    private int calculateLastPageNoOnPageList() {
+        return (int)(Math.ceil(currentPageNo/(double)PAGE_GROUP_SIZE)) * PAGE_GROUP_SIZE;
+    }
+
     public int getFirstPageNoOnPageList() {
-        lastPageNoOnPageList = (int)(Math.ceil(currentPageNo/10.0)) * 10;
-        firstPageNoOnPageList = lastPageNoOnPageList - 9;
+        firstPageNoOnPageList = calculateLastPageNoOnPageList() - (PAGE_GROUP_SIZE - 1);
         return firstPageNoOnPageList;
     }
 
     public int getLastPageNoOnPageList() {
-        lastPageNoOnPageList = (int)(Math.ceil(currentPageNo/10.0)) * 10;
+        lastPageNoOnPageList = calculateLastPageNoOnPageList();
         int realEnd = (int)(Math.ceil((getTotalCount() * 1.0) / getPageSize()));
         if(realEnd < lastPageNoOnPageList) {
             lastPageNoOnPageList = realEnd;
