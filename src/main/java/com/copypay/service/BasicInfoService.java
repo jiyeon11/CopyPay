@@ -179,17 +179,20 @@ public class BasicInfoService {
     }
 
     //페이징 설정
-    public <T>Pagination createPagination(T request, int currentPage, int totalCount){
+    public <T>Pagination createPagination(T request, int currentPage){
+        int totalCount = 0;
         Pagination pagination = new Pagination();
         pagination.setCurrentPageNo(currentPage);
-        pagination.setTotalCount(totalCount);
         if (request instanceof BasicInfoRequest) {
             ((BasicInfoRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
             ((BasicInfoRequest) request).setPageSize(pagination.getPageSize());
+            totalCount = getBasicInfoListTotalCount((BasicInfoRequest)request);
         } else if (request instanceof BasicInfoViewRequest) {
             ((BasicInfoViewRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
             ((BasicInfoViewRequest) request).setPageSize(pagination.getPageSize());
+            totalCount = getBasicInfoViewListTotalCount((BasicInfoViewRequest)request);
         }
+        pagination.setTotalCount(totalCount);
         return pagination;
     }
 }

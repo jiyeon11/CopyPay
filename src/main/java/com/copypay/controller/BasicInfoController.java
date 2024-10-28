@@ -48,12 +48,8 @@ public class BasicInfoController {
 
     @GetMapping("/api/basic-info/list")
     @ResponseBody
-    public ResponseEntity<GenericPaginationResponse<BasicInfoResponse>> getBasicInfoList(@RequestParam(required = false) String mid,
-                                                                                     @RequestParam(required = false, defaultValue = "1") Integer currentPage){
-
-        BasicInfoRequest basicInfoRequest = new BasicInfoRequest(mid);
-        int totalCount = basicInfoService.getBasicInfoListTotalCount(basicInfoRequest);  //리스트 총 개수 구함
-        Pagination pagination = basicInfoService.createPagination(basicInfoRequest, currentPage, totalCount);
+    public ResponseEntity<GenericPaginationResponse<BasicInfoResponse>> getBasicInfoList(BasicInfoRequest basicInfoRequest){
+        Pagination pagination = basicInfoService.createPagination(basicInfoRequest, basicInfoRequest.getCurrentPage());
         List<BasicInfoResponse> basicInfoResponse = basicInfoService.getBasicInfoList(basicInfoRequest);
         GenericPaginationResponse<BasicInfoResponse> response = new GenericPaginationResponse<>(basicInfoResponse, pagination);
         return ResponseEntity.ok().body(response);
@@ -125,20 +121,10 @@ public class BasicInfoController {
 
     @GetMapping("/api/basic-info-view")
     @ResponseBody
-    public ResponseEntity<GenericPaginationResponse<BasicInfoViewResponse>> getBasicInfoViewList(@RequestParam(required = false) String mid,
-                                                                          @RequestParam(required = false) String businessType,
-                                                                          @RequestParam(required = false) String isUsed,
-                                                                          @RequestParam(required = false) Boolean dateOption,
-                                                                          @RequestParam(required = false) String startDate,
-                                                                          @RequestParam(required = false) String endDate,
-                                                                          @RequestParam(required = false) String isSmallMidUsed,
-                                                                          @RequestParam(required = false, defaultValue = "1") Integer currentPage){
-        BasicInfoViewRequest basicInfoViewRequest = new BasicInfoViewRequest(mid, businessType, isUsed, dateOption, startDate, endDate, isSmallMidUsed);
-        int totalCount = basicInfoService.getBasicInfoViewListTotalCount(basicInfoViewRequest);  //리스트 총 개수 구함
-        Pagination pagination = basicInfoService.createPagination(basicInfoViewRequest, currentPage, totalCount);
+    public ResponseEntity<GenericPaginationResponse<BasicInfoViewResponse>> getBasicInfoViewList(@ModelAttribute BasicInfoViewRequest basicInfoViewRequest){
+        Pagination pagination = basicInfoService.createPagination(basicInfoViewRequest, basicInfoViewRequest.getCurrentPage());
         List<BasicInfoViewResponse> basicInfoViewResponse = basicInfoService.getBasicInfoViewList(basicInfoViewRequest);
         GenericPaginationResponse<BasicInfoViewResponse> response = new GenericPaginationResponse<>(basicInfoViewResponse, pagination);
-
         return ResponseEntity.ok().body(response);
     }
 }
