@@ -24,34 +24,33 @@ public class BasicInfoAPIController {
 
     @PostMapping("/basic-infos")
     public void saveBasicInfo(@Valid @RequestBody BasicInfosRequest basicInfosRequest, HttpServletRequest request){
-        basicInfosRequest.getMemoRequest().setId(basicInfoService.getUsernameFromSession(request));
+        basicInfoService.setUsernameFromSession(basicInfosRequest.getMemoRequest(), request);
         basicInfoService.saveBasicInfo(basicInfosRequest);
     }
 
     @PostMapping("/settlement-infos")
     public void saveSettlementInfo(@Valid @RequestBody BasicInfosRequest basicInfosRequest, HttpServletRequest request){
-        basicInfosRequest.getMemoRequest().setId(basicInfoService.getUsernameFromSession(request));
+        basicInfoService.setUsernameFromSession(basicInfosRequest.getMemoRequest(), request);
         basicInfoService.saveSettlementInfo(basicInfosRequest);
     }
 
     @PostMapping("/payment-methods")
     public void savePaymentMethod(@Valid @RequestBody BasicInfosRequest basicInfosRequest, HttpServletRequest request){
-        basicInfosRequest.getMemoRequest().setId(basicInfoService.getUsernameFromSession(request));
+        basicInfoService.setUsernameFromSession(basicInfosRequest.getMemoRequest(), request);
         basicInfoService.savePaymentMethod(basicInfosRequest);
     }
 
     @PostMapping("/memos")
     public void saveMemo(@Valid @RequestBody MemoRequest memoRequest, HttpServletRequest request){
-        memoRequest.setId(basicInfoService.getUsernameFromSession(request));
+        basicInfoService.setUsernameFromSession(memoRequest, request);
         basicInfoService.saveMemo(memoRequest);
     }
 
     @PostMapping("/contracts")
     public void saveContract(@Valid @RequestBody BasicInfosRequest basicInfosRequest, HttpServletRequest request){
-        basicInfosRequest.getMemoRequest().setId(basicInfoService.getUsernameFromSession(request));
+        basicInfoService.setUsernameFromSession(basicInfosRequest.getMemoRequest(), request);
         basicInfoService.saveContract(basicInfosRequest);
     }
-
 
     @GetMapping("/basic-info/list")
     public GenericPaginationResponse<BasicInfoResponse> getBasicInfoList(BasicInfoRequest basicInfoRequest){

@@ -197,14 +197,16 @@ public class BasicInfoService {
         return pagination;
     }
 
-    //세션에서 사용자 id 가져옴
-    public String getUsernameFromSession(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    //세션에서 사용자 id 가져와서 설정
+    public void setUsernameFromSession(MemoRequest memoRequest, HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
         String username = (String)session.getAttribute("username");
         if (username == null) {
             log.error("사용자 id가 세션에 존재하지 않습니다.");
             throw new IllegalArgumentException("사용자 id가 세션에 존재하지 않습니다.");
+        }else{
+            memoRequest.setId(username);
+            log.info("세션에서 사용자 id를 성공적으로 조회했습니다: {}", username);
         }
-        return username;
     }
 }
