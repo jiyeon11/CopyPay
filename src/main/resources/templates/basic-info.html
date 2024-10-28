@@ -91,7 +91,7 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">계약일자</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputContractDate" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputContractDate" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatDate(this)">
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자명</td>
                             <td class="border-2 py-1">
@@ -214,7 +214,7 @@
                                 </select>
                                 <div>
                                     <label for="inputFeeSettlementDate" class="text-sm font-bold ml-3">적용시작일자:</label>
-                                    <input type="text" id="inputFeeSettlementDate" name="적용시작일자" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                    <input type="text" id="inputFeeSettlementDate" name="적용시작일자" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatDate(this)" required>
                                     <div class="text-sm inline">부터</div>
                                 </div>
                                 <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFeeSettlementDate" name="errorFeeSettlementDate"></p>
@@ -321,7 +321,7 @@
                                     <option value="요청1일">요청1일</option>
                                 </select>
                                 <label for="inputEffectiveDate" class="text-sm font-bold ml-3">적용시작일자:</label>
-                                <input type="text" id="inputEffectiveDate" class="w-[5.5rem] h-7 text-sm mt-2 pl-1 border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputEffectiveDate" class="w-[5.5rem] h-7 text-sm mt-2 pl-1 border-2 border-gray-400 outline-none" oninput="formatDate(this)">
                                 <div class="text-sm inline">부터</div>
                                 <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorSettlementCycleEffectiveDate" name="errorSettlementCycleEffectiveDate"></p>
                             </td>

@@ -49,6 +49,7 @@ function formatPhone(phone) {  // 전화번호 형식으로 바꾸기
         phoneNumber = first + '-' + second + '-' + third;
     }
     $(phone).val(phoneNumber);
+    return phoneNumber;
 }
 
 function setTodayDate() {  //오늘 날짜로 설정
