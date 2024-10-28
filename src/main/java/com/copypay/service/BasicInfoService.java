@@ -5,13 +5,14 @@ import com.copypay.dto.request.*;
 import com.copypay.dto.response.*;
 import com.copypay.exception.*;
 import com.copypay.repository.BasicInfoRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -194,5 +195,16 @@ public class BasicInfoService {
         }
         pagination.setTotalCount(totalCount);
         return pagination;
+    }
+
+    //세션에서 사용자 id 가져옴
+    public String getUsernameFromSession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("username");
+        if (username == null) {
+            log.error("사용자 id가 세션에 존재하지 않습니다.");
+            throw new IllegalArgumentException("사용자 id가 세션에 존재하지 않습니다.");
+        }
+        return username;
     }
 }
