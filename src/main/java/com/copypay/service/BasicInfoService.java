@@ -65,13 +65,11 @@ public class BasicInfoService {
     //MID로 메모 내역 가져오기
     public List<MemoResponse> getMemoList(String inputMid){
         List<MemoResponse> memoList = basicInfoRepository.getMemoList(inputMid);
-        if(memoList.isEmpty()) {
-            log.info("MID {}에 대한 메모내역이 없습니다.", inputMid);
-            throw new MemoNotFoundException();
-        }else{
-            log.info("총 {}개의 메모를 성공적으로 가져왔습니다", memoList.size());
-        }
-        return memoList;
+        return salesManagementService.validateListNotEmpty(
+                memoList,
+                String.format("총 %d개의 기본 정보 항목을 성공적으로 가져왔습니다", memoList.size()),
+                String.format("MID %s에 대한 메모내역이 없습니다.", inputMid)
+        );
     }
 
     //일반정보(계약) & 메모 저장
@@ -139,19 +137,19 @@ public class BasicInfoService {
         }
 
         rowsAffected = basicInfoRepository.saveSettlementInfo(basicInfosRequest.getSettlementInfoRequest());
-        if(rowsAffected != 1){
+        if(rowsAffected == 0){
             log.error("NO : {} 정산정보 저장 실패", basicInfosRequest.getSettlementInfoRequest().getNo());
             throw new SaveFailedException();
         }
 
         rowsAffected = basicInfoRepository.savePaymentMethod(basicInfosRequest.getPaymentMethodRequest());
-        if(rowsAffected != 1){
+        if(rowsAffected == 0){
             log.error("NO : {} 결제수단 저장 실패", basicInfosRequest.getPaymentMethodRequest().getNo());
             throw new SaveFailedException();
         }
 
         rowsAffected = basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
-        if(rowsAffected != 1){
+        if(rowsAffected == 0){
             log.error("MID : {} 메모 저장 실패", basicInfosRequest.getMemoRequest().getMid());
             throw new SaveFailedException();
         }
