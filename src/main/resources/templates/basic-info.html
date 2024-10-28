@@ -933,6 +933,7 @@
                         `;
                 tbody.append(row);
             });
+            data.pagination.length = Object.keys(data.list).length;  //리스트 길이 추가
             renderPagination(data.pagination);  //페이징
         }
 

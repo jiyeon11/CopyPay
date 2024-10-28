@@ -18,7 +18,7 @@ public class Pagination {
     private boolean prev;		        //이전 버튼
     private boolean next;		        //다음 버튼
 
-    private static final int PAGE_GROUP_SIZE = 10;
+    private static final int PAGE_GROUP_SIZE = 10;  //화면에 표시될 최대 페이지 수
     
     private int calculateLastPageNoOnPageList() {
         return (int)(Math.ceil(currentPageNo/(double)PAGE_GROUP_SIZE)) * PAGE_GROUP_SIZE;
