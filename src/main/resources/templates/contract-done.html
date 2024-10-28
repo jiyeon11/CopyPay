@@ -49,40 +49,12 @@
                     const searchValue = $("#searchValue").val();
                     // searchOption을 선택하지 않았거나, searchValue를 입력하지 않았으면 전체 조회
                     const url = '/api/contract-done/list' + (searchOption === "NONE" || !searchValue ? '' : `?searchOption=${searchOption}&searchValue=${searchValue}`);
-                    makeAjaxCall(url, 'GET', function (data) {
+                    makeAjaxCall(url, 'GET', null, function (data) {
                         populateTable(data);
                     }, showEmptyDataRow);
                     $("#contractDoneList").removeClass("hidden");
                 });
             });
-
-            /**
-             * AJAX 요청을 처리하는 공통 함수
-             * @param {string} url - 요청 URL
-             * @param {string} method - HTTP 메서드
-             * @param {function} successCallback - 성공 시 콜백 함수
-             * @param {function} errorCallback - 에러 시 콜백 함수
-             */
-            function makeAjaxCall(url, method, successCallback, errorCallback) {
-                $.ajax({
-                    url: url,
-                    method: method,
-                    success: function (data) {
-                        successCallback(data);
-                    },
-                    error: function (error) {
-                        if(errorCallback){
-                            errorCallback();
-                        }
-                        else if(error.responseJSON.message){
-                            alert(error.responseJSON.message);
-                        }
-                        else if(!error.responseJSON.message){
-                            alert("데이터를 가져오는 데 실패했습니다. 다시 시도해 주세요.");
-                        }
-                    }
-                });
-            }
 
             function populateTable(data) {  // 받아온 데이터로 계약 진행현황 조회 테이블 행 추가
                 const tbody = $('#list');
