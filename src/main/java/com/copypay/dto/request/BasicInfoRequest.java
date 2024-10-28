@@ -1,19 +1,11 @@
 package com.copypay.dto.request;
 
-import jakarta.validation.Valid;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class BasicInfoRequest {
-    @Valid
-    private ContractRequest contractRequest;
-    @Valid
-    private SettlementInfoRequest settlementInfoRequest;
-    @Valid
-    private PaymentMethodRequest paymentMethodRequest;
-    @Valid
-    private MemoRequest memoRequest;
+public class BasicInfoRequest extends PaginationRequest{
+    private String mid;
 }

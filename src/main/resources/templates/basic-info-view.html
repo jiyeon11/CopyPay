@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기본정보 조회</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <button id="basicInfoCheckBtn" class="float-right items-center px-6 py-2 mr-10 mt-3 bg-slate-800 text-md text-white rounded">조회</button><br>
+    <div class="flex mt-10 ml-20 pl-20 rounded-lg items-center space-x-2">
+        <table class="table-fixed border-collapse mx-auto w-[105rem] h-auto">
+            <tbody class="table-row-group">
+                <tr class="table-row">
+                    <td class="text-center border-2 border-gray-300 bg-gray-200 py-1">
+                        <select id="selectMid" class="ml-3 border-2 border-gray-400 outline-none text-base w-24">
+                            <option value="MID">MID</option>
+                        </select>
+                    </td>
+                    <td class="border-2 py-1 border-gray-300">
+                        <input type="text" id="inputMid" name="mid" class="w-28 h-7 text-sm pl-1 ml-3 border-2 border-gray-400 outline-none">
+                    </td>
+                    <td class="text-center border-2 border-gray-300 bg-gray-200 py-1">사업체구분</td>
+                    <td class="border-2 border-gray-300 py-1">
+                        <select id="selectBusinessType" class="ml-3 border-2 border-gray-400 outline-none text-sm w-24">
+                            <option value="모두">모두</option>
+                            <option value="개인사업자">개인사업자</option>
+                            <option value="법인사업자">법인사업자</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr class="table-row">
+                    <td class="text-center border-2 border-gray-300 bg-gray-200 py-1">사용여부</td>
+                    <td class="border-2 border-gray-300 py-1">
+                        <select id="selectIsUsed" class="ml-3 border-2 border-gray-400 outline-none text-sm w-24">
+                            <option value="모두">모두</option>
+                            <option value="사용">사용</option>
+                            <option value="사용안함">사용안함</option>
+                        </select>
+                    </td>
+                    <td class="text-center border-2 border-gray-300 bg-gray-200 py-1"><input id="dateOption" type="checkbox" class="ml-2">
+                        <label for="dateOption">등록일</label>
+                    </td>
+                    <td class="border-2 border-gray-300 py-1">
+                        <input type="date" id="startDate" min="2013-01-01" max="2032-12-31" class="ml-4 p-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"/>
+                        <span class="px-2 text-sm">~</span>
+                        <input type="date" id="endDate" min="2013-01-01" max="2032-12-31" class="p-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"/>            
+                    </td>
+                </tr>
+
+                <tr class="table-row">
+                    <td class="text-center border-2 border-gray-300 bg-gray-200 py-1">영중소 사용여부</td>
+                    <td class="border-2 border-gray-300 py-1" colspan="3">
+                        <select id="selectIsSmallMidUsed" class="ml-3 border-2 border-gray-400 outline-none text-sm w-24">
+                            <option value="모두">모두</option>
+                            <option value="미사용">미사용</option>
+                            <option value="사용">사용</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="basicInfoViewList" class="fixed mt-5 ml-10 pl-40 items-center hidden">
+        <!-- 조회한 기본정보 리스트 -->
+        <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[37rem] overflow-y-auto">
+            <table class="w-full table-fixed">
+                <thead class="bg-blue-200 sticky top-0 z-10">
+                    <tr>
+                        <th class="text-center border-r border-blue-400 py-1">사업자번호</th>
+                        <th class="text-center border-r border-blue-400 py-1">상호</th>
+                        <th class="text-center border-r border-blue-400 py-1">MID</th>
+                        <th class="text-center border-r border-blue-400 py-1">사용여부</th>
+                        <th class="text-center border-r border-blue-400 py-1">영중소 사용여부</th>
+                        <th class="text-center border-r border-blue-400 py-1">등록일</th>
+                    </tr>
+                </thead>
+                <tbody id="list" class="text-sm">
+                </tbody>
+            </table>
+        </div>
+        <div class="bg-slate-200 text-center" id="pagination">
+
+        </div>
+    </div>
+
+    <script>
+        var pageIndex;  //현재 페이지
+        $(document).ready(function () {
+            var date = new Date();
+            date.setMonth(date.getMonth() - 1);
+
+            //조회 버튼 클릭 시
+            $("#basicInfoCheckBtn").on('click', function () {
+                pageIndex = 1;
+                fetchAndDisplayPage(pageIndex);
+            });
+        });
+
+        function fetchAndDisplayPage(pageIndex){  //지정된 페이지의 데이터 목록을 가져옴
+            if(validateInputDate()){
+                var request = {
+                    mid: $('#inputMid').val(),
+                    businessType: $('#selectBusinessType').val(),
+                    isUsed: $('#selectIsUsed').val(),
+                    dateOption: $('input:checkbox[id="dateOption"]').is(":checked"),
+                    startDate: removeDateSymbols($('#startDate').val()),
+                    endDate: removeDateSymbols($('#endDate').val()),
+                    isSmallMidUsed: $('#selectIsSmallMidUsed').val(),
+                    currentPage: pageIndex
+                };
+                makeAjaxCall('/api/basic-info-view', 'GET', request, function (data) {
+                    populateTable(data);
+                }, showEmptyDataRow());
+                $("#basicInfoViewList").removeClass("hidden");
+            }
+        }
+
+        function populateTable(data) {  //받아온 데이터로 기본 정보 조회 테이블 행 추가
+            const tbody = $('#list');
+            tbody.empty();
+            $.each(data.list, function (index, item) {
+                const row = `
+                            <tr class="even:bg-blue-300 odd:bg-white hover:bg-slate-400">
+                                <td class="table-cell px-2 py-1">${formatBusinessRegNumber(item.businessRegNumber)}</td>
+                                <td class="table-cell px-2 py-1">${item.businessName}</td>
+                                <td class="table-cell px-2 py-1">${item.mid}</td>
+                                <td class="table-cell px-2 py-1">${item.isUsed}</td>
+                                <td class="table-cell px-2 py-1">${item.isSmallMidUsed}</td>
+                                <td class="table-cell px-2 py-1">${formatDate(item.contractDate)}</td>
+                            </tr>
+                        `;
+                tbody.append(row);
+            });
+            data.pagination.length = Object.keys(data.list).length;  //리스트 길이 추가
+            renderPagination(data.pagination);  //페이징
+        }
+
+        function showEmptyDataRow() {  //기본 정보 조회 테이블의 조회 결과가 없을 때
+            const tbody = $('#list');
+            $('#pagination').empty();
+            tbody.empty();
+            const noDataRow = `
+                            <tr class="table-row">
+                                <td class="text-center pt-36" colspan="6">
+                                    <p class="text-lg">조회 결과가 없습니다.</p>
+                                </td>
+                            </tr>
+                        `;
+            tbody.append(noDataRow);
+        }
+    </script>
+</body>
+
+</html>

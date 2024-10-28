@@ -1,15 +1,13 @@
 package com.copypay.repository;
 
-import com.copypay.dto.request.ContractRequest;
-import com.copypay.dto.request.MemoRequest;
-import com.copypay.dto.request.PaymentMethodRequest;
-import com.copypay.dto.request.SettlementInfoRequest;
+import com.copypay.dto.request.*;
 import com.copypay.dto.response.*;
 import com.copypay.repository.mapper.BasicInfoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,8 +15,8 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     private final BasicInfoMapper basicInfoMapper;
 
     @Override
-    public List<BasicInfoListResponse> getBasicInfoList(String inputMid) {
-        return basicInfoMapper.getBasicInfoList(inputMid);
+    public List<BasicInfoResponse> getBasicInfoList(BasicInfoRequest basicInfoRequest) {
+        return basicInfoMapper.getBasicInfoList(basicInfoRequest);
     }
 
     @Override
@@ -27,7 +25,7 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     }
 
     @Override
-    public BasicInfoResponse getBasicInfo(String inputBusinessRegNumber) {
+    public BasicInfosResponse getBasicInfo(String inputBusinessRegNumber) {
         return basicInfoMapper.getBasicInfo(inputBusinessRegNumber);
     }
 
@@ -74,5 +72,20 @@ public class BasicInfoRepositoryImpl implements BasicInfoRepository {
     @Override
     public int saveMemo(MemoRequest memoRequest) {
         return basicInfoMapper.saveMemo(memoRequest);
+    }
+
+    @Override
+    public List<BasicInfoViewResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest) {
+        return basicInfoMapper.getBasicInfoViewList(basicInfoViewRequest);
+    }
+
+    @Override
+    public int countBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest) {
+        return basicInfoMapper.countBasicInfoViewList(basicInfoViewRequest);
+    }
+
+    @Override
+    public int countBasicInfoList(BasicInfoRequest basicInfoRequest) {
+        return basicInfoMapper.countBasicInfoList(basicInfoRequest);
     }
 }

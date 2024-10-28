@@ -9,12 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BasicInfoListResponse {
+public class BasicInfoViewResponse {
     private String businessRegNumber;  //사업자번호
     private String businessName;  //상호
     private String mid;  //MID
-    private String businessType;  //사업체구분
     private String isUsed;  //사용여부
     private String isSmallMidUsed; //영중소 사용여부
-
+    private String contractDate;  //등록일
 }
