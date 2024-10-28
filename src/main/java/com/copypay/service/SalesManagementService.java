@@ -65,12 +65,9 @@ public class SalesManagementService {
 
     // MID 조회
     public String getMid(String mid){
-        if(Objects.equals(mid, ""))
-            return "MID값을 입력해주세요.";
-        else if(!mid.endsWith("m"))
-            return "MID의 마지막 글자는 m으로 끝나야 합니다.";
-        else if(mid.length() > 21)
-            return "MID는 최대 21자리입니다.";
+        if(Objects.equals(mid, "")) return "MID값을 입력해주세요.";
+        if(!mid.endsWith("m")) return "MID의 마지막 글자는 m으로 끝나야 합니다.";
+        if(mid.length() > 21) return "MID는 최대 21자리입니다.";
         String midResult = salesManagementRepository.getMid(mid);
         if(midResult == null)
             return "사용 가능한 MID입니다.";
