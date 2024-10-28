@@ -1,17 +1,15 @@
 package com.copypay.repository;
 
-import com.copypay.dto.request.ContractRequest;
-import com.copypay.dto.request.MemoRequest;
-import com.copypay.dto.request.PaymentMethodRequest;
-import com.copypay.dto.request.SettlementInfoRequest;
+import com.copypay.dto.request.*;
 import com.copypay.dto.response.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BasicInfoRepository {
-    List<BasicInfoListResponse> getBasicInfoList(String inputMid);
+    List<BasicInfoResponse> getBasicInfoList(BasicInfoRequest basicInfoRequest);
     List<String> getManagerId();
-    BasicInfoResponse getBasicInfo(String inputBusinessRegNumber);
+    BasicInfosResponse getBasicInfo(String inputBusinessRegNumber);
     List<MemoResponse> getMemoList(String inputMid);
     ContractResponse getContractByBusinessRegNumber(String inputBusinessRegNumber);
     PaymentMethodResponse getPaymentMethodByNo(int no);
@@ -21,4 +19,7 @@ public interface BasicInfoRepository {
     int saveSettlementInfo(SettlementInfoRequest settlementInfoRequest);
     int savePaymentMethod(PaymentMethodRequest paymentMethodRequest);
     int saveMemo(MemoRequest memoRequest);
+    List<BasicInfoViewResponse> getBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
+    int countBasicInfoViewList(BasicInfoViewRequest basicInfoViewRequest);
+    int countBasicInfoList(BasicInfoRequest basicInfoRequest);
 }

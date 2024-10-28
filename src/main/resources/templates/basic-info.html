@@ -30,8 +30,8 @@
     </div>
     <div id="basicInfoList" class="fixed mt-5 ml-10 pl-40 items-center hidden">
         <!-- 조회한 기본정보 리스트 -->
-        <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[44rem] overflow-y-auto">
-            <table class="w-full">
+        <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[37rem] overflow-y-auto">
+            <table class="w-full table-fixed">
                 <thead class="bg-blue-200 sticky top-0 z-10">
                   <tr>
                     <th class="text-center border-r border-blue-400 py-1">사업자번호</th>
@@ -46,11 +46,14 @@
                 </tbody>
             </table>
         </div>
+        <div class="bg-slate-200 text-center" id="pagination">
+
+        </div>
     </div>
 
     <!-- 신규 모달 -->
     <form id="basicInfoNewModal" class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-[120rem] h-full flex justify-center items-center">
-        <div class="fixed bg-blue-500 w-5/6 py-2 z-10 top-14">
+        <div class="fixed bg-blue-500 w-[100rem] py-2 z-10 top-14">
             <h3 class="font-bold text-white text-lg ml-2">기본정보</h3>
         </div>
         <div class="bg-white rounded-lg shadow-lg p-6 w-5/6 h-4/5 overflow-y-auto">
@@ -88,7 +91,7 @@
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">계약일자</td>
                             <td class="border-2 py-1">
-                                <input type="text" id="inputContractDate" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputContractDate" class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatDate(this)">
                             </td>
                             <td class="text-center border-2 bg-stone-300 py-1">대표자명</td>
                             <td class="border-2 py-1">
@@ -211,7 +214,7 @@
                                 </select>
                                 <div>
                                     <label for="inputFeeSettlementDate" class="text-sm font-bold ml-3">적용시작일자:</label>
-                                    <input type="text" id="inputFeeSettlementDate" name="적용시작일자" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none" required>
+                                    <input type="text" id="inputFeeSettlementDate" name="적용시작일자" class="w-[5.5rem] h-7 text-sm pl-1 border-2 border-gray-400 outline-none" oninput="formatDate(this)" required>
                                     <div class="text-sm inline">부터</div>
                                 </div>
                                 <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorFeeSettlementDate" name="errorFeeSettlementDate"></p>
@@ -318,7 +321,7 @@
                                     <option value="요청1일">요청1일</option>
                                 </select>
                                 <label for="inputEffectiveDate" class="text-sm font-bold ml-3">적용시작일자:</label>
-                                <input type="text" id="inputEffectiveDate" class="w-[5.5rem] h-7 text-sm mt-2 pl-1 border-2 border-gray-400 outline-none">
+                                <input type="text" id="inputEffectiveDate" class="w-[5.5rem] h-7 text-sm mt-2 pl-1 border-2 border-gray-400 outline-none" oninput="formatDate(this)">
                                 <div class="text-sm inline">부터</div>
                                 <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorSettlementCycleEffectiveDate" name="errorSettlementCycleEffectiveDate"></p>
                             </td>
@@ -555,7 +558,7 @@
             </div>
         </div>
 
-        <div class="fixed bottom-14 w-5/6 bg-white py-2 text-center z-10">
+        <div class="fixed bottom-14 w-[100rem] bg-white py-2 text-center z-10">
             <button id="closeModalBtn" class="text-white text-xs bg-slate-500 w-16 h-7 float-right rounded-md mr-2">닫기</button>
             <button id="allRegisterBtn" class="text-white text-xs bg-green-700 w-24 h-7 float-right rounded-md mr-2">전체 등록</button>
         </div>
@@ -575,15 +578,13 @@
     <script>
         var no;
         var currentSaveType = '';  //저장할 테이블이 뭔지 저장하는 변수
+        var pageIndex;  //현재 페이지
+
         $(document).ready(function () {
             //기본 정보 조회 버튼 클릭 시
             $("#basicInfoCheckBtn").on('click', function () {
-                const midValue = $("#inputMid").val();
-                const url = midValue === "" ? '/api/basic-info/list' : '/api/basic-info/list/' + midValue;
-                makeAjaxCall(url, 'GET', null, function (data) {
-                    populateTable(data);
-                }, showEmptyDataRow);
-                $("#basicInfoList").removeClass("hidden");
+                pageIndex = 1;
+                fetchAndDisplayPage(pageIndex);  //조회, 페이징
             });
 
             $("#registerBasicInfoBtn").click(handleFormSubmit("basic"));  //일반정보 등록 버튼 클릭 시
@@ -687,7 +688,7 @@
 
             //사업자 번호로 일반정보 데이터 가져오기
             $("#getBasicInfoBtn").click(function () {
-                const regNumber = $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, '');
+                const regNumber = removeNonNumbers($("#inputBusinessRegNumber").val());
                 if (!/^\d{10}$/.test(regNumber)) {
                     alert('사업자번호는 10자리가 유효합니다.')
                 } else {
@@ -712,76 +713,37 @@
             ];
             checkboxGroups.forEach(group => setupCheckboxGroup(group.id, group.childClass));
         });
-        
-        function handleFormSubmit(saveType) {
+
+        function fetchAndDisplayPage(pageIndex){  //지정된 페이지의 데이터 목록을 가져옴
+            var request = {
+                    mid: $('#inputMid').val(),
+                    currentPage: pageIndex
+                };
+            makeAjaxCall('/api/basic-info/list', 'GET', request, function (data) {
+                populateTable(data);
+            }, showEmptyDataRow);
+            $("#basicInfoList").removeClass("hidden");
+        }
+
+        function handleFormSubmit(saveType) {  //저장/등록 버튼을 눌렀을 때 메모 모달이 보이도록 함
             return function(event) {
                 event.preventDefault();
                 $("#memoModal").removeClass("hidden");
-                currentSaveType = saveType;
+                currentSaveType = saveType;  //저장 유형 설정 (일반정보인지 정산정보인지 결제수단인지 구분)
             }
-}
-        /**
-         * AJAX 요청을 처리하는 공통 함수
-         * @param {string} url - 요청 URL
-         * @param {string} method - HTTP 메서드
-         * @param {object} data - 전송할 데이터 (JSON 형식)
-         * @param {function} successCallback - 성공 시 콜백 함수
-         * @param {function} errorCallback - 에러 시 콜백 함수
-         */
-        function makeAjaxCall(url, method, data, successCallback, errorCallback) {
-            const token = $("meta[name='_csrf']").attr("content")
-            const header = $("meta[name='_csrf_header']").attr("content");
-
-            $.ajax({
-                url: url,
-                method: method,
-                data: method !== 'GET' ? JSON.stringify(data) : undefined,
-                contentType: method !== 'GET' ? 'application/json; charset=utf-8' : undefined,
-                beforeSend: function(xhr){  //CSRF 토큰 설정
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (responseData) {
-                    successCallback(responseData);
-                },
-                error: function (error) {
-                    if(errorCallback){
-                        errorCallback();
-                    }
-                    else if(error.responseJSON){
-                        const errors = error.responseJSON;
-                        //모든 필드의 오류 메시지 초기화
-                        $('.error-message').text('');
-
-                        //오류 메시지를 각 필드에 맞게 표시
-                        for (const field in errors) {
-                            $("p[name=error" + extractFieldName(field)+"]").text(errors[field]);
-                        }
-                    }
-                    else if(!error.responseJSON.message){
-                        alert("다시 시도해 주세요.");
-                    }
-                }
-            });
-        }
-
-        //검증 실패한 필드 이름 추출
-        function extractFieldName(field) {
-            var parts = field.split('.');
-            parts = parts.length > 1 ? parts[1] : field; //두 번째 부분 반환
-            return parts.charAt(0).toUpperCase() + parts.slice(1);
         }
 
         //일반정보(계약) 등록
         function getContractData() {
             var contractData = {
-                businessRegNumber: $("#inputBusinessRegNumber").val().replace(/[^0-9]/g, ''),
+                businessRegNumber: removeNonNumbers($("#inputBusinessRegNumber").val()),
                 mid: $('#inputMID2').val(),
                 businessName: $('#inputBusinessName').val(),
-                contractDate: $('#inputContractDate').val().replace(/[-/]/g, ''),
+                contractDate: removeNonNumbers($("#inputContractDate").val()),
                 ceoName: $('#inputCeoName').val(),
-                ceoBirth: $('#ceoBirth').text().replace(/[-/]/g, ''),
-                ceoHp: $('#ceoHP').text().replace(/[-/]/g, ''),
-                ceoTel: $('#ceoTEL').val().replace(/[-/]/g, ''),
+                ceoBirth: removeNonNumbers($('#ceoBirth').text()),
+                ceoHp: removeNonNumbers($('#ceoHP').text()),
+                ceoTel: removeNonNumbers($("#ceoTEL").val()),
                 ceoEmail: $('#ceoEmail').val(),
                 ceoFax: $('#ceoFAX').val(),
                 businessPostcode: $('#inputPostCode').val(),
@@ -789,8 +751,8 @@
                 businessAddressLine2: $('#inputAddress2').val(),
                 businessType: $('#businessType').text(),
                 franchiseContractManagerName: $('#inputContractManagerName').val(),
-                franchiseContractManagerTel: $('#inputContractManagerTEL').val().replace(/[-/]/g, ''),
-                franchiseContractManagerHp: $('#inputContractManagerHP').val().replace(/[-/]/g, ''),
+                franchiseContractManagerTel: removeNonNumbers($("#inputContractManagerTEL").val()),
+                franchiseContractManagerHp: removeNonNumbers($("#inputContractManagerHP").val()),
                 franchiseContractManagerEmail: $('#inputContractManagerEmail').val(),
                 contractManager: $('#selectContractManager').val(),
                 salesManager: $('#selectSalesManager').val()
@@ -815,7 +777,7 @@
                 no: no,
                 paymentMethod: $('#selectPaymentMethod').val(),
                 feePaymentMethod: $('#selectFeePaymentMethod').val(),
-                feeSettlementDate: $('#inputFeeSettlementDate').val().replace(/[-/]/g, ''),
+                feeSettlementDate: removeNonNumbers($("#inputFeeSettlementDate").val()),
                 depositAccountFormat: depositAccountFormat,
                 accountParameterName: accountParameterName,
                 taxInvoiceCriteria: $('#selectTaxInvoiceCriteria').val(),
@@ -846,7 +808,7 @@
                 isUsed: $('#selectIsUsed').val(),
                 authenticationType: $('#selectAuthenticationType').val(),
                 settlementCycle: $('#selectSettlementCycle').val(),
-                settlementCycleEffectiveDate: $('#inputEffectiveDate').val().replace(/[-/]/g, ''),
+                settlementCycleEffectiveDate: removeNonNumbers($("#inputEffectiveDate").val()),
                 purchaseMethod: $('#selectPurchaseMethod').val(),
                 purchaseDate: $('#selectPurchaseDate').val(),
                 debitcardFeeManagement: $('#selectDebitcardFeeManagement').val(),
@@ -958,7 +920,7 @@
         function populateTable(data) {  //받아온 데이터로 기본 정보 조회 테이블 행 추가
             const tbody = $('#list');
             tbody.empty();
-            $.each(data, function(index, item){
+            $.each(data.list, function(index, item){
                     const row = `
                             <tr class="even:bg-blue-300 odd:bg-white hover:bg-slate-400">
                                 <td class="table-cell px-2 py-1">${formatBusinessRegNumber(item.businessRegNumber)}</td>
@@ -971,6 +933,8 @@
                         `;
                 tbody.append(row);
             });
+            data.pagination.length = Object.keys(data.list).length;  //리스트 길이 추가
+            renderPagination(data.pagination);  //페이징
         }
 
         function showEmptyDataRow(){  //기본 정보 조회 테이블의 조회 결과가 없을 때
@@ -1014,43 +978,6 @@
             tbody.append(noDataRow);
         }
 
-        function formatBusinessRegNumber(regNumber) {  //사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
-            let formatRegNumber = typeof regNumber === 'string' ? regNumber : $(regNumber).val();
-            formatRegNumber = formatRegNumber
-                .replace(/[^0-9]/g, '')
-                .replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
-            $(regNumber).val(formatRegNumber);
-            return formatRegNumber;
-        }
-
-        function formatDate(dateString) {  //날짜 YYYY/MM/DD 형식으로 바꾸기
-            if (!/^\d{8}$/.test(dateString)) {
-                console.error('잘못된 날짜 형식입니다:', dateString);
-                return '';
-            }
-            const year = dateString.substring(0, 4);
-            const month = dateString.substring(4, 6);
-            const day = dateString.substring(6, 8);
-            return year+'/'+month+'/'+day;
-        }
-
-        function formatPhone(phone) {  //전화번호 형식으로 바꾸기
-            let phoneNumber = typeof phone === 'string' ? phone : $(phone).val();
-            phoneNumber = phoneNumber
-                .replace(/[^0-9]/g, '')
-                .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
-            $(phone).val(phoneNumber);
-            return phoneNumber;
-        }
-
-        function setTodayDate(){  //오늘 날짜로 설정
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            const formattedDate = year+'/'+month+'/'+day;
-            return formattedDate;
-        }
     </script>
 </body>
 
