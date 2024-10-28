@@ -65,6 +65,13 @@
 		WHERE MID LIKE #{mid}
 	</select>
 
+	<!-- 사업자 번호 조회 -->
+	<select id="getRegNumber" parameterType="string" resultType="string">
+		SELECT BUSINESS_REG_NUMBER
+		FROM CONTRACT
+		WHERE BUSINESS_REG_NUMBER LIKE #{regNumber} AND MID IS NULL
+	</select>
+
 	<!-- MID 발급 -->
 	<update id="issueMid" parameterType="map">
 		UPDATE CONTRACT

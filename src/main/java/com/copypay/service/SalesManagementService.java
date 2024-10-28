@@ -73,14 +73,27 @@ public class SalesManagementService {
                 .orElse("사용 가능한 MID입니다.");
     }
 
+    // 사업자 번호 조회
+    public String getRegNumber(String regNumber){
+        return salesManagementRepository.getRegNumber(regNumber)
+                .map(midValue -> "MID 등록 가능한 사업자번호입니다.")
+                .orElse("사업자번호가 존재하지 않거나, 이미 MID가 발급되었습니다.");
+    }
+
     // MID 발급
     @Transactional
-    public void issueMid(MidIssueRequest midIssueRequest){
-        try{
+    public void issueMid(MidIssueRequest midIssueRequest) {
+        try {
             salesManagementRepository.issueMid(midIssueRequest);
+            log.info("MID 발급 완료. MID: {}, 사업자번호: {}",
+                    midIssueRequest.getMid(),
+                    midIssueRequest.getBusinessRegNumber());
         } catch (BusinessRegNumberNotFoundException e) {
             log.error("존재하지 않는 사업자번호입니다.");
             throw new BusinessRegNumberNotFoundException();
+        } catch (Exception e) {
+            log.error("MID 발급 중 오류 발생: {}", e.getMessage());
+            throw new RuntimeException("MID 발급에 실패했습니다", e);
         }
     }
 

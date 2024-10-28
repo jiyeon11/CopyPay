@@ -40,6 +40,12 @@ public class SalesManagementRepositoryImpl implements SalesManagementRepository 
         return salesManagementMapper.getMid(mid);
     }
 
+    // 사업자 번호 조회
+    @Override
+    public Optional<String> getRegNumber(String regNumber){
+        return salesManagementMapper.getRegNumber(regNumber);
+    }
+
     // MID 발급
     @Override
     public void issueMid(MidIssueRequest midIssueRequest) {

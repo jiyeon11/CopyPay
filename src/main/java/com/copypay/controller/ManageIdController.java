@@ -34,6 +34,12 @@ public class ManageIdController {
         return salesManagementService.getMid(mid);
     }
 
+    @GetMapping("/api/manage-id/check-reg-number")
+    @ResponseBody
+    public String checkRegNumber(@RequestParam String regNumber){
+        return salesManagementService.getRegNumber(regNumber);
+    }
+
     @PostMapping("/api/manage-id/issue-mid")
     @ResponseBody
     public ResponseEntity<?>  issueMid(@Valid @RequestBody MidIssueRequest midIssueRequest){

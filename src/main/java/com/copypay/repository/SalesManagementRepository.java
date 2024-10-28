@@ -14,6 +14,7 @@ public interface SalesManagementRepository {
     List<ContractDoneListResponse> getContractDoneList(String searchOption, String searchValue);
     List<ManageIdListResponse> getManageIdList(String searchOption, String searchValue);
     Optional<String> getMid(String mid);
+    Optional<String> getRegNumber(String regNumber);
     void issueMid(MidIssueRequest midIssueRequest);
     void registerContract(ContractRegisterRequest contractRegisterRequest);
 }

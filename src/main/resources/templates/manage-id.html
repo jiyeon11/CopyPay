@@ -61,8 +61,8 @@
                 <tr class="table-row">
                     <td class="text-center border-2 bg-stone-300 py-1"><span class="text-red-500">*</span>사업자번호</td>
                     <td class="border-2 py-1">
-                        <input type="text" id="businessRegNumber" name="businessRegNumber"
-                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                        <p id="inputRegNumber" name="inputRegNumber"
+                           class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
                         <p class="error-message text-red-500 text-sm mt-1 ml-3" id="errorBusinessRegNumber"
                            name="errorBusinessRegNumber"></p>
                     </td>
@@ -138,6 +138,50 @@
     </div>
 </form>
 
+<!-- 가맹점 조회 모달 -->
+<form id="checkRegNumberModal"
+      class="bg-black bg-opacity-50 hidden fixed top-0 left-0 w-full h-full flex justify-center items-center">
+    <div class="fixed bg-blue-500 w-3/6 py-2 z-10 top-72">
+        <h3 class="font-bold text-white text-lg ml-2">사업자번호 조회</h3>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6 w-3/6 h-2/6 overflow-y-auto relative">
+        <div class="bg-white mt-0 rounded-lg shadow-2xl w-full h-fit">
+            <table class="table-fixed w-full border-collapse mx-auto">
+                <tbody class="table-row-group">
+                <tr>
+                    <td class="border-2 py-1">
+                        <select id="selectOption2" name="selectOption2"
+                                class="ml-3 border-2 border-gray-400 outline-none text-sm">
+                            <option value="사업자번호">사업자번호</option>
+                        </select>
+                    </td>
+                    <td class="border-2 py-1">
+                        <input type="text" id="inputCheckRegNumber" name="inputCheckRegNumber"
+                               class="w-28 h-7 ml-3 text-sm pl-1 border-2 border-gray-400 outline-none">
+                    </td>
+                    <td class="table-cell px-2 py-1">
+                        <button type="button" id="useRegNumberBtn" class="invisible text-white text-xs bg-green-700 w-16 h-7 float-right rounded-md">선택
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" id="checkRegNumberBtn"
+                                class="text-white text-xs bg-slate-800 w-16 h-7 float-right rounded-md mr-2">조회
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody id="checkRegNumberResult" class="text-sm">
+                </tbody>
+            </table>
+        </div>
+        <div class="absolute bottom-4 right-4">
+            <button type="button" id="closeCheckRegNumberModalBtn"
+                    class="text-white text-xs bg-slate-500 w-16 h-7 rounded-md">닫기
+            </button>
+        </div>
+    </div>
+</form>
+
 <script>
     $(document).ready(function () {
         // 조회 버튼 클릭 시
@@ -157,12 +201,14 @@
             event.preventDefault();
             const data =  {
                 mid: $('#inputMid').text(),
-                businessRegNumber: $('#businessRegNumber').val(),
+                businessRegNumber: $('#inputRegNumber').text(),
             };
             var url = '/api/manage-id/issue-mid';
             makeAjaxCall(url, 'POST', data, function(data){
                 $("#issueModal").addClass("hidden");
                 url = '/api/manage-id/list';
+                alert("MID가 발급되었습니다.");
+                clearIssueModal();
                 makeAjaxCall(url, 'GET', null, function (data) {
                     populateTable(data);
                 }, showEmptyDataRow);
@@ -176,6 +222,15 @@
             const url = 'api/manage-id/check-mid' + (`?mid=${inputMid}`);
             makeAjaxCall(url, 'GET', null, function (data) {
                 checkMidResult(data);
+            }, function (){})
+        });
+
+        // 사업자 번호 조회 버튼 클릭 시
+        $('#checkRegNumberBtn').on('click', function () {
+            const inputRegNumber = $("#inputCheckRegNumber").val();
+            const url = 'api/manage-id/check-reg-number' + (`?regNumber=${inputRegNumber}`);
+            makeAjaxCall(url, 'GET', null, function (data) {
+                checkRegNumberResult(data);
             }, function (){})
         });
 
@@ -204,6 +259,23 @@
         $("#useMidBtn").click(function (){
             $('#inputMid').text($("#inputCheckMid").val());
             clearCheckMidModal();
+            $("#issueModal").removeClass("hidden");
+        });
+
+        // 사업자 번호 조회 모달 열기
+        $("#inputRegNumber").on('click', function () {  // 사업자번호 필드 클릭시
+            $("#checkRegNumberModal").removeClass("hidden");
+        });
+
+        // 사업자 번호 조회 모달 닫기
+        $("#closeCheckRegNumberModalBtn").click(function () {
+            clearCheckRegNumberModal();
+        });
+
+        // 조회한 사업자 번호 선택
+        $("#useRegNumberBtn").click(function (){
+            $('#inputRegNumber').text($("#inputCheckRegNumber").val());
+            clearCheckRegNumberModal();
             $("#issueModal").removeClass("hidden");
         });
 
@@ -305,6 +377,27 @@
         }
     }
 
+    function checkRegNumberResult(data) {  // 조회한 가맹점의 사용 가능 여부를 띄움
+        const tbody = $('#checkRegNumberResult');
+        const inputRegNumber = $("#inputCheckRegNumber").val();
+        $("#checkRegNumberResult").find('tr').remove(); // 출력 값 초기화
+        if (data) {
+            const row = `
+                <tr>
+                    <td class="px-2 py-1">${inputRegNumber}</td>
+                    <td id="dataField" class="px-2 py-1 whitespace-nowrap">${data}</td>
+                </tr>
+        `;
+            tbody.append(row);
+            if (data === "MID 등록 가능한 사업자번호입니다.")
+                $("#useRegNumberBtn").removeClass("invisible");  // 선택 버튼을 화면에 표시
+            else {
+                $("#useRegNumberBtn").addClass("invisible");  // 선택 버튼을 숨김
+                $("#dataField").addClass("text-red-500");
+            }
+        }
+    }
+
     function extractFieldName(field) {
         return field.charAt(0).toUpperCase() + field.slice(1);
     }
@@ -320,6 +413,13 @@
         $("#checkMidResult").find('tr').remove(); // 출력 값 초기화
         $('#useMidBtn').addClass("invisible"); // 발급 버튼 숨기기
         $("#checkMidModal").addClass("hidden"); // 모달 숨김
+    }
+
+    function clearCheckRegNumberModal() {  // 사업자 번호 조회 모달 입력 내용 초기화
+        $("#checkRegNumberModal input[type='text']").val(''); // 입력 값 초기화
+        $("#checkRegNumberResult").find('tr').remove(); // 출력 값 초기화
+        $('#useRegNumberBtn').addClass("invisible"); // 발급 버튼 숨기기
+        $("#checkRegNumberModal").addClass("hidden"); // 모달 숨김
     }
 
     function formatBusinessRegNumber(regNumber) {  // 사업자번호 xxx-xx-xxxxx 형식으로 바꾸기
