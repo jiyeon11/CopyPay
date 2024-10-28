@@ -148,7 +148,7 @@ function renderPagination(data) {  //페이징
         pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${data.realEnd}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;&gt;</a></li>`;
     }
     pagination += `</ol>`;
-    pagination += `<p class="text-sm float-left ml-1 text-slate-600">${data.firstRecordIndex+1}-${data.firstRecordIndex+data.length}/${data.totalCount}건 [${pageIndex}/${data.realEnd} 페이지] 조회되었습니다.</P>`
+    pagination += `<p class="text-sm fixed float-left ml-1 text-slate-600">${data.firstRecordIndex+1}-${data.firstRecordIndex+data.length}/${data.totalCount}건 [${pageIndex}/${data.realEnd} 페이지] 조회되었습니다.</P>`
     page.append(pagination);
     $(`#page-${data.currentPageNo}`).addClass("text-white bg-blue-500");  //현재 페이지 표시
 }
