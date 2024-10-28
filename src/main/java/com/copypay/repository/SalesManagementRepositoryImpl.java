@@ -9,6 +9,7 @@ import com.copypay.repository.mapper.SalesManagementMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -35,7 +36,7 @@ public class SalesManagementRepositoryImpl implements SalesManagementRepository 
 
     // MID 조회
     @Override
-    public String getMid(String mid){
+    public Optional<String> getMid(String mid){
         return salesManagementMapper.getMid(mid);
     }
 
