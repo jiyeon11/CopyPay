@@ -22,9 +22,10 @@ public class ContractProgressController {
         return "contract-progress";
     }
 
-    @GetMapping(value = {"/api/contract-progress/list/{checkedDate}/{startDate}/{endDate}", "/api/contract-progress/list"})
+    @GetMapping("/api/contract-progress/list")
     @ResponseBody
-    public ResponseEntity<List<ContractProgressListResponse>> getContractProgressList(@PathVariable(required = false) String checkedDate, @PathVariable(required = false) String startDate, @PathVariable(required = false) String endDate) {
+    public ResponseEntity<List<ContractProgressListResponse>> getContractProgressList(@RequestParam(required = false) String checkedDate,
+                                                                                      @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate){
         return ResponseEntity.ok(salesManagementService.getContractProgressList(checkedDate, startDate, endDate));
     }
 

@@ -267,7 +267,7 @@
             const endDate = $("#endDate").val();
             const checkedDate = $('input:checkbox[id="dateOption"]').is(":checked")
             // 삼항연산자   접수일자 체크 여부를 확인
-            const url = checkedDate ? '/api/contract-progress/list/' + checkedDate + '/' + startDate + '/' + endDate : '/api/contract-progress/list';
+            const url = '/api/contract-progress/list' + (!checkedDate ? '' : `?checkedDate=${checkedDate}&startDate=${startDate}&endDate=${endDate}`);
             makeAjaxCall(url, 'GET', null, function (data) {
                 populateTable(data);
             }, showEmptyDataRow);
