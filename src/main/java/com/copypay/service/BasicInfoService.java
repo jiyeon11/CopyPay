@@ -78,8 +78,7 @@ public class BasicInfoService {
         int rowsAffected = basicInfoRepository.saveContract(basicInfosRequest.getContractRequest());
         rowsAffected += basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
         if(rowsAffected < 2) {
-            log.error("사업자번호 : {} 계약 저장 실패", basicInfosRequest.getContractRequest().getBusinessRegNumber());
-            throw new SaveFailedException();
+            logSaveError("사업자번호", basicInfosRequest.getContractRequest().getBusinessRegNumber(),"일반정보(계약) 저장 실패");
         }else{
             log.info("사업자번호 : {} 계약 정보가 성공적으로 저장되었습니다.", basicInfosRequest.getContractRequest().getBusinessRegNumber());
         }
@@ -96,8 +95,7 @@ public class BasicInfoService {
         int rowsAffected = basicInfoRepository.saveSettlementInfo(basicInfosRequest.getSettlementInfoRequest());
         rowsAffected += basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
         if(rowsAffected < 2){
-            log.error("NO : {} 정산정보 저장 실패", basicInfosRequest.getSettlementInfoRequest().getNo());
-            throw new SaveFailedException();
+            logSaveError("NO", String.valueOf(basicInfosRequest.getSettlementInfoRequest().getNo()),"정산정보 저장 실패");
         }else{
             log.info("NO : {} 정산정보 정보가 성공적으로 저장되었습니다.", basicInfosRequest.getSettlementInfoRequest().getNo());
         }
@@ -109,8 +107,7 @@ public class BasicInfoService {
         int rowsAffected = basicInfoRepository.savePaymentMethod(basicInfosRequest.getPaymentMethodRequest());
         rowsAffected += basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
         if(rowsAffected < 2){
-            log.error("NO : {} 결제수단 저장 실패", basicInfosRequest.getPaymentMethodRequest().getNo());
-            throw new SaveFailedException();
+            logSaveError("NO", String.valueOf(basicInfosRequest.getPaymentMethodRequest().getNo()),"결제수단 저장 실패");
         }else{
             log.info("NO : {} 결제수단이 성공적으로 저장되었습니다.", basicInfosRequest.getPaymentMethodRequest().getNo());
         }
@@ -120,8 +117,7 @@ public class BasicInfoService {
     public void saveMemo(MemoRequest memoRequest){
         int rowsAffected = basicInfoRepository.saveMemo(memoRequest);
         if(rowsAffected == 0){
-            log.error("MID : {} 메모 저장 실패", memoRequest.getMid());
-            throw new SaveFailedException();
+            logSaveError("MID", memoRequest.getMid(),"메모 저장 실패");
         }else{
             log.info("MID : {} 메모가 성공적으로 저장되었습니다.", memoRequest.getMid());
         }
@@ -132,26 +128,22 @@ public class BasicInfoService {
     public void saveBasicInfo(BasicInfosRequest basicInfosRequest){
         int rowsAffected = basicInfoRepository.saveContract(basicInfosRequest.getContractRequest());
         if(rowsAffected != 1){
-            log.error("사업자번호 : {} 계약 저장 실패", basicInfosRequest.getContractRequest().getBusinessRegNumber());
-            throw new SaveFailedException();
+            logSaveError("사업자번호", basicInfosRequest.getContractRequest().getBusinessRegNumber(),"계약 저장 실패");
         }
 
         rowsAffected = basicInfoRepository.saveSettlementInfo(basicInfosRequest.getSettlementInfoRequest());
         if(rowsAffected == 0){
-            log.error("NO : {} 정산정보 저장 실패", basicInfosRequest.getSettlementInfoRequest().getNo());
-            throw new SaveFailedException();
+            logSaveError("NO", String.valueOf(basicInfosRequest.getSettlementInfoRequest().getNo()),"정산정보 저장 실패");
         }
 
         rowsAffected = basicInfoRepository.savePaymentMethod(basicInfosRequest.getPaymentMethodRequest());
         if(rowsAffected == 0){
-            log.error("NO : {} 결제수단 저장 실패", basicInfosRequest.getPaymentMethodRequest().getNo());
-            throw new SaveFailedException();
+            logSaveError("NO", String.valueOf(basicInfosRequest.getPaymentMethodRequest().getNo()),"결제수단 저장 실패");
         }
 
         rowsAffected = basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
         if(rowsAffected == 0){
-            log.error("MID : {} 메모 저장 실패", basicInfosRequest.getMemoRequest().getMid());
-            throw new SaveFailedException();
+            logSaveError("MID", String.valueOf(basicInfosRequest.getMemoRequest().getMid()),"메모 저장 실패");
         }
 
         log.info("사업자번호 : {} 기본정보가 성공적으로 저장되었습니다.", basicInfosRequest.getContractRequest().getBusinessRegNumber());
@@ -206,5 +198,11 @@ public class BasicInfoService {
             memoRequest.setId(username);
             log.info("세션에서 사용자 id를 성공적으로 조회했습니다: {}", username);
         }
+    }
+
+    //저장 실패 시 에러 로그 출력
+    private void logSaveError(String identifierType, String identifierValue, String message) {
+        log.error("{} : {} {}", identifierType, identifierValue, message);
+        throw new SaveFailedException();
     }
 }
