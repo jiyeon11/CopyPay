@@ -107,7 +107,7 @@ function makeAjaxCall(url, method, data, successCallback, errorCallback) {
             if (errorCallback) {
                 errorCallback();
             }
-            else if (error.responseJSON) {
+            if (error.responseJSON) {
                 const errors = error.responseJSON;
                 if (errors.status) {  //상태코드가 있으면 alert 띄움
                     alert(errors.message);
