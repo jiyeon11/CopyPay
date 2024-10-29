@@ -129,7 +129,7 @@ public class BasicInfoService {
     @Transactional
     public void saveBasicInfo(BasicInfosRequest basicInfosRequest){
         int rowsAffected = basicInfoRepository.saveContract(basicInfosRequest.getContractRequest());
-        if(rowsAffected != 0){
+        if(rowsAffected == 0){
             logSaveError("사업자번호", basicInfosRequest.getContractRequest().getBusinessRegNumber(),"계약 저장 실패");
         }
 
