@@ -181,7 +181,12 @@ public class BasicInfoService {
         return basicInfoRepository.countBasicInfoList(basicInfoRequest);
     }
 
-    // 영업관리의 계약 완료의 조회에서 리스트 총 개수 가져오기
+    // 영업관리의 계약 진행현황의 조회에서 리스트 총 개수 가져오기
+    public int getContractProgressListTotalCount(ContractProgressRequest contractProgressRequest){
+        return salesManagementRepository.countContractProgressList(contractProgressRequest);
+    }
+
+    // 영업관리의 계약 완료현황의 조회에서 리스트 총 개수 가져오기
     public int getContractDoneListTotalCount(ContractDoneRequest contractDoneRequest){
         return salesManagementRepository.countContractDoneList(contractDoneRequest);
     }
@@ -199,10 +204,14 @@ public class BasicInfoService {
             ((BasicInfoViewRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
             ((BasicInfoViewRequest) request).setPageSize(pagination.getPageSize());
             totalCount = getBasicInfoViewListTotalCount((BasicInfoViewRequest)request);
+        } else if (request instanceof ContractProgressRequest) {
+            ((ContractProgressRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
+            ((ContractProgressRequest) request).setPageSize(pagination.getPageSize());
+            totalCount = getContractProgressListTotalCount((ContractProgressRequest)request);
         } else if (request instanceof ContractDoneRequest) {
             ((ContractDoneRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
             ((ContractDoneRequest) request).setPageSize(pagination.getPageSize());
-            totalCount = getContractDoneListTotalCount((ContractDoneRequest)request);
+            totalCount = getContractDoneListTotalCount((ContractDoneRequest) request);
         }
         pagination.setTotalCount(totalCount);
         return pagination;

@@ -1,6 +1,7 @@
 package com.copypay.repository;
 
 import com.copypay.dto.request.ContractDoneRequest;
+import com.copypay.dto.request.ContractProgressRequest;
 import com.copypay.dto.request.ContractRegisterRequest;
 import com.copypay.dto.request.MidIssueRequest;
 import com.copypay.dto.response.ContractDoneListResponse;
@@ -19,8 +20,14 @@ public class SalesManagementRepositoryImpl implements SalesManagementRepository 
     
     // 계약 진행현황 조회
     @Override
-    public List<ContractProgressListResponse> getContractProgressList(String checkedDate, String startDate, String endDate) {
-        return salesManagementMapper.getContractProgressList(checkedDate, startDate, endDate);
+    public List<ContractProgressListResponse> getContractProgressList(ContractProgressRequest contractProgressRequest) {
+        return salesManagementMapper.getContractProgressList(contractProgressRequest);
+    }
+
+    // 계약 진행현황 조회 데이터 개수
+    @Override
+    public int countContractProgressList(ContractProgressRequest contractProgressRequest) {
+        return salesManagementMapper.countContractProgressList(contractProgressRequest);
     }
 
     // 계약 완료현황 조회
@@ -28,8 +35,8 @@ public class SalesManagementRepositoryImpl implements SalesManagementRepository 
     public List<ContractDoneListResponse> getContractDoneList(ContractDoneRequest contractDoneRequest) {
         return salesManagementMapper.getContractDoneList(contractDoneRequest);
     }
-    
-    // 계약 완료현황 조회 데아터 개수
+
+    // 계약 완료현황 조회 데이터 개수
     @Override
     public int countContractDoneList(ContractDoneRequest contractDoneRequest) {
         return salesManagementMapper.countContractDoneList(contractDoneRequest);

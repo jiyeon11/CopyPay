@@ -1,6 +1,7 @@
 package com.copypay.service;
 
 import com.copypay.dto.request.ContractDoneRequest;
+import com.copypay.dto.request.ContractProgressRequest;
 import com.copypay.dto.request.ContractRegisterRequest;
 import com.copypay.dto.request.MidIssueRequest;
 import com.copypay.dto.response.ContractDoneListResponse;
@@ -35,12 +36,12 @@ public class SalesManagementService {
     }
 
     // 계약 진행현황 조회
-    public List<ContractProgressListResponse> getContractProgressList(String checkedDate, String startDate, String endDate) {
-        List<ContractProgressListResponse> contractProgressList = salesManagementRepository.getContractProgressList(checkedDate, startDate, endDate);
+    public List<ContractProgressListResponse> getContractProgressList(ContractProgressRequest contractProgressRequest) {
+        List<ContractProgressListResponse> contractProgressList = salesManagementRepository.getContractProgressList(contractProgressRequest);
         return validateListNotEmpty(
                 contractProgressList,
                 String.format("총 %d개의 계약 진행현황 항목을 성공적으로 가져왔습니다", contractProgressList.size()),
-                String.format("접수일자 %s ~ %s 에 일치하는 정보가 없습니다.", startDate, endDate)
+                String.format("접수일자 %s ~ %s 에 일치하는 정보가 없습니다.", contractProgressRequest.getStartDate(), contractProgressRequest.getEndDate())
         );
     }
 

@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SalesManagementRepository {
-    List<ContractProgressListResponse> getContractProgressList(String checkedDate, String startDate, String endDate);
+    List<ContractProgressListResponse> getContractProgressList(ContractProgressRequest contractProgressRequest);
     List<ContractDoneListResponse> getContractDoneList(ContractDoneRequest contractDoneRequest);
     int countContractDoneList(ContractDoneRequest contractDoneRequest);
+    int countContractProgressList(ContractProgressRequest contractProgressRequest);
     List<ManageIdListResponse> getManageIdList(String searchOption, String searchValue);
     Optional<String> getMid(String mid);
     Optional<String> getRegNumber(String regNumber);
