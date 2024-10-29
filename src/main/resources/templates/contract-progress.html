@@ -26,8 +26,8 @@
 
 <div id="contractProgressList" class="fixed mt-5 ml-10 pl-40 items-center hidden">
     <!-- 조회한 계약 진행현황 -->
-    <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[44rem] overflow-y-auto">
-        <table class="w-full">
+    <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[37rem] overflow-y-auto">
+        <table class="w-full table-fixed">
             <thead class="bg-blue-200 sticky top-0 z-10">
             <tr>
                 <th class="text-center border-r border-blue-400 py-1">계약일자</th>
@@ -40,6 +40,8 @@
             <tbody id="list" class="text-sm">
             </tbody>
         </table>
+    </div>
+    <div class="bg-slate-200 text-center" id="pagination">
     </div>
 </div>
 
@@ -255,24 +257,32 @@
 </form>
 
 <script>
+    var pageIndex;  //현재 페이지
     $(document).ready(function () {
         var date = new Date();
         $('#endDate').val(date.toISOString().substring(0, 10));
         date.setMonth(date.getMonth() - 1);
         $('#startDate').val(date.toISOString().substring(0, 10)); // 오늘에서 한 달을 뺀 날짜
 
+        // // 조회 버튼 클릭 시
+        // $("#contractProgressCheckBtn").on('click', function () {
+        //     const startDate = $("#startDate").val();
+        //     const endDate = $("#endDate").val();
+        //     const checkedDate = $('input:checkbox[id="dateOption"]').is(":checked")
+        //     // 삼항연산자   접수일자 체크 여부를 확인
+        //     const url = '/api/contract-progress/list' + (!checkedDate ? '' : `?checkedDate=${checkedDate}&startDate=${startDate}&endDate=${endDate}`);
+        //     makeAjaxCall(url, 'GET', null, function (data) {
+        //         populateTable(data);
+        //     }, showEmptyDataRow);
+        //     $("#contractProgressList").removeClass("hidden");
+        // });
+
         // 조회 버튼 클릭 시
         $("#contractProgressCheckBtn").on('click', function () {
-            const startDate = $("#startDate").val();
-            const endDate = $("#endDate").val();
-            const checkedDate = $('input:checkbox[id="dateOption"]').is(":checked")
-            // 삼항연산자   접수일자 체크 여부를 확인
-            const url = '/api/contract-progress/list' + (!checkedDate ? '' : `?checkedDate=${checkedDate}&startDate=${startDate}&endDate=${endDate}`);
-            makeAjaxCall(url, 'GET', null, function (data) {
-                populateTable(data);
-            }, showEmptyDataRow);
-            $("#contractProgressList").removeClass("hidden");
+            pageIndex = 1;
+            fetchAndDisplayPage(pageIndex);
         });
+
 
         // 신규등록 모달 열기
         $("#newModalBtn").click(function () {
@@ -303,36 +313,46 @@
                 // 등록 후, 바로 조회 결과 보여줌
                 $("#contractProgressNewModal").addClass("hidden");
                 clearModal();
-                const url = '/api/contract-progress/list';
-                makeAjaxCall(url, 'GET', null, function (data) {
-                    populateTable(data);
-                }, showEmptyDataRow);
-                $("#contractProgressList").removeClass("hidden");
+                fetchAndDisplayPage(1);
             }, function (){ alert("다시 시도해 주세요.");});
         });
     });
 
+    function fetchAndDisplayPage(pageIndex){  //지정된 페이지의 데이터 목록을 가져옴
+        var request = {
+            startDate:  $("#startDate").val(),
+            endDate: $("#endDate").val(),
+            checkedDate : $('input:checkbox[id="dateOption"]').is(":checked"),
+            currentPage: pageIndex
+        };
+        makeAjaxCall('/api/contract-progress/list', 'GET', request, function (data) {
+            populateTable(data);
+        }, showEmptyDataRow);
+        $("#contractProgressList").removeClass("hidden");
+    }
+
     function populateTable(data) {  // 받아온 데이터로 계약 진행현황 조회 테이블 행 추가
         const tbody = $('#list');
         tbody.empty();
-        if (data) {
-            $.each(data, function (index, item) {
-                const row = `
-                            <tr class="even:bg-blue-300 odd:bg-white hover:bg-slate-400">
-                                <td class="table-cell px-2 py-1">${formatDate(item.contractDate)}</td>
-                                <td class="table-cell px-2 py-1">${formatBusinessRegNumber(item.businessRegNumber)}</td>
-                                <td class="table-cell px-2 py-1">${item.businessName}</td>
-                                <td class="table-cell px-2 py-1">${item.contractManager}</td>
-                                <td class="table-cell px-2 py-1">${item.salesManager}</td>
-                            </tr>
-                        `;
-                tbody.append(row);
-            });
-        }
+        $.each(data.list, function(index, item){
+            const row = `
+                        <tr class="even:bg-blue-300 odd:bg-white hover:bg-slate-400">
+                            <td class="table-cell px-2 py-1">${formatDate(item.contractDate)}</td>
+                            <td class="table-cell px-2 py-1">${formatBusinessRegNumber(item.businessRegNumber)}</td>
+                            <td class="table-cell px-2 py-1">${item.businessName}</td>
+                            <td class="table-cell px-2 py-1">${item.contractManager}</td>
+                            <td class="table-cell px-2 py-1">${item.salesManager}</td>
+                        </tr>
+                    `;
+            tbody.append(row);
+        });
+        data.pagination.length = Object.keys(data.list).length;  //리스트 길이 추가
+        renderPagination(data.pagination);  //페이징
     }
 
     function showEmptyDataRow() {  // 계약 진행현황 조회 결과가 없을 때
         const tbody = $('#list');
+        $('#pagination').empty();
         tbody.empty();
         const noDataRow = `
                             <tr class="table-row">
