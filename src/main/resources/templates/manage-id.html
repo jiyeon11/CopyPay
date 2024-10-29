@@ -285,6 +285,12 @@
             $("#issueModal").removeClass("hidden");
         });
 
+        document.addEventListener('keydown', function(event) { // Enter 키 눌렀을 때 폼 제출 막음
+            if (event.key === 'Enter') {
+                event.preventDefault();
+            }
+        }, true);
+
     });
 
     function populateTable(data) {  // 받아온 데이터로 조회 테이블 행 추가
