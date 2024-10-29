@@ -69,7 +69,6 @@ public class BasicInfoAPIController {
         return basicInfoService.getBasicInfo(businessRegNumber);
     }
 
-
     @GetMapping("/memo/{inputMid}")
     public List<MemoResponse> getMemoList(@PathVariable String inputMid){
         return basicInfoService.getMemoList(inputMid);

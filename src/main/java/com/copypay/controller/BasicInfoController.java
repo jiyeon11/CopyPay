@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 public class BasicInfoController {
-    private final BasicInfoService basicInfoService;
-
     @GetMapping("/basic-info")
     public String basic_info(){
         return "basic-info";
