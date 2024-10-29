@@ -5,7 +5,7 @@
 <mapper namespace="com.copypay.repository.mapper.SalesManagementMapper">
 
 	<!-- 계약 진행현황 조회 -->
-    <select id="getContractProgressList" parameterType="string" resultType="com.copypay.dto.response.ContractProgressListResponse">
+    <select id="getContractProgressList" parameterType="com.copypay.dto.request.ContractProgressRequest" resultType="com.copypay.dto.response.ContractProgressListResponse">
 	<![CDATA[
 		SELECT
 		    CONTRACT_DATE AS contractDate,
@@ -14,13 +14,32 @@
 			CONTRACT_MANAGER AS contractManager,
 			SALES_MANAGER AS salesManager
 		FROM CONTRACT
-		WHERE #{checkedDate} IS NULL OR CONTRACT_DATE BETWEEN DATE_FORMAT(#{startDate}, '%Y%m%d') AND DATE_FORMAT(#{endDate}, '%Y%m%d')
+		]]>
+		<if test="checkedDate != 'false'">
+			WHERE CONTRACT_DATE BETWEEN DATE_FORMAT(#{startDate}, '%Y%m%d') AND DATE_FORMAT(#{endDate}, '%Y%m%d')
+		</if>
+		<![CDATA[
 		ORDER BY CONTRACT_DATE DESC
+		LIMIT #{pageSize} OFFSET #{firstIndex}
 		]]>
 	</select>
 
+	<!-- 계약 진행현황 조회 데이터 개수 -->
+	<select id="countContractProgressList" parameterType="com.copypay.dto.request.ContractProgressRequest" resultType="int">
+		<![CDATA[
+		SELECT COUNT(NO)
+		FROM CONTRACT
+    	]]>
+		<if test="checkedDate != 'false'">
+			WHERE CONTRACT_DATE BETWEEN DATE_FORMAT(#{startDate}, '%Y%m%d') AND DATE_FORMAT(#{endDate}, '%Y%m%d')
+		</if>
+		<![CDATA[
+    	ORDER BY CONTRACT_DATE DESC
+     	]]>
+	</select>
+
 	<!-- 계약 완료현황 조회 -->
-	<select id="getContractDoneList" parameterType="map" resultType="com.copypay.dto.response.ContractDoneListResponse">
+	<select id="getContractDoneList" parameterType="com.copypay.dto.request.ContractDoneRequest" resultType="com.copypay.dto.response.ContractDoneListResponse">
 	<![CDATA[
 		SELECT
 			CONTRACT_DATE AS contractDate,
@@ -29,15 +48,84 @@
 			CONTRACT_MANAGER AS contractManager,
 			SALES_MANAGER AS salesManager
 		FROM CONTRACT
-		WHERE 1=1
     ]]>
-		<if test="searchOption != null">
-			AND ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
+		<if test="searchOption != 'NONE' and searchValue != null">
+			WHERE ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
 		</if>
 	<![CDATA[
     	ORDER BY CONTRACT_DATE DESC
+		LIMIT #{pageSize} OFFSET #{firstIndex}
     ]]>
 	</select>
+
+	<!-- 계약 완료현황 조회 데이터 개수 -->
+	<select id="countContractDoneList" parameterType="com.copypay.dto.request.ContractDoneRequest" resultType="int">
+		<![CDATA[
+		SELECT COUNT(NO)
+		FROM CONTRACT
+    	]]>
+		<if test="searchOption != 'NONE' and searchValue != null">
+			WHERE ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
+		</if>
+		<![CDATA[
+    	ORDER BY CONTRACT_DATE DESC
+     	]]>
+	</select>
+
+	<!-- 가맹점 ID 관리 페이지 조회 -->
+	<select id="getManageIdList" parameterType="com.copypay.dto.request.ManageIdRequest" resultType="com.copypay.dto.response.ManageIdListResponse">
+		<![CDATA[
+		SELECT
+			BUSINESS_NAME AS businessName,
+			BUSINESS_REG_NUMBER AS businessRegNumber,
+			CEO_NAME AS ceoName,
+			MID AS mid
+		FROM CONTRACT
+		WHERE MID IS NOT NULL
+    ]]>
+		<if test="searchOption != 'NONE' and searchValue != null">
+			AND ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
+		</if>
+		<![CDATA[
+    	ORDER BY CONTRACT_DATE DESC
+    ]]>
+	</select>
+
+	<!-- 가맹점 ID 관리 조회 데이터 개수 -->
+	<select id="countManageIdList" parameterType="com.copypay.dto.request.ManageIdRequest" resultType="int">
+		<![CDATA[
+		SELECT COUNT(NO)
+		FROM CONTRACT
+		WHERE MID IS NOT NULL
+    	]]>
+		<if test="searchOption != 'NONE' and searchValue != null">
+			AND ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
+		</if>
+		<![CDATA[
+    	ORDER BY CONTRACT_DATE DESC
+     	]]>
+	</select>
+
+	<!-- MID 조회-->
+	<select id="getMid" parameterType="string" resultType="string">
+		SELECT MID
+		FROM CONTRACT
+		WHERE MID LIKE #{mid}
+	</select>
+
+	<!-- 사업자 번호 조회 -->
+	<select id="getRegNumber" parameterType="string" resultType="string">
+		SELECT BUSINESS_REG_NUMBER
+		FROM CONTRACT
+		WHERE BUSINESS_REG_NUMBER LIKE #{regNumber} AND MID IS NULL
+	</select>
+
+	<!-- MID 발급 -->
+	<update id="issueMid" parameterType="map">
+		UPDATE CONTRACT
+		SET MID = #{mid}
+		WHERE BUSINESS_REG_NUMBER LIKE #{businessRegNumber}
+	</update>
 
 	<!-- 신규 계약 등록 -->
 	<insert id="registerContract" parameterType="com.copypay.dto.request.ContractRegisterRequest">
