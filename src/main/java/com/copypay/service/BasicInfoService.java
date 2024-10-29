@@ -77,7 +77,7 @@ public class BasicInfoService {
     public void saveContract(BasicInfosRequest basicInfosRequest) {
         int rowsAffected = basicInfoRepository.saveContract(basicInfosRequest.getContractRequest());
         rowsAffected += basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
-        if(rowsAffected != 2) {
+        if(rowsAffected < 2) {
             log.error("사업자번호 : {} 계약 저장 실패", basicInfosRequest.getContractRequest().getBusinessRegNumber());
             throw new SaveFailedException();
         }else{
@@ -95,7 +95,7 @@ public class BasicInfoService {
     public void saveSettlementInfo(BasicInfosRequest basicInfosRequest){
         int rowsAffected = basicInfoRepository.saveSettlementInfo(basicInfosRequest.getSettlementInfoRequest());
         rowsAffected += basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
-        if(rowsAffected <= 2){
+        if(rowsAffected < 2){
             log.error("NO : {} 정산정보 저장 실패", basicInfosRequest.getSettlementInfoRequest().getNo());
             throw new SaveFailedException();
         }else{
@@ -108,7 +108,7 @@ public class BasicInfoService {
     public void savePaymentMethod(BasicInfosRequest basicInfosRequest){
         int rowsAffected = basicInfoRepository.savePaymentMethod(basicInfosRequest.getPaymentMethodRequest());
         rowsAffected += basicInfoRepository.saveMemo(basicInfosRequest.getMemoRequest());
-        if(rowsAffected <= 2){
+        if(rowsAffected < 2){
             log.error("NO : {} 결제수단 저장 실패", basicInfosRequest.getPaymentMethodRequest().getNo());
             throw new SaveFailedException();
         }else{
