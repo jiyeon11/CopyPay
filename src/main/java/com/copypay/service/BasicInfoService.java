@@ -191,26 +191,26 @@ public class BasicInfoService {
         return salesManagementRepository.countContractDoneList(contractDoneRequest);
     }
 
+    private void setupPaginationRequest(PaginationRequest request, Pagination pagination) {
+        request.setFirstIndex(pagination.getFirstRecordIndex());
+        request.setPageSize(pagination.getPageSize());
+    }
+
     //페이징 설정
-    public <T>Pagination createPagination(T request, int currentPage){
-        int totalCount = 0;
+    public <T> Pagination createPagination(T request, int currentPage) {
         Pagination pagination = new Pagination();
         pagination.setCurrentPageNo(currentPage);
+        if (request instanceof PaginationRequest) {
+            setupPaginationRequest((PaginationRequest) request, pagination);
+        }
+        int totalCount = 0;
         if (request instanceof BasicInfoRequest) {
-            ((BasicInfoRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
-            ((BasicInfoRequest) request).setPageSize(pagination.getPageSize());
-            totalCount = getBasicInfoListTotalCount((BasicInfoRequest)request);
+            totalCount = getBasicInfoListTotalCount((BasicInfoRequest) request);
         } else if (request instanceof BasicInfoViewRequest) {
-            ((BasicInfoViewRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
-            ((BasicInfoViewRequest) request).setPageSize(pagination.getPageSize());
-            totalCount = getBasicInfoViewListTotalCount((BasicInfoViewRequest)request);
+            totalCount = getBasicInfoViewListTotalCount((BasicInfoViewRequest) request);
         } else if (request instanceof ContractProgressRequest) {
-            ((ContractProgressRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
-            ((ContractProgressRequest) request).setPageSize(pagination.getPageSize());
-            totalCount = getContractProgressListTotalCount((ContractProgressRequest)request);
+            totalCount = getContractProgressListTotalCount((ContractProgressRequest) request);
         } else if (request instanceof ContractDoneRequest) {
-            ((ContractDoneRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
-            ((ContractDoneRequest) request).setPageSize(pagination.getPageSize());
             totalCount = getContractDoneListTotalCount((ContractDoneRequest) request);
         }
         pagination.setTotalCount(totalCount);
