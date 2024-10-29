@@ -596,7 +596,7 @@
                 event.preventDefault();
                 makeAjaxCall('/api/memos', 'POST', getMemoData(), function(data){
                     alert('메모가 성공적으로 저장되었습니다.');
-                    $('#memoContent').val('');
+                    $('#memoContent1').val('');
                     //mid로 메모 데이터 가져오기
                     makeAjaxCall('api/memo/'+ $('#inputMID2').val(), 'GET', null, function(data){
                         populateMemo(data);
@@ -733,7 +733,7 @@
             }
         }
 
-        //일반정보(계약) 등록
+        //일반정보(계약) 등록할 데이터
         function getContractData() {
             var contractData = {
                 businessRegNumber: removeNonNumbers($("#inputBusinessRegNumber").val()),
@@ -760,7 +760,7 @@
             return contractData;
         }
 
-        //정산정보 저장
+        //정산정보 저장할 데이터
         function getSettlementInfoData() {
             var depositAccountFormat = $('input:radio[name="bordered-radio"]:checked').val();
             var accountParameterName;
@@ -788,7 +788,7 @@
             return settlementInfoData;
         }
 
-        //결제수단 저장
+        //결제수단 저장할 데이터
         function getPaymentMethodData(){
             var majorDomesticCardArray = [];
             var minorDomesticCardArray = [];
@@ -823,11 +823,11 @@
             return paymentMethodData;
         }
 
-        //메모 등록
+        //메모 등록할 데이터
         function getMemoData(){
             var memoData = {
                 mid: $('#inputMID2').val(),
-                content: $('#memoContent1').val() || $('#memoContent2').val()
+                content: $('#memoContent2').val() || $('#memoContent1').val()
             };
             return memoData;
         }
