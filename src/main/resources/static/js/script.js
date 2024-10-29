@@ -128,6 +128,20 @@ function makeAjaxCall(url, method, data, successCallback, errorCallback) {
     });
 }
 
+function showEmptyDataRow(cols) {  //조회 테이블의 조회 결과가 없을 때
+    const tbody = $('#list');
+    $('#pagination').empty();
+    tbody.empty();
+    const noDataRow = `
+                    <tr class="table-row">
+                        <td class="text-center pt-36" colspan="${cols}">
+                            <p class="text-lg">조회 결과가 없습니다.</p>
+                        </td>
+                    </tr>
+                `;
+    tbody.append(noDataRow);
+}
+
 function renderPagination(data) {  //페이징
     pageIndex = data.currentPageNo;  //현재 페이지로 변경
     const page = $('#pagination');
