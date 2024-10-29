@@ -1,9 +1,6 @@
 package com.copypay.repository;
 
-import com.copypay.dto.request.ContractDoneRequest;
-import com.copypay.dto.request.ContractProgressRequest;
-import com.copypay.dto.request.ContractRegisterRequest;
-import com.copypay.dto.request.MidIssueRequest;
+import com.copypay.dto.request.*;
 import com.copypay.dto.response.ContractDoneListResponse;
 import com.copypay.dto.response.ContractProgressListResponse;
 import com.copypay.dto.response.ManageIdListResponse;
@@ -44,8 +41,14 @@ public class SalesManagementRepositoryImpl implements SalesManagementRepository 
 
     // 가맹점 ID 관리 조회
     @Override
-    public List<ManageIdListResponse> getManageIdList(String searchOption, String searchValue) {
-        return salesManagementMapper.getManageIdList(searchOption, searchValue);
+    public List<ManageIdListResponse> getManageIdList(ManageIdRequest manageIdRequest) {
+        return salesManagementMapper.getManageIdList(manageIdRequest);
+    }
+
+    // 가맹점 ID 관리 조회 데이터 개수
+    @Override
+    public int countManageIdList(ManageIdRequest manageIdRequest) {
+        return salesManagementMapper.countManageIdList(manageIdRequest);
     }
 
     // MID 조회

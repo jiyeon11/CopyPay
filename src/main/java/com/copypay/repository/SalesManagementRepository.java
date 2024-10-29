@@ -11,9 +11,10 @@ import java.util.Optional;
 public interface SalesManagementRepository {
     List<ContractProgressListResponse> getContractProgressList(ContractProgressRequest contractProgressRequest);
     List<ContractDoneListResponse> getContractDoneList(ContractDoneRequest contractDoneRequest);
+    List<ManageIdListResponse> getManageIdList(ManageIdRequest manageIdRequest);
     int countContractDoneList(ContractDoneRequest contractDoneRequest);
     int countContractProgressList(ContractProgressRequest contractProgressRequest);
-    List<ManageIdListResponse> getManageIdList(String searchOption, String searchValue);
+    int countManageIdList(ManageIdRequest manageIdRequest);
     Optional<String> getMid(String mid);
     Optional<String> getRegNumber(String regNumber);
     void issueMid(MidIssueRequest midIssueRequest);

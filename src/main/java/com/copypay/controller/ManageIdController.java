@@ -1,7 +1,11 @@
 package com.copypay.controller;
 
+import com.copypay.dto.Pagination;
+import com.copypay.dto.request.ManageIdRequest;
 import com.copypay.dto.request.MidIssueRequest;
+import com.copypay.dto.response.GenericPaginationResponse;
 import com.copypay.dto.response.ManageIdListResponse;
+import com.copypay.service.BasicInfoService;
 import com.copypay.service.SalesManagementService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ManageIdController {
     private final SalesManagementService salesManagementService;
+    private final BasicInfoService basicInfoService;
 
     @GetMapping("/manage-id")
     public String manageId() {
@@ -24,8 +29,10 @@ public class ManageIdController {
 
     @GetMapping("/api/manage-id/list")
     @ResponseBody
-    public ResponseEntity<List<ManageIdListResponse>> getManageIdList(@RequestParam(required = false) String searchOption, @RequestParam(required = false) String searchValue){
-        return ResponseEntity.ok(salesManagementService.getManageIdList(searchOption, searchValue));
+    public GenericPaginationResponse<ManageIdListResponse> getManageIdList(@ModelAttribute ManageIdRequest manageIdRequest){
+        Pagination pagination = basicInfoService.createPagination(manageIdRequest, manageIdRequest.getCurrentPage());
+        List<ManageIdListResponse> manageIdListResponse = salesManagementService.getManageIdList(manageIdRequest);
+        return new GenericPaginationResponse<>(manageIdListResponse, pagination);
     }
 
     @GetMapping("/api/manage-id/check-mid")

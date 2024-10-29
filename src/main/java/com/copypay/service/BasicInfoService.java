@@ -191,6 +191,11 @@ public class BasicInfoService {
         return salesManagementRepository.countContractDoneList(contractDoneRequest);
     }
 
+    // 영업관리의 가맹점 ID 관리의 조회에서 리스트 총 개수 가져오기
+    public int getManageIdListTotalCount(ManageIdRequest manageIdRequest){
+        return salesManagementRepository.countManageIdList(manageIdRequest);
+    }
+
     private void setupPaginationRequest(PaginationRequest request, Pagination pagination) {
         request.setFirstIndex(pagination.getFirstRecordIndex());
         request.setPageSize(pagination.getPageSize());
@@ -212,6 +217,8 @@ public class BasicInfoService {
             totalCount = getContractProgressListTotalCount((ContractProgressRequest) request);
         } else if (request instanceof ContractDoneRequest) {
             totalCount = getContractDoneListTotalCount((ContractDoneRequest) request);
+        } else if (request instanceof ManageIdRequest) {
+            totalCount = getManageIdListTotalCount((ManageIdRequest) request);
         }
         pagination.setTotalCount(totalCount);
         return pagination;

@@ -73,7 +73,7 @@
 	</select>
 
 	<!-- 가맹점 ID 관리 페이지 조회 -->
-	<select id="getManageIdList" parameterType="map" resultType="com.copypay.dto.response.ManageIdListResponse">
+	<select id="getManageIdList" parameterType="com.copypay.dto.request.ManageIdRequest" resultType="com.copypay.dto.response.ManageIdListResponse">
 		<![CDATA[
 		SELECT
 			BUSINESS_NAME AS businessName,
@@ -83,12 +83,27 @@
 		FROM CONTRACT
 		WHERE MID IS NOT NULL
     ]]>
-		<if test="searchOption != null">
+		<if test="searchOption != 'NONE' and searchValue != null">
 			AND ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
 		</if>
 		<![CDATA[
     	ORDER BY CONTRACT_DATE DESC
     ]]>
+	</select>
+
+	<!-- 가맹점 ID 관리 조회 데이터 개수 -->
+	<select id="countManageIdList" parameterType="com.copypay.dto.request.ManageIdRequest" resultType="int">
+		<![CDATA[
+		SELECT COUNT(NO)
+		FROM CONTRACT
+		WHERE MID IS NOT NULL
+    	]]>
+		<if test="searchOption != 'NONE' and searchValue != null">
+			AND ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
+		</if>
+		<![CDATA[
+    	ORDER BY CONTRACT_DATE DESC
+     	]]>
 	</select>
 
 	<!-- MID 조회-->

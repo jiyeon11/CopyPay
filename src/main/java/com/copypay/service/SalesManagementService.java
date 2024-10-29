@@ -1,9 +1,6 @@
 package com.copypay.service;
 
-import com.copypay.dto.request.ContractDoneRequest;
-import com.copypay.dto.request.ContractProgressRequest;
-import com.copypay.dto.request.ContractRegisterRequest;
-import com.copypay.dto.request.MidIssueRequest;
+import com.copypay.dto.request.*;
 import com.copypay.dto.response.ContractDoneListResponse;
 import com.copypay.dto.response.ContractProgressListResponse;
 import com.copypay.dto.response.ManageIdListResponse;
@@ -56,12 +53,12 @@ public class SalesManagementService {
     }
 
     // 가맹점 ID 관리 조회
-    public List<ManageIdListResponse> getManageIdList(String searchOption, String searchValue) {
-        List<ManageIdListResponse> manageIdList = salesManagementRepository.getManageIdList(searchOption, searchValue);
+    public List<ManageIdListResponse> getManageIdList(ManageIdRequest manageIdRequest) {
+        List<ManageIdListResponse> manageIdList = salesManagementRepository.getManageIdList(manageIdRequest);
         return validateListNotEmpty(
                 manageIdList,
                 String.format("총 %d개의 계약 정보 항목을 성공적으로 가져왔습니다", manageIdList.size()),
-                String.format("검색 조건 %s에 일치하는 정보가 없습니다. 검색어 : %s", searchOption, searchValue)
+                String.format("검색 조건 %s에 일치하는 정보가 없습니다. 검색어 : %s", manageIdRequest.getSearchOption(), manageIdRequest.getSearchValue())
         );
     }
 
