@@ -356,10 +356,6 @@
         }
     }
 
-    function extractFieldName(field) {
-        return field.charAt(0).toUpperCase() + field.slice(1);
-    }
-
     function clearIssueModal() {  // 발급 모달 입력 내용 초기화
         $("#issueModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
         $("#issueModal p").text(''); // 모든 p 태그 텍스트, 에러 메시지 초기화
