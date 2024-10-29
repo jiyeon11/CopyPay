@@ -20,7 +20,7 @@
 	</select>
 
 	<!-- 계약 완료현황 조회 -->
-	<select id="getContractDoneList" parameterType="map" resultType="com.copypay.dto.response.ContractDoneListResponse">
+	<select id="getContractDoneList" parameterType="com.copypay.dto.request.ContractDoneRequest" resultType="com.copypay.dto.response.ContractDoneListResponse">
 	<![CDATA[
 		SELECT
 			CONTRACT_DATE AS contractDate,
@@ -29,14 +29,28 @@
 			CONTRACT_MANAGER AS contractManager,
 			SALES_MANAGER AS salesManager
 		FROM CONTRACT
-		WHERE 1=1
     ]]>
-		<if test="searchOption != null">
-			AND ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
+		<if test="searchOption != 'NONE' and searchValue != null">
+			WHERE ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
 		</if>
 	<![CDATA[
     	ORDER BY CONTRACT_DATE DESC
+		LIMIT #{pageSize} OFFSET #{firstIndex}
     ]]>
+	</select>
+
+	<!-- 계약 완료현황 조회 데이터 개수 -->
+	<select id="countContractDoneList" parameterType="com.copypay.dto.request.ContractDoneRequest" resultType="int">
+		<![CDATA[
+		SELECT COUNT(NO)
+		FROM CONTRACT
+    	]]>
+		<if test="searchOption != 'NONE' and searchValue != null">
+			WHERE ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')
+		</if>
+		<![CDATA[
+    	ORDER BY CONTRACT_DATE DESC
+     	]]>
 	</select>
 
 	<!-- 가맹점 ID 관리 페이지 조회 -->
@@ -48,7 +62,7 @@
 			CEO_NAME AS ceoName,
 			MID AS mid
 		FROM CONTRACT
-		WHERE 1=1 AND MID IS NOT NULL
+		WHERE MID IS NOT NULL
     ]]>
 		<if test="searchOption != null">
 			AND ${searchOption} LIKE CONCAT('%', #{searchValue}, '%')

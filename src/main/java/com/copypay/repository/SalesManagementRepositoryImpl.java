@@ -1,5 +1,6 @@
 package com.copypay.repository;
 
+import com.copypay.dto.request.ContractDoneRequest;
 import com.copypay.dto.request.ContractRegisterRequest;
 import com.copypay.dto.request.MidIssueRequest;
 import com.copypay.dto.response.ContractDoneListResponse;
@@ -24,8 +25,14 @@ public class SalesManagementRepositoryImpl implements SalesManagementRepository 
 
     // 계약 완료현황 조회
     @Override
-    public List<ContractDoneListResponse> getContractDoneList(String searchOption, String searchValue) {
-        return salesManagementMapper.getContractDoneList(searchOption, searchValue);
+    public List<ContractDoneListResponse> getContractDoneList(ContractDoneRequest contractDoneRequest) {
+        return salesManagementMapper.getContractDoneList(contractDoneRequest);
+    }
+    
+    // 계약 완료현황 조회 데아터 개수
+    @Override
+    public int countContractDoneList(ContractDoneRequest contractDoneRequest) {
+        return salesManagementMapper.countContractDoneList(contractDoneRequest);
     }
 
     // 가맹점 ID 관리 조회

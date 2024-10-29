@@ -1,5 +1,6 @@
 package com.copypay.service;
 
+import com.copypay.dto.request.ContractDoneRequest;
 import com.copypay.dto.request.ContractRegisterRequest;
 import com.copypay.dto.request.MidIssueRequest;
 import com.copypay.dto.response.ContractDoneListResponse;
@@ -44,12 +45,12 @@ public class SalesManagementService {
     }
 
     // 계약 완료현황 조회
-    public List<ContractDoneListResponse> getContractDoneList(String searchOption, String searchValue) {
-        List<ContractDoneListResponse> contractDoneList = salesManagementRepository.getContractDoneList(searchOption, searchValue);
+    public List<ContractDoneListResponse> getContractDoneList(ContractDoneRequest contractDoneRequest){
+        List<ContractDoneListResponse> contractDoneList = salesManagementRepository.getContractDoneList(contractDoneRequest);
         return validateListNotEmpty(
                 contractDoneList,
-                String.format("총 %d개의 계약 완료현황 항목을 성공적으로 가져왔습니다", contractDoneList.size()),
-                String.format("검색 조건 %s에 일치하는 정보가 없습니다. 검색어 : %s", searchOption, searchValue)
+                String.format("총 %d개의 기본 정보 항목을 성공적으로 가져왔습니다", contractDoneList.size()),
+                "조건에 맞는 기본정보가 없습니다."
         );
     }
 

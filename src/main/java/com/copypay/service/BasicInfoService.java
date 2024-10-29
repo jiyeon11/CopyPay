@@ -5,6 +5,7 @@ import com.copypay.dto.request.*;
 import com.copypay.dto.response.*;
 import com.copypay.exception.*;
 import com.copypay.repository.BasicInfoRepository;
+import com.copypay.repository.SalesManagementRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 public class BasicInfoService {
     private final BasicInfoRepository basicInfoRepository;
     private final SalesManagementService salesManagementService;
+    private final SalesManagementRepository salesManagementRepository;
 
     //기본정보 등록/변경의 조회
     public List<BasicInfoResponse> getBasicInfoList(BasicInfoRequest basicInfoRequest) {
@@ -179,6 +181,11 @@ public class BasicInfoService {
         return basicInfoRepository.countBasicInfoList(basicInfoRequest);
     }
 
+    // 영업관리의 계약 완료의 조회에서 리스트 총 개수 가져오기
+    public int getContractDoneListTotalCount(ContractDoneRequest contractDoneRequest){
+        return salesManagementRepository.countContractDoneList(contractDoneRequest);
+    }
+
     //페이징 설정
     public <T>Pagination createPagination(T request, int currentPage){
         int totalCount = 0;
@@ -192,6 +199,10 @@ public class BasicInfoService {
             ((BasicInfoViewRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
             ((BasicInfoViewRequest) request).setPageSize(pagination.getPageSize());
             totalCount = getBasicInfoViewListTotalCount((BasicInfoViewRequest)request);
+        } else if (request instanceof ContractDoneRequest) {
+            ((ContractDoneRequest) request).setFirstIndex(pagination.getFirstRecordIndex());
+            ((ContractDoneRequest) request).setPageSize(pagination.getPageSize());
+            totalCount = getContractDoneListTotalCount((ContractDoneRequest)request);
         }
         pagination.setTotalCount(totalCount);
         return pagination;
