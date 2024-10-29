@@ -146,7 +146,7 @@ function renderPagination(data) {  //페이징
     pageIndex = data.currentPageNo;  //현재 페이지로 변경
     const page = $('#pagination');
     page.empty();
-    var pagination = `<ol class="inline-flex space-x-2 whitespace-nowrap" id="pagination">`;
+    var pagination = `<ol class="absolute left-1/2 transform -translate-x-1/2 inline-flex space-x-2 whitespace-nowrap center" id="pagination">`;
     var isPrev = pageIndex > 1? pageIndex-1 : pageIndex;  //이전 버튼
     pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(1); return false;" class="px-1 -mx-1 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;&lt;</a></li>`;
     pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${isPrev}); return false;" class="px-1 -mx-1 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;</a></li>`;
@@ -159,7 +159,7 @@ function renderPagination(data) {  //페이징
     pagination += `<li class="next"><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${isNext}); return false;" class="px-1 -mx-1 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;</a></li>`;
     pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${data.realEnd}); return false;" class="px-1 -mx-1 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;&gt;</a></li>`;
     pagination += `</ol>`;
-    pagination += `<p class="text-sm fixed float-left ml-1 text-slate-600">${data.firstRecordIndex+1}-${data.firstRecordIndex+data.length}/${data.totalCount}건 [${pageIndex}/${data.realEnd} 페이지] 조회되었습니다.</P>`
+    pagination += `<p class="text-sm ml-1 float-left inline-flex text-slate-600">${data.firstRecordIndex+1}-${data.firstRecordIndex+data.length}/${data.totalCount}건 [${pageIndex}/${data.realEnd} 페이지] 조회되었습니다.</P>`
     page.append(pagination);
     $(`#page-${data.currentPageNo}`).addClass("text-white bg-blue-500");  //현재 페이지 표시
 }
