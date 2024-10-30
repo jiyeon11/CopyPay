@@ -86,9 +86,10 @@ function validateInputDate() {  //기간 입력값 검증
  * @param {object} data - 전송할 데이터 (JSON 형식)
  * @param {function} successCallback - 성공 시 콜백 함수
  * @param {function} errorCallback - 에러 시 콜백 함수
+ * @Param {{}} option - 파일 다운로드 시 속성
  */
-function makeAjaxCall(url, method, data, successCallback, errorCallback) {
-    const token = $("meta[name='_csrf']").attr("content")
+function makeAjaxCall(url, method, data, successCallback, errorCallback, option = {}) {
+    const token = $("meta[name='_csrf']").attr("content");
     const header = $("meta[name='_csrf_header']").attr("content");
 
     $.ajax({
@@ -96,11 +97,12 @@ function makeAjaxCall(url, method, data, successCallback, errorCallback) {
         method: method,
         data: method !== 'GET' ? JSON.stringify(data) : $.param(data),
         contentType: method !== 'GET' ? 'application/json; charset=utf-8' : undefined,
-        beforeSend: function (xhr) {  //CSRF 토큰 설정
+        beforeSend: function (xhr) {  // CSRF 토큰 설정
             xhr.setRequestHeader(header, token);
         },
+        xhrFields: option,  // 파일 다운로드 시 적용
         success: function (responseData) {
-            $('.error-message').text('');//모든 필드의 오류 메시지 초기화
+            $('.error-message').text('');  // 모든 필드의 오류 메시지 초기화
             successCallback(responseData);
         },
         error: function (error) {
@@ -109,19 +111,16 @@ function makeAjaxCall(url, method, data, successCallback, errorCallback) {
             }
             if (error.responseJSON) {
                 const errors = error.responseJSON;
-                if (errors.status) {  //상태코드가 있으면 alert 띄움
+                if (errors.status) {  // 상태코드가 있으면 alert 띄움
                     alert(errors.message);
                 } else {
-                    $("#memoModal").addClass("hidden");  //메모 모달 창 숨김
-                    //모든 필드의 오류 메시지 초기화
-                    $('.error-message').text('');
-                    //오류 메시지를 각 필드에 맞게 표시
-                    for (const field in errors) {
+                    $("#memoModal").addClass("hidden");  // 메모 모달 창 숨김
+                    $('.error-message').text('');  // 모든 필드의 오류 메시지 초기화
+                    for (const field in errors) {  // 오류 메시지를 각 필드에 맞게 표시
                         $("p[name=error" + extractFieldName(field) + "]").text(errors[field]);
                     }
                 }
-            }
-            else if (!error.responseJSON || !error.responseJSON.message) {
+            } else if (!error.responseJSON || !error.responseJSON.message) {
                 alert("다시 시도해 주세요.");
             }
         }
