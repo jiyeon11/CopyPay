@@ -2,10 +2,7 @@ package com.copypay.service;
 
 import com.copypay.dto.response.ContractProgressListResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +22,12 @@ public class ExcelService {
             // 엑셀 파일 헤더 생성
             String[] headers = {"계약일자", "사업자번호", "상호", "계약담당자", "영업담당자"};
             for (int i = 0; i < headers.length; i++) {
+                sheet.setColumnWidth(i,5000); // 셀 가로폭 지정
                 Cell cell = headerRow.createCell(i);
                 cell.setCellValue(headers[i]);
             }
 
-            // 데이터가 있을 때만 추가....
+            // 데이터가 있을 때만 추가
             if (!contractProgressList.isEmpty()) {
                 int rowIndex = 1;
                 for (ContractProgressListResponse contract : contractProgressList) {
