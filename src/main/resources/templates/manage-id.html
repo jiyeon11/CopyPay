@@ -202,7 +202,7 @@
             };
             makeAjaxCall('/api/manage-id/list', 'GET', request, function (data) {
                 populateTable(data);
-            }, showEmptyDataRow);
+            }, showEmptyDataRow(6));
             $("#contractDoneList").removeClass("hidden");
         }
 
@@ -312,20 +312,6 @@
         });
         data.pagination.length = Object.keys(data.list).length;  //리스트 길이 추가
         renderPagination(data.pagination);  //페이징
-    }
-
-    function showEmptyDataRow() {  // 조회 결과가 없을 때
-        const tbody = $('#list');
-        $('#pagination').empty();
-        tbody.empty();
-        const noDataRow = `
-                            <tr class="table-row">
-                                <td class="text-center pt-36" colspan="6">
-                                    <p class="text-lg">조회 결과가 없습니다.</p>
-                                </td>
-                            </tr>
-                        `;
-        tbody.append(noDataRow);
     }
 
     function checkMidResult(data) {  // 조회한 MID의 사용 가능 여부를 띄움
