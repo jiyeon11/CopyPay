@@ -1,9 +1,7 @@
 package com.copypay.controller;
 
-import com.copypay.dto.Pagination;
 import com.copypay.dto.request.ContractProgressRequest;
 import com.copypay.dto.response.ContractProgressListResponse;
-import com.copypay.service.BasicInfoService;
 import com.copypay.service.ExcelService;
 import com.copypay.service.SalesManagementService;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +25,7 @@ public class ExcelController {
     @GetMapping("/api/contract-progress/excel")
     @ResponseBody
     public ResponseEntity<byte[]>  getContractProgressExcel(@ModelAttribute ContractProgressRequest contractProgressRequest) {
-        log.info(String.valueOf(contractProgressRequest.getPageSize()));
-        contractProgressRequest.setPageSize(9999);
-        log.info(String.valueOf(contractProgressRequest.getPageSize()));
+        contractProgressRequest.setPageSize(Integer.MAX_VALUE);
         List<ContractProgressListResponse> contractProgressListResponse = salesManagementService.getContractProgressList(contractProgressRequest);
         ByteArrayInputStream excelData = excelService.generateExcel(contractProgressListResponse);
 
