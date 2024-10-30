@@ -22,13 +22,14 @@ import java.io.ByteArrayInputStream;
 @Controller
 public class ExcelController {
     private final SalesManagementService salesManagementService;
-    private final BasicInfoService basicInfoService;
     private final ExcelService excelService;
 
     @GetMapping("/api/contract-progress/excel")
     @ResponseBody
     public ResponseEntity<byte[]>  getContractProgressExcel(@ModelAttribute ContractProgressRequest contractProgressRequest) {
-        Pagination pagination = basicInfoService.createPagination(contractProgressRequest, contractProgressRequest.getCurrentPage());
+        log.info(String.valueOf(contractProgressRequest.getPageSize()));
+        contractProgressRequest.setPageSize(9999);
+        log.info(String.valueOf(contractProgressRequest.getPageSize()));
         List<ContractProgressListResponse> contractProgressListResponse = salesManagementService.getContractProgressList(contractProgressRequest);
         ByteArrayInputStream excelData = excelService.generateExcel(contractProgressListResponse);
 
