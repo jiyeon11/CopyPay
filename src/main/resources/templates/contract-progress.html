@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div id="contractProgressList" class="fixed mt-5 ml-10 pl-40 items-center hidden">
+<div id="contractProgressList" style="display: none" class="fixed mt-5 ml-10 pl-40 items-center">
     <!-- 조회한 계약 진행현황 -->
     <div class="bg-white mt-2 rounded-lg shadow-2xl w-[105rem] h-[37rem] overflow-y-auto">
         <table class="w-full table-fixed">
@@ -268,7 +268,7 @@
         $('#endDate').val(date.toISOString().substring(0, 10));
         date.setMonth(date.getMonth() - 1);
         $('#startDate').val(date.toISOString().substring(0, 10)); // 오늘에서 한 달을 뺀 날짜
-
+        const listResult = document.getElementById("contractProgressList");
 
         // 엑셀 버튼 클릭 시
         $("#excelBtn").on('click', function () {
@@ -279,6 +279,11 @@
                 checkedDate: $('input:checkbox[id="dateOption"]').is(":checked"),
                 currentPage: pageIndex
             };
+            console.log(list.style.display)
+            if(listResult.style.display === "none"){
+                alert("엑셀을 생성할 리스트를 먼저 조회해주세요.")
+                return
+            }
             makeAjaxCall('/api/contract-progress/excel', 'GET', request,
                 function (data) {
                     var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
@@ -296,7 +301,6 @@
                     responseType: 'blob' // 서버로부터의 응답을 blob 객체로 받음
                 }
             );
-            $("#contractProgressList").removeClass("hidden");
         });
 
             // 조회 버튼 클릭 시
@@ -310,7 +314,7 @@
                 $('#applicationDate').text(new Date().toISOString().substring(0, 10));
 
                 makeAjaxCall('/api/managers', 'GET', null, function (data) {  // 계약담당자, 영업담당자 셀렉트박스 추가
-                    $("#contractProgressList").addClass("hidden");
+                    listResult.style.display = 'none' // 화면에 안 보이게 함
                     $("#contractProgressNewModal").removeClass("hidden");
                     getManagers(data);
                 }, function () {
@@ -351,7 +355,8 @@
             makeAjaxCall('/api/contract-progress/list', 'GET', request, function (data) {
                 populateTable(data);
             }, showEmptyDataRow(5));
-            $("#contractProgressList").removeClass("hidden");
+            const listResult = document.getElementById("contractProgressList");
+            listResult.style.display = 'inline' // 화면에 보이게 함 (기본 속성)
         }
 
         function populateTable(data) {  // 받아온 데이터로 계약 진행현황 조회 테이블 행 추가
