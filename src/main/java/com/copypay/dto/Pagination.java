@@ -15,9 +15,6 @@ public class Pagination {
     private int firstPageNoOnPageList;	//페이지 리스트의 첫 페이지 번호
     private int lastPageNoOnPageList;	//페이지 리스트의 마지막 페이지 번호
     private int firstRecordIndex; 		//페이징 sql의 조건절에 사용되는 시작 rownum
-    private boolean prev;		        //이전 버튼
-    private boolean next;		        //다음 버튼
-
     private static final int PAGE_GROUP_SIZE = 10;  //화면에 표시될 최대 페이지 수
     
     private int calculateLastPageNoOnPageList() {
@@ -42,13 +39,6 @@ public class Pagination {
         return (currentPageNo - 1) * pageSize;
     }
 
-    public boolean getPrev() {
-        return getFirstPageNoOnPageList() > 1;
-    }
-
-    public boolean getNext() {
-        return getLastPageNoOnPageList() < getRealEnd();
-    }
     public int getRealEnd() {
         realEnd = (int) Math.ceil((double) totalCount / pageSize);
         return realEnd;

@@ -128,27 +128,38 @@ function makeAjaxCall(url, method, data, successCallback, errorCallback) {
     });
 }
 
+function showEmptyDataRow(cols) {  //조회 테이블의 조회 결과가 없을 때
+    const tbody = $('#list');
+    $('#pagination').empty();
+    tbody.empty();
+    const noDataRow = `
+                    <tr class="table-row">
+                        <td class="text-center pt-36" colspan="${cols}">
+                            <p class="text-lg">조회 결과가 없습니다.</p>
+                        </td>
+                    </tr>
+                `;
+    tbody.append(noDataRow);
+}
+
 function renderPagination(data) {  //페이징
     pageIndex = data.currentPageNo;  //현재 페이지로 변경
     const page = $('#pagination');
     page.empty();
-    var pagination = `<ol class="inline-flex space-x-2 whitespace-nowrap" id="pagination">`;
-
-    if (data.prev) {  // 이전 버튼
-        pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(1); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;&lt;</a></li>`;
-        pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${data.currentPageNo - 1}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;</a></li>`;
-    }
+    var pagination = `<ol class="absolute left-1/2 transform -translate-x-1/2 inline-flex space-x-2 whitespace-nowrap center" id="pagination">`;
+    var isPrev = pageIndex > 1? pageIndex-1 : pageIndex;  //이전 버튼
+    pagination += `<li><button type="button" onclick="fetchAndDisplayPage(1)" class="px-1 -mx-1 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;&lt;</button></li>`;
+    pagination += `<li><button type="button" onclick="fetchAndDisplayPage(${isPrev})" class="px-1 -mx-1 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&lt;</button></li>`;
 
     for (var i = data.firstPageNoOnPageList; i <= data.lastPageNoOnPageList; i++) {  // 숫자들
-        pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${i}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" id="page-${i}">${i}</a></li>`;
+        pagination += `<li><button type="button" onclick="fetchAndDisplayPage(${i})"class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" id="page-${i}">${i}</button></li>`;
     }
 
-    if (data.next) {  // 다음 버튼
-        pagination += `<li class="next"><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${data.currentPageNo + 1}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;</a></li>`;
-        pagination += `<li><a href="javascript:void(0);" onclick="fetchAndDisplayPage(${data.realEnd}); return false;" class="px-2 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;&gt;</a></li>`;
-    }
+    var isNext = pageIndex < data.realEnd? pageIndex+1 : pageIndex;  //다음 버튼
+    pagination += `<li><button type="button" onclick="fetchAndDisplayPage(${isNext})" class="px-1 -mx-1 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;</button></li>`;
+    pagination += `<li><button type="button" onclick="fetchAndDisplayPage(${data.realEnd})" class="px-1 -mx-1 border rounded-lg hover:bg-blue-500 hover:text-white transition duration-200">&gt;&gt;</button></li>`;
     pagination += `</ol>`;
-    pagination += `<p class="text-sm fixed float-left ml-1 text-slate-600">${data.firstRecordIndex+1}-${data.firstRecordIndex+data.length}/${data.totalCount}건 [${pageIndex}/${data.realEnd} 페이지] 조회되었습니다.</P>`
+    pagination += `<p class="text-sm ml-1 float-left inline-flex text-slate-600">${data.firstRecordIndex+1}-${data.firstRecordIndex+data.length}/${data.totalCount}건 [${pageIndex}/${data.realEnd} 페이지] 조회되었습니다.</P>`
     page.append(pagination);
     $(`#page-${data.currentPageNo}`).addClass("text-white bg-blue-500");  //현재 페이지 표시
 }
