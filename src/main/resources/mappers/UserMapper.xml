@@ -6,7 +6,7 @@
 <mapper namespace="com.copypay.repository.mapper.UserMapper">
 
     <select id="findByUsername" parameterType="String" resultType="com.copypay.model.User">
-        SELECT ID, PW, EMAIL FROM USER WHERE ID = #{id}
+        SELECT ID, PW, EMAIL, OTP FROM USER WHERE ID = #{username}
     </select>
 
     <update id="updatePassword" parameterType="Map">
