@@ -288,7 +288,9 @@
                     var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                     var link = document.createElement('a');  // a라는 요소 만듬
                     link.href = window.URL.createObjectURL(blob);
-                    link.download = "계약진행현황.xlsx"; // 파일명
+                    var downloadTime = new Date();
+                    downloadTime = downloadTime.toLocaleString();
+                    link.download = "계약진행현황_"+username+"_"+downloadTime+".xlsx"; // 파일명
                     document.body.appendChild(link);
                     link.click(); // a의 클릭 이벤트를 발생시켜서 다운로드 시작
                     document.body.removeChild(link);
