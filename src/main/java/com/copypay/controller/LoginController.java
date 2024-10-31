@@ -50,4 +50,23 @@ public class LoginController {
             return "lost-pw";
         }
     }
+
+    @GetMapping("/otp-send")
+    public String sendMail(@RequestParam String id, Model model) {
+        try {
+            if (mailService.mailSendOTP(id)) {
+                return "mail-done"; // 아이디가 존재할 경우
+            } else {
+                model.addAttribute("error", "존재하지 않는 아이디입니다.");
+                return "lost-pw";   // 아이디가 존재하지 않을 경우
+            }
+        } catch (MailSendException e) {
+            model.addAttribute("error", "메일 전송 중 오류가 발생했습니다.");
+            return "lost-pw";
+        } catch (Exception e) { // 그 외 예외 처리
+            log.error("예외 발생: {}", e.getMessage());
+            model.addAttribute("error", "메일 전송 중 오류가 발생했습니다.");
+            return "lost-pw";
+        }
+    }
 }

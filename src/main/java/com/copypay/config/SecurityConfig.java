@@ -4,7 +4,6 @@ import com.copypay.repository.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -30,7 +29,7 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // 쿠키를 통한 CSRF 토큰 저장소 사용
                 )
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/", "/lost-pw", "/mail-send", "/otp-qr").permitAll()  // 접근 가능한 페이지
+                        .requestMatchers("/", "/lost-pw", "/mail-send", "/otp-qr", "/otp-send").permitAll()  // 접근 가능한 페이지
                         .anyRequest().authenticated()                        // 그 외 경로는 로그인 필요
                 )
                 .formLogin(formLogin -> formLogin
