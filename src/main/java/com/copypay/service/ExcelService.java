@@ -68,8 +68,12 @@ public class ExcelService {
         cellStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
         cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setBorderLeft(BorderStyle.THIN);
+        cellStyle.setBorderRight(BorderStyle.THIN);
         return cellStyle;
     }
+
     // 데이터 목록 스타일 지정
     private CellStyle createStyle(Workbook workbook) {
         CellStyle cellStyle = workbook.createCellStyle();
