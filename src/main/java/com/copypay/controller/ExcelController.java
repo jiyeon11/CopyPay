@@ -30,7 +30,7 @@ public class ExcelController {
         ByteArrayInputStream excelData = excelService.generateExcel(contractProgressListResponse);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=contract_progress.xlsx");
+        headers.add("Content-Disposition", "attachment; filename");
 
         return ResponseEntity.ok()
                 .headers(headers)

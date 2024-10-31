@@ -279,7 +279,6 @@
                 checkedDate: $('input:checkbox[id="dateOption"]').is(":checked"),
                 currentPage: pageIndex
             };
-            console.log(list.style.display)
             if(listResult.style.display === "none"){
                 alert("엑셀을 생성할 리스트를 먼저 조회해주세요.")
                 return
@@ -289,7 +288,7 @@
                     var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                     var link = document.createElement('a');  // a라는 요소 만듬
                     link.href = window.URL.createObjectURL(blob);
-                    link.download = "contract_progress.xlsx"; // 파일명
+                    link.download = "계약진행현황.xlsx"; // 파일명
                     document.body.appendChild(link);
                     link.click(); // a의 클릭 이벤트를 발생시켜서 다운로드 시작
                     document.body.removeChild(link);
