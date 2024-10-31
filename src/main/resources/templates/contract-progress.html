@@ -420,12 +420,16 @@
         }
 
         function clearModal() {  // 입력 내용 초기화
-            $("#contractProgressNewModal input[type='text']").val(''); // 모든 텍스트 입력 필드 초기화
-            $("#contractProgressNewModal input[type='checkbox']").prop('checked', false); // 모든 체크박스 초기화
-            $("#contractProgressNewModal select").prop('selectedIndex', 0); // 모든 셀렉트 박스 초기화
-            $("#contractProgressNewModal p").text(''); // 모든 p 태그 텍스트, 에러 메시지 초기화
-            $("#contractManager").empty(); // 불러온 계약 담당자 초기화
-            $("#salesManager").empty(); // 불러온 영업 담당자 초기화
+            const modal = $("#contractProgressNewModal");
+            const elements = {
+                'input[type="text"]': el => el.val(''), // 모든 텍스트 입력 필드 초기화
+                'select': el => el.prop('selectedIndex', 0), // 모든 셀렉트 박스 초기화
+                'p': el => el.text(''), // 모든 p 태그 텍스트, 에러 메시지 초기화
+                '#contractManager, #salesManager': el => el.empty()  // 불러온 담당자 초기화
+            };
+            Object.entries(elements).forEach(([selector, action]) => {
+                modal.find(selector).each((_, el) => action($(el)));
+            });
         }
 
         function getManagers(data) {  //담당자 id 가져오기
