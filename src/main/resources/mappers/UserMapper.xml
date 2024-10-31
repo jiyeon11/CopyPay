@@ -13,6 +13,9 @@
         UPDATE USER SET PW= TO_BASE64(MD5(#{password})) WHERE ID = #{id}
     </update>
 
+    <select id="getOTPKeyById" parameterType="string" resultType="string">
+        SElECT OTP FROM USER WHERE ID = #{id}
+    </select>
 </mapper>
 
 
