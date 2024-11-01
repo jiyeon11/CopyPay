@@ -6,13 +6,13 @@
     <title></title>
 </head>
 <body>
-<button id="issueModalBtn" class="float-right items-center px-6 py-2 mr-2 bg-red-600  text-md text-white rounded">발급
+<button id="issueModalBtn" class="float-right items-center px-6 py-2 mr-16 bg-red-600  text-md text-white rounded">발급
 </button>
 <button id="manageIdCheckBtn" class="float-right items-center px-6 py-2 mr-2 bg-slate-800 text-md text-white rounded">
     조회
 </button>
 <!-- select 검색 조건 -->
-<div class="flex bg-white mt-16 ml-10 pl-40 rounded-lg w-[105rem]">
+<div class="flex bg-white mt-16 ml-10 pl-40 rounded-lg w-[95rem]">
     <div>
         <select id="searchOption" name="searchOption"
                 class="flex-shrink-0 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 dark:border-gray-700 dark:text-white rounded-s-lg hover:bg-gray-200 focus:outline-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
@@ -202,7 +202,7 @@
             };
             makeAjaxCall('/api/manage-id/list', 'GET', request, function (data) {
                 populateTable(data);
-            }, showEmptyDataRow);
+            }, showEmptyDataRow(6));
             $("#contractDoneList").removeClass("hidden");
         }
 
@@ -286,6 +286,12 @@
             $("#issueModal").removeClass("hidden");
         });
 
+        document.addEventListener('keydown', function(event) { // Enter 키 눌렀을 때 폼 제출 막음
+            if (event.key === 'Enter') {
+                event.preventDefault();
+            }
+        }, true);
+
     });
 
     function populateTable(data) {  // 받아온 데이터로 조회 테이블 행 추가
@@ -306,20 +312,6 @@
         });
         data.pagination.length = Object.keys(data.list).length;  //리스트 길이 추가
         renderPagination(data.pagination);  //페이징
-    }
-
-    function showEmptyDataRow() {  // 조회 결과가 없을 때
-        const tbody = $('#list');
-        $('#pagination').empty();
-        tbody.empty();
-        const noDataRow = `
-                            <tr class="table-row">
-                                <td class="text-center pt-36" colspan="6">
-                                    <p class="text-lg">조회 결과가 없습니다.</p>
-                                </td>
-                            </tr>
-                        `;
-        tbody.append(noDataRow);
     }
 
     function checkMidResult(data) {  // 조회한 MID의 사용 가능 여부를 띄움
